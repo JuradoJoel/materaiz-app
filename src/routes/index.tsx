@@ -16,6 +16,7 @@ import { LoadingSpinner } from 'src/components/loading-spinner';
 import RoleBasedGuard from 'src/features/auth/RoleBasedGuard';
 import ErrorPage from 'src/pages/ErrorPage';
 import NotAllowedPage from 'src/pages/NotAllowedPage';
+import HomePage from 'src/features/home/HomePage';
 
 /**
  * This will show a full screen spinner while the component is loading.
@@ -83,6 +84,9 @@ const LazyResetPasswordPage = withLoadingSpinner(
 const LazySuccessfullyResetPasswordPage = withLoadingSpinner(
   lazy(() => import('src/features/auth/reset-password/SuccessfullyResetPasswordPage'))
 );
+/* const LazyHomePage = withLoadingSpinner(
+  lazy(() => import('src/features/auth/reset-password/SuccessfullyResetPasswordPage'))
+); */
 
 const ROUTES: RouteObject[] = [
   {
@@ -91,6 +95,12 @@ const ROUTES: RouteObject[] = [
     children: [
       { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
       { path: 'successfully-reset-password', element: <LazySuccessfullyResetPasswordPage /> },
+      {
+        path: 'home',
+        element: (
+            <HomePage />
+        ),
+      },
       {
         path: 'auth',
         element: (
