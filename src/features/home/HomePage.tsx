@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { APP_NAME } from 'src/config';
 import Header from './Header';
+import Body from './Body';
 
 function HomePage() {
   return (
@@ -8,8 +9,9 @@ function HomePage() {
       <Helmet>
         <title> Home | {APP_NAME}</title>
       </Helmet>
-      
+
       <Header />
+      <Body />
     </>
   );
 }

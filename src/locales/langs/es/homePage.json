@@ -1,0 +1,11 @@
+{
+  "navBar1": "Catálogo",
+  "navBar2": "Mi cuenta mayorista",
+  "title": "catálogo mayorista",
+  "bulkPurchase": "COMPRA POR MAYOR",
+  "bulkPurchaseText": "Los precios que ves <strong>EN NUESTRO CATÁLOGO SON EN EFECTIVO</strong> y están disponibles <strong>SOLO EN COMPRAS REALIZADAS EN NUESTRO LOCAL</strong>. Si realizás tu pedido A TRAVÉS DE LA WEB, EL ÚNICO MEDIO DE PAGO DISPONIBLE ES <strong>TRANSFERENCIA</strong>, Y SE <strong>APLICARÁ UN 5% ADICIONAL</strong> SOBRE EL TOTAL. <strong>SOLO PARA NUEVOS CLIENTES, EL MONTO MÍNIMO DE LA PRIMERA COMPRA ES DE $95.000 O MÁS</strong>.",
+  "payment": "pago",
+  "paymentText": "Al confirmar tu pedido, te mostraremos todos los datos necesarios para realizar la <strong>TRANSFERENCIA</strong>. RECORDÁ: NO SE ACEPTAN PAGOS EN EFECTIVO PARA COMPRAS ONLINE.",
+  "shipping": "envios",
+  "shippingText": "Despachamos de 4 a 6 días. SI VENIS AL LOCAL RETIRAS TODA LA MERCADERIA EN EL MOMENTO Y PODES ELEGIRLA. GENERAL ACHA 364 - RAMOS MEJIA // ENVIO A CABA Y AMBA A DOMICILIO. RESTO DEL PAIS VIA CARGO O CORREO ARGENTINO, A SUCURSAL MAS CERCANA."
+}
