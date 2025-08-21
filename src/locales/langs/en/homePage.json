@@ -7,5 +7,6 @@
   "payment": "pago",
   "paymentText": "Al confirmar tu pedido, te mostraremos todos los datos necesarios para realizar la <strong>TRANSFERENCIA</strong>. RECORDÁ: NO SE ACEPTAN PAGOS EN EFECTIVO PARA COMPRAS ONLINE.",
   "shipping": "envios",
-  "shippingText": "Despachamos de 4 a 6 días. SI VENIS AL LOCAL RETIRAS TODA LA MERCADERIA EN EL MOMENTO Y PODES ELEGIRLA. GENERAL ACHA 364 - RAMOS MEJIA // ENVIO A CABA Y AMBA A DOMICILIO. RESTO DEL PAIS VIA CARGO O CORREO ARGENTINO, A SUCURSAL MAS CERCANA."
+  "shippingText": "Despachamos de 4 a 6 días. SI VENIS AL LOCAL RETIRAS TODA LA MERCADERIA EN EL MOMENTO Y PODES ELEGIRLA. GENERAL ACHA 364 - RAMOS MEJIA // ENVIO A CABA Y AMBA A DOMICILIO. RESTO DEL PAIS VIA CARGO O CORREO ARGENTINO, A SUCURSAL MAS CERCANA.",
+  "promo": "Promociones al costo"
 }
