@@ -3,18 +3,13 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AddIcon from '@mui/icons-material/Add';
 import { Product } from 'src/components/product/types';
+import formatCurrency from 'src/utils/formatCurrency';
 
 interface ProductCardProps {
   product: Product;
 }
 
 function ProductCard({ product }: ProductCardProps) {
-  const formatCurrency = (value: number) =>
-    new Intl.NumberFormat('es-AR', {
-      style: 'currency',
-      currency: 'ARS',
-      minimumFractionDigits: 0,
-    }).format(value);
   return (
     <>
       <Card
@@ -40,10 +35,10 @@ function ProductCard({ product }: ProductCardProps) {
               component="span"
               sx={{ textDecoration: 'line-through', color: 'neutral.main', marginRight: 1 }}
             >
-              {formatCurrency(product.original_Price)}
+              {formatCurrency(product.original_price)}
             </Box>
             <Box component="span" sx={{ color: 'error.main', fontWeight: 'bold' }}>
-              {formatCurrency(product.discount_Price)}
+              {formatCurrency(product.discount_price)}
             </Box>
           </Typography>
         </CardContent>
