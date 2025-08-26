@@ -28,7 +28,7 @@ function ProductCard({ product }: ProductCardProps) {
           alt={product.name}
           sx={{ width: '80px', height: '80px', mr: 2 }}
         />
-        <CardContent sx={{ flexGrow: 1, p: 0 }}>
+        <CardContent sx={{ flexGrow: 1, p: 1 }}>
           <Typography variant="body1">{product.name}</Typography>
           <Typography variant="body2">
             <Box
@@ -58,7 +58,6 @@ function ProductCard({ product }: ProductCardProps) {
           <ShoppingCartIcon />
         </Button>
       </Card>
-      )
     </>
   );
 }
