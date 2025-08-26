@@ -3,6 +3,7 @@ import { APP_NAME } from 'src/config';
 import Header from './Header';
 import Body from './Body';
 import Footer from './Footer';
+import ProductList from './ProductList';
 
 function HomePage() {
   return (
@@ -14,6 +15,7 @@ function HomePage() {
       <Header />
       <Body />
       <Footer />
+      <ProductList />
     </>
   );
 }
