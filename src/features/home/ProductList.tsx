@@ -2,60 +2,34 @@ import { Box, Typography, Container } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import ProductCard from './ProductCard';
 import { Product } from 'src/components/product/types';
+import { productsData } from 'src/data/productsData';
 
-function ProductList() {
+interface ProductListProps {
+  category?: string;
+}
+const categoryTranslations: { [key: string]: string } = {
+  kit: 'homePage.categoryKit',
+  combo: 'homePage.categoryCombo',
+  termo: 'homePage.categoryTermo',
+  mate: 'homePage.categoryMate',
+};
+
+function ProductList({ category }: ProductListProps) {
   const { t } = useTranslation();
+  const filteredProducts = category
+    ? productsData.filter((product) => product.category === category)
+    : productsData;
 
-  const products: Product[] = [
-    {
-      id: 1,
-      name: 'Kit Viajero (ROSA) bolso matero + yerb + azuc + mate + bombilla',
-      original_price: 17000,
-      discount_price: 12950,
-      image: 'test/rosa-kit.jpg',
+  const productsByCategory = filteredProducts.reduce(
+    (acc: { [key: string]: Product[] }, product) => {
+      (acc[product.category] = acc[product.category] || []).push(product);
+      return acc;
     },
-    {
-      id: 2,
-      name: 'COMBO: "IMPERIAL GUARDA ALPACA" + canasta ECO + chaulita + bombilla chata',
-      original_price: 35000,
-      discount_price: 24459,
-      image: 'test/alpaca-combo.jpg',
-    },
-    {
-      id: 3,
-      name: 'MEGA OFERTA COMBO AL COSTO: "CAMIONERO ALGARROBO" + BOMBILLA CHATA + CANASTA ECO + YERB + AZUC',
-      original_price: 20000,
-      discount_price: 15789,
-      image: 'test/algarrobo-combo.jpg',
-    },
-    {
-      id: 4,
-      name: 'MOCHILA/BOLSO MATERO NEGRO + TERMO ACERO MM + IMPERIAL "GUARDA ACERO" + YERB + AZUC + BOMB CHATA',
-      original_price: 55000,
-      discount_price: 28992,
-      image: 'test/mochila-negro.jpg',
-    },
-    {
-      id: 5,
-      name: 'CANASTA MATERA NEGRA ECO + TERMO ACERO MM + IMPERIAL "GUARDA ACERO" + YERB + AZUC + BOMB CHATA',
-      original_price: 55000,
-      discount_price: 28992,
-      image: 'test/canasta-negra.jpg',
-    },
-    {
-      id: 6,
-      name: 'KIT VIAJERO NEGRO bolso matero clásico + yerb + azuc + mate térmico vasito + bombilla chata',
-      original_price: 16000,
-      discount_price: 11990,
-      image: 'test/negro-kit.jpg',
-    },
-  ];
+    {}
+  );
 
   return (
     <Container>
-      <Typography variant="h4" sx={{ textTransform: 'uppercase', mb: 2 }}>
-        {t('homePage.promo')}
-      </Typography>
       <Box
         sx={{
           borderBottom: 2,
@@ -63,9 +37,24 @@ function ProductList() {
           mb: 2,
         }}
       />
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
+      {category ? (
+        filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => <ProductCard key={product.id} product={product} />)
+        ) : (
+          <Typography>No se encontraron productos</Typography>
+        )
+      ) : (
+        Object.entries(productsByCategory).map(([cat, products]) => (
+          <Box key={cat} sx={{ mb: 4 }}>
+            <Typography variant="h5" sx={{ textTransform: 'uppercase', mb: 2 }}>
+              {t(categoryTranslations[cat] || cat)}
+            </Typography>
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </Box>
+        ))
+      )}
     </Container>
   );
 }
