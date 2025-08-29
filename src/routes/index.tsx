@@ -84,9 +84,9 @@ const LazyResetPasswordPage = withLoadingSpinner(
 const LazySuccessfullyResetPasswordPage = withLoadingSpinner(
   lazy(() => import('src/features/auth/reset-password/SuccessfullyResetPasswordPage'))
 );
-/* const LazyHomePage = withLoadingSpinner(
-  lazy(() => import('src/features/auth/reset-password/SuccessfullyResetPasswordPage'))
-); */
+const LazyCategoryPage = withLoadingSpinner(
+  lazy(() => import('src/features/home/FilteredProducts'))
+);
 
 const ROUTES: RouteObject[] = [
   {
@@ -97,9 +97,7 @@ const ROUTES: RouteObject[] = [
       { path: 'successfully-reset-password', element: <LazySuccessfullyResetPasswordPage /> },
       {
         path: 'home',
-        element: (
-            <HomePage />
-        ),
+        element: <HomePage />,
       },
       {
         path: 'auth',
@@ -129,6 +127,10 @@ const ROUTES: RouteObject[] = [
           },
           { element: <Navigate to="login" replace />, index: true },
         ],
+      },
+      {
+        path: 'category/:id',
+        element: <LazyCategoryPage />,
       },
 
       {
