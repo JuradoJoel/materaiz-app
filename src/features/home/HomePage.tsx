@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async';
 import { APP_NAME } from 'src/config';
 import Body from './Body';
 import ProductList from './ProductList';
-import Footer from './Footer';
 import { productsData } from 'src/utils/mock_products';
 
 function HomePage() {
@@ -14,7 +13,6 @@ function HomePage() {
 
       <Body />
       <ProductList products={productsData} />
-      <Footer />
     </>
   );
 }
