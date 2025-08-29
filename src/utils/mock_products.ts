@@ -1,4 +1,5 @@
 import { Product } from 'src/components/product/types';
+import { Category } from 'src/models/Category';
 
 export const productsData: Product[] = [
   {
@@ -8,7 +9,12 @@ export const productsData: Product[] = [
     discount_price: 12950,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'kit',
+    categories: [
+      {
+        id: 1,
+        name: 'Kit',
+      },
+    ],
   },
   {
     id: 2,
@@ -17,7 +23,12 @@ export const productsData: Product[] = [
     discount_price: 24459,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'mate',
+    categories: [
+      {
+        id: 1,
+        name: 'Kit',
+      },
+    ],
   },
   {
     id: 3,
@@ -26,7 +37,12 @@ export const productsData: Product[] = [
     discount_price: 15789,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'combo',
+    categories: [
+      {
+        id: 1,
+        name: 'Kit',
+      },
+    ],
   },
   {
     id: 4,
@@ -35,7 +51,12 @@ export const productsData: Product[] = [
     discount_price: 28992,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'kit',
+    categories: [
+      {
+        id: 1,
+        name: 'Kit',
+      },
+    ],
   },
   {
     id: 5,
@@ -44,7 +65,12 @@ export const productsData: Product[] = [
     discount_price: 28992,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'termo',
+    categories: [
+      {
+        id: 1,
+        name: 'Kit',
+      },
+    ],
   },
   {
     id: 6,
@@ -53,7 +79,12 @@ export const productsData: Product[] = [
     discount_price: 11990,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'termo',
+    categories: [
+      {
+        id: 1,
+        name: 'Kit',
+      },
+    ],
   },
   {
     id: 7,
@@ -62,7 +93,12 @@ export const productsData: Product[] = [
     discount_price: 12990,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'kit',
+    categories: [
+      {
+        id: 1,
+        name: 'Kit',
+      },
+    ],
   },
   {
     id: 8,
@@ -71,7 +107,12 @@ export const productsData: Product[] = [
     discount_price: 11990,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'mate',
+    categories: [
+      {
+        id: 2,
+        name: 'Combo',
+      },
+    ],
   },
   {
     id: 9,
@@ -80,7 +121,12 @@ export const productsData: Product[] = [
     discount_price: 11990,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'combo',
+    categories: [
+      {
+        id: 2,
+        name: 'Combo',
+      },
+    ],
   },
   {
     id: 10,
@@ -89,7 +135,12 @@ export const productsData: Product[] = [
     discount_price: 12990,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'mate',
+    categories: [
+      {
+        id: 4,
+        name: 'Mate',
+      },
+    ],
   },
   {
     id: 11,
@@ -98,7 +149,12 @@ export const productsData: Product[] = [
     discount_price: 11990,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'combo',
+    categories: [
+      {
+        id: 2,
+        name: 'Combo',
+      },
+    ],
   },
   {
     id: 12,
@@ -107,7 +163,12 @@ export const productsData: Product[] = [
     discount_price: 11990,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'mate',
+    categories: [
+      {
+        id: 4,
+        name: 'Mate',
+      },
+    ],
   },
   {
     id: 13,
@@ -116,7 +177,12 @@ export const productsData: Product[] = [
     discount_price: 10990,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'combo',
+    categories: [
+      {
+        id: 2,
+        name: 'Combo',
+      },
+    ],
   },
   {
     id: 14,
@@ -125,7 +191,12 @@ export const productsData: Product[] = [
     discount_price: 11990,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'kit',
+    categories: [
+      {
+        id: 1,
+        name: 'Kit',
+      },
+    ],
   },
   {
     id: 15,
@@ -134,7 +205,12 @@ export const productsData: Product[] = [
     discount_price: 12950,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'termo',
+    categories: [
+      {
+        id: 5,
+        name: 'Apa',
+      },
+    ],
   },
   {
     id: 17,
@@ -143,7 +219,12 @@ export const productsData: Product[] = [
     discount_price: 12990,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'termo',
+    categories: [
+      {
+        id: 5,
+        name: 'Apa',
+      },
+    ],
   },
   {
     id: 18,
@@ -152,7 +233,12 @@ export const productsData: Product[] = [
     discount_price: 12990,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'termo',
+    categories: [
+      {
+        id: 5,
+        name: 'Apa',
+      },
+    ],
   },
   {
     id: 19,
@@ -161,7 +247,12 @@ export const productsData: Product[] = [
     discount_price: 12990,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'mate',
+    categories: [
+      {
+        id: 4,
+        name: 'Mate',
+      },
+    ],
   },
   {
     id: 20,
@@ -170,7 +261,12 @@ export const productsData: Product[] = [
     discount_price: 12990,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'combo',
+    categories: [
+      {
+        id: 2,
+        name: 'Combo',
+      },
+    ],
   },
   {
     id: 21,
@@ -179,6 +275,11 @@ export const productsData: Product[] = [
     discount_price: 12990,
     image:
       'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    category: 'kit',
+    categories: [
+      {
+        id: 1,
+        name: 'Kit',
+      },
+    ],
   },
 ];

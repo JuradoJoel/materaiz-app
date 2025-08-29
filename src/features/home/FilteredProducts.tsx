@@ -6,11 +6,15 @@ import ProductList from './ProductList';
 import Footer from './Footer';
 import { useParams } from 'react-router-dom';
 import { mockCategories } from 'src/utils/mock_categories';
+import { productsData } from 'src/utils/mock_products';
 
 function FilteredProducts() {
   const { id } = useParams<{ id: string }>();
 
   const category = mockCategories.find((category) => category.id === Number(id));
+  const products = productsData.filter((product) =>
+    product.categories.some((category) => category.id === Number(id))
+  );
   return (
     <>
       <Helmet>
@@ -22,7 +26,7 @@ function FilteredProducts() {
         <Typography variant="h4" sx={{ textTransform: 'uppercase', margin: 2 }}>
           {category?.name}
         </Typography>
-        <ProductList />
+        <ProductList products={products} />
       </Container>
       <Footer />
     </>

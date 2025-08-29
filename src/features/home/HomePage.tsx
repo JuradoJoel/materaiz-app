@@ -4,6 +4,7 @@ import Header from './Header';
 import Body from './Body';
 import ProductList from './ProductList';
 import Footer from './Footer';
+import { productsData } from 'src/utils/mock_products';
 
 function HomePage() {
   return (
@@ -14,7 +15,7 @@ function HomePage() {
 
       <Header />
       <Body />
-      <ProductList />
+      <ProductList products={productsData} />
       <Footer />
     </>
   );

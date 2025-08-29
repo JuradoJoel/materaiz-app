@@ -1,8 +1,12 @@
 import { Box, Container } from '@mui/material';
 import ProductCard from './ProductCard';
-import { productsData } from 'src/utils/mock_products';
+import { Product } from 'src/components/product/types';
 
-function ProductList() {
+interface ProductListProps {
+  products: Product[];
+}
+
+function ProductList({ products }: ProductListProps) {
   return (
     <Container>
       <Box
@@ -13,7 +17,7 @@ function ProductList() {
         }}
       />
 
-      {productsData.map((product) => (
+      {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
     </Container>
