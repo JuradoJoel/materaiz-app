@@ -54,36 +54,38 @@ const lazyWithReload = (factory: () => Promise<{ default: ElementType }>) =>
   lazy(() => importOrReload(factory()));
 
 const LazyPage404 = withLoadingScreen(lazyWithReload(() => import('../pages/Page404')));
-const LazyLoginPage = withLoadingScreen(
-  lazyWithReload(() => import('src/features/auth/login/LoginPage'))
-);
-const LazyRegisterPage = withLoadingScreen(
-  lazyWithReload(() => import('src/features/auth/register/RegisterPage'))
-);
-const LazyForgotPasswordPage = withLoadingScreen(
-  lazyWithReload(() => import('src/features/auth/forgot-password/ForgotPasswordPage'))
-);
-const LazyNewPasswordPage = withLoadingScreen(
-  lazyWithReload(() => import('src/features/auth/new-password/NewPasswordPage'))
-);
-const LazyVerifyCodePage = withLoadingScreen(
-  lazyWithReload(() => import('src/features/auth/verify-code/VerifyCodePage'))
-);
-const LazyAdminUsersListPage = withLoadingSpinner(
-  lazy(() => import('src/features/admin-user-crud/AdminUserListPage'))
-);
-const LazyAdminUsersCreatePage = withLoadingSpinner(
-  lazyWithReload(() => import('src/features/admin-user-crud/AdminUserCreatePage'))
-);
-const LazyAdminUsersEditPage = withLoadingSpinner(
-  lazyWithReload(() => import('src/features/admin-user-crud/AdminUserEditPage'))
-);
-const LazyResetPasswordPage = withLoadingSpinner(
-  lazy(() => import('src/features/auth/reset-password/ResetPasswordPage'))
-);
-const LazySuccessfullyResetPasswordPage = withLoadingSpinner(
-  lazy(() => import('src/features/auth/reset-password/SuccessfullyResetPasswordPage'))
-);
+// const LazyLoginPage = withLoadingScreen(
+//   lazyWithReload(() => import('src/features/auth/login/LoginPage'))
+// );
+// const LazyRegisterPage = withLoadingScreen(
+//   lazyWithReload(() => import('src/features/auth/register/RegisterPage'))
+// );
+// const LazyForgotPasswordPage = withLoadingScreen(
+//   lazyWithReload(() => import('src/features/auth/forgot-password/ForgotPasswordPage'))
+// );
+// const LazyNewPasswordPage = withLoadingScreen(
+//   lazyWithReload(() => import('src/features/auth/new-password/NewPasswordPage'))
+// );
+// const LazyVerifyCodePage = withLoadingScreen(
+//   lazyWithReload(() => import('src/features/auth/verify-code/VerifyCodePage'))
+// );
+// const LazyAdminUsersListPage = withLoadingSpinner(
+//   lazy(() => import('src/features/admin-user-crud/AdminUserListPage'))
+// );
+// const LazyAdminUsersCreatePage = withLoadingSpinner(
+//   lazyWithReload(() => import('src/features/admin-user-crud/AdminUserCreatePage'))
+// );
+// const LazyAdminUsersEditPage = withLoadingSpinner(
+//   lazyWithReload(() => import('src/features/admin-user-crud/AdminUserEditPage'))
+// );
+// const LazyResetPasswordPage = withLoadingSpinner(
+//   lazy(() => import('src/features/auth/reset-password/ResetPasswordPage'))
+// );
+// const LazySuccessfullyResetPasswordPage = withLoadingSpinner(
+//   lazy(() => import('src/features/auth/reset-password/SuccessfullyResetPasswordPage'))
+// );
+const LazyHomePage = withLoadingSpinner(lazy(() => import('src/features/home/HomePage')));
+
 const LazyCategoryPage = withLoadingSpinner(
   lazy(() => import('src/features/home/FilteredProducts'))
 );
@@ -94,68 +96,73 @@ const ROUTES: RouteObject[] = [
     element: <App />,
     children: [
       { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
-      { path: 'successfully-reset-password', element: <LazySuccessfullyResetPasswordPage /> },
       {
         path: 'home',
-        element: <HomePage />,
-      },
-      {
-        path: 'auth',
         element: (
-          <GuestGuard>
-            <Outlet />
-          </GuestGuard>
+          <>
+            <DashboardLayout>
+              <LazyHomePage />
+            </DashboardLayout>
+          </>
         ),
-        children: [
-          {
-            path: 'login',
-            element: <LazyLoginPage />,
-            errorElement: <ErrorPage />,
-          },
-          {
-            path: 'register',
-            element: <LazyRegisterPage />,
-          },
-          {
-            element: <CompactLayout />,
-            children: [
-              { path: 'forgot-password', element: <LazyForgotPasswordPage /> },
-              { path: 'reset-password/:id', element: <LazyResetPasswordPage /> },
-              { path: 'new-password', element: <LazyNewPasswordPage /> },
-              { path: 'verify', element: <LazyVerifyCodePage /> },
-            ],
-          },
-          { element: <Navigate to="login" replace />, index: true },
-        ],
       },
       {
         path: 'category/:id',
         element: <LazyCategoryPage />,
       },
-
-      {
-        path: 'dashboard',
-        errorElement: <ErrorPage />,
-        element: (
-          <AuthGuard>
-            <RoleBasedGuard>
-              <DashboardLayout />
-            </RoleBasedGuard>
-          </AuthGuard>
-        ),
-        children: [
-          { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
-          {
-            path: 'admin-users',
-            children: [
-              { element: <Navigate to="/dashboard/admin-users/list" replace />, index: true },
-              { path: 'list', element: <LazyAdminUsersListPage /> },
-              { path: 'create', element: <LazyAdminUsersCreatePage /> },
-              { path: 'edit/:id', element: <LazyAdminUsersEditPage /> },
-            ],
-          },
-        ],
-      },
+      // {
+      //   path: 'auth',
+      //   element: (
+      //     <GuestGuard>
+      //       <Outlet />
+      //     </GuestGuard>
+      //   ),
+      //   children: [
+      //     {
+      //       path: 'login',
+      //       element: <LazyLoginPage />,
+      //       errorElement: <ErrorPage />,
+      //     },
+      //     {
+      //       path: 'register',
+      //       element: <LazyRegisterPage />,
+      //     },
+      //     {
+      //       element: <CompactLayout />,
+      //       children: [
+      //         { path: 'forgot-password', element: <LazyForgotPasswordPage /> },
+      //         { path: 'reset-password/:id', element: <LazyResetPasswordPage /> },
+      //         { path: 'new-password', element: <LazyNewPasswordPage /> },
+      //         { path: 'verify', element: <LazyVerifyCodePage /> },
+      //       ],
+      //     },
+      //     { element: <Navigate to="login" replace />, index: true },
+      //   ],
+      // },
+      // { path: 'successfully-reset-password', element: <LazySuccessfullyResetPasswordPage /> },
+      // {
+      //   path: 'dashboard',
+      //   errorElement: <ErrorPage />,
+      //   element: (
+      //     <AuthGuard>
+      //       <RoleBasedGuard>
+      //         <DashboardLayout />
+      //       </RoleBasedGuard>
+      //     </AuthGuard>
+      //   ),
+      //   children: [
+      //     { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
+      //     {
+      //       path: 'admin-users',
+      //       children: [
+      //         { element: <Navigate to="/dashboard/admin-users/list" replace />, index: true },
+      //         { path: 'list', element: <LazyAdminUsersListPage /> },
+      //         { path: 'create', element: <LazyAdminUsersCreatePage /> },
+      //         { path: 'edit/:id', element: <LazyAdminUsersEditPage /> },
+      //       ],
+      //     },
+      //   ],
+      // },
       {
         element: <CompactLayout />,
         children: [

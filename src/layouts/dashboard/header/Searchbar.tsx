@@ -153,7 +153,7 @@ function Searchbar() {
       <div>
         {!open && (
           <IconButtonAnimate onClick={handleOpen}>
-            <Iconify icon="eva:search-fill" />
+            <Iconify icon="eva:search-fill" color="white" />
           </IconButtonAnimate>
         )}
 

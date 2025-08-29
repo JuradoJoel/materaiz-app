@@ -12,10 +12,11 @@ import Main from './Main';
 import NavHorizontal from './nav/NavHorizontal';
 import NavMini from './nav/NavMini';
 import NavVertical from './nav/NavVertical';
+import Footer from './footer';
 
 // ----------------------------------------------------------------------
 
-export default function DashboardLayout() {
+export default function DashboardLayout({ children }: { children?: React.ReactNode }) {
   const { themeLayout } = useSettingsContext();
 
   const isDesktop = useResponsive('up', 'lg');
@@ -39,13 +40,11 @@ export default function DashboardLayout() {
   if (isNavHorizontal) {
     return (
       <>
-        <Header onOpenNav={handleOpen} />
+        <Header onOpenNav={handleOpen} onClose={handleClose} open={open} />
 
         {isDesktop ? <NavHorizontal /> : renderNavVertical}
 
-        <Main>
-          <Outlet />
-        </Main>
+        <Main>{children || <Outlet />}</Main>
       </>
     );
   }
@@ -53,40 +52,34 @@ export default function DashboardLayout() {
   if (isNavMini) {
     return (
       <>
-        <Header onOpenNav={handleOpen} />
+        <Header onOpenNav={handleOpen} onClose={handleClose} open={open} />
 
         <Box
           sx={{
             display: { lg: 'flex' },
-            minHeight: { lg: 1 },
           }}
         >
           {isDesktop ? <NavMini /> : renderNavVertical}
-
-          <Main>
-            <Outlet />
-          </Main>
+          <Main>{children || <Outlet />}</Main>
         </Box>
+        <Footer />
       </>
     );
   }
 
   return (
-    <>
-      <Header onOpenNav={handleOpen} />
+    <Box>
+      <Header onOpenNav={handleOpen} onClose={handleClose} open={open} />
 
       <Box
         sx={{
           display: { lg: 'flex' },
-          minHeight: { lg: 1 },
         }}
       >
         {renderNavVertical}
-
-        <Main>
-          <Outlet />
-        </Main>
+        <Main>{children || <Outlet />}</Main>
       </Box>
-    </>
+      <Footer />
+    </Box>
   );
 }

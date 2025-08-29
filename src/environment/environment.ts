@@ -1,10 +1,12 @@
 const environments = {
   dev: {
     backEnd: 'https://backend.com/api/',
+    baseURL: 'https://backend.com/api/',
     production: false,
   },
   prod: {
     backEnd: 'https://backend.com/api/',
+    baseURL: 'https://backend.com/api/',
     production: true,
   },
 };

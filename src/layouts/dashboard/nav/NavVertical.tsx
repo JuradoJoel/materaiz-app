@@ -1,18 +1,17 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
-import { Box, Drawer, Stack } from '@mui/material';
+import { Box, Drawer, IconButton, Stack } from '@mui/material';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
 // config
 import { NAV } from '../../../config';
 // components
 import Logo from '../../../components/logo';
-import { NavSectionVertical } from '../../../components/nav-section';
 import Scrollbar from '../../../components/scrollbar';
 //
-import useNavConfig from './config';
-import NavAccount from './NavAccount';
+import Iconify from 'src/components/iconify';
+import { NavContent } from './NavContent';
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +22,6 @@ type Props = {
 
 export default function NavVertical({ openNav, onCloseNav }: Props) {
   const { pathname } = useLocation();
-  const navConfig = useNavConfig();
 
   const isDesktop = useResponsive('up', 'lg');
 
@@ -37,32 +35,40 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
   const renderContent = (
     <Scrollbar
       sx={{
-        height: 1,
+        height: 'calc(100vh - 100px)',
         '& .simplebar-content': {
-          height: 1,
+          height: '100%',
           display: 'flex',
           flexDirection: 'column',
         },
       }}
     >
       <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
         spacing={3}
         sx={{
           pt: 3,
           pb: 2,
           px: 2.5,
           flexShrink: 0,
+          backgroundColor: 'transparent',
         }}
       >
         <Logo />
-
-        <NavAccount />
+        {!isDesktop ? (
+          <IconButton
+            onClick={() => (openNav ? onCloseNav() : null)}
+            sx={{ color: 'text.primary' }}
+          >
+            <Iconify icon={openNav ? 'material-symbols:close' : 'eva:menu-fill'} />
+          </IconButton>
+        ) : null}
       </Stack>
-
-      <NavSectionVertical data={navConfig} />
-
-      <Box sx={{ flexGrow: 1 }} />
-
+      <Box mt={2}>
+        <NavContent onClose={onCloseNav} />
+      </Box>
       {/*<NavDocs />*/}
     </Scrollbar>
   );
@@ -72,39 +78,24 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
       component="nav"
       sx={{
         flexShrink: { lg: 0 },
-        width: { lg: NAV.W_DASHBOARD },
       }}
     >
-      {isDesktop ? (
-        <Drawer
-          open
-          variant="permanent"
-          PaperProps={{
-            sx: {
-              width: NAV.W_DASHBOARD,
-              bgcolor: 'transparent',
-              borderRightStyle: 'dashed',
-            },
-          }}
-        >
-          {renderContent}
-        </Drawer>
-      ) : (
-        <Drawer
-          open={openNav}
-          onClose={onCloseNav}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          PaperProps={{
-            sx: {
-              width: NAV.W_DASHBOARD,
-            },
-          }}
-        >
-          {renderContent}
-        </Drawer>
-      )}
+      <Drawer
+        anchor={isDesktop ? 'left' : 'top'}
+        open={openNav}
+        onClose={onCloseNav}
+        ModalProps={{
+          keepMounted: true,
+        }}
+        PaperProps={{
+          sx: {
+            width: isDesktop ? NAV.W_DASHBOARD : '100%',
+            height: '100%',
+          },
+        }}
+      >
+        {renderContent}
+      </Drawer>
     </Box>
   );
 }

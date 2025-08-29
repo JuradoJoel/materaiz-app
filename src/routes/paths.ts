@@ -6,6 +6,9 @@ export const PATHS = {
   'successfully-reset-password': {
     root: '/successfully-reset-password',
   },
+  home: {
+    root: '/home',
+  },
   auth: {
     root: '/auth',
     login: '/auth/login',
