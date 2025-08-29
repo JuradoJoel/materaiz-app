@@ -6,6 +6,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
+import { mockCategories } from 'src/utils/mock_categories';
+import { Category } from 'src/models/Category';
 
 function Header() {
   const { t } = useTranslation();
@@ -46,27 +48,18 @@ function Header() {
                 >
                   {t('homePage.categories')}
                 </Button>
+
                 <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-                  <MenuItem onClick={handleClose}>
-                    <Link to="/category/kit" style={{ textDecoration: 'none', color: 'inherit' }}>
-                      {t('homePage.categoryKit')}
-                    </Link>
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <Link to="/category/combo" style={{ textDecoration: 'none', color: 'inherit' }}>
-                      {t('homePage.categoryCombo')}
-                    </Link>
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <Link to="/category/termo" style={{ textDecoration: 'none', color: 'inherit' }}>
-                      {t('homePage.categoryTermo')}
-                    </Link>
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <Link to="/category/mate" style={{ textDecoration: 'none', color: 'inherit' }}>
-                      {t('homePage.categoryMate')}
-                    </Link>
-                  </MenuItem>
+                  {mockCategories.map((category: Category) => (
+                    <MenuItem key={category.id} onClick={handleClose}>
+                      <Link
+                        to={`/category/${category.id}`}
+                        style={{ textDecoration: 'none', color: 'inherit' }}
+                      >
+                        {category.name}
+                      </Link>
+                    </MenuItem>
+                  ))}
                 </Menu>
               </Box>
               <Box>

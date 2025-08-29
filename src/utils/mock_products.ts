@@ -6,7 +6,8 @@ export const productsData: Product[] = [
     name: 'Kit Viajero (ROSA) bolso matero + yerb + azuc + mate + bombilla',
     original_price: 17000,
     discount_price: 12950,
-    image: 'test/rosa-kit.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'kit',
   },
   {
@@ -14,7 +15,8 @@ export const productsData: Product[] = [
     name: 'COMBO: "IMPERIAL GUARDA ALPACA" + canasta ECO + chaulita + bombilla chata',
     original_price: 35000,
     discount_price: 24459,
-    image: 'test/alpaca-combo.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'mate',
   },
   {
@@ -22,7 +24,8 @@ export const productsData: Product[] = [
     name: 'MEGA OFERTA COMBO AL COSTO: "CAMIONERO ALGARROBO" + BOMBILLA CHATA + CANASTA ECO + YERB + AZUC',
     original_price: 20000,
     discount_price: 15789,
-    image: 'test/algarrobo-combo.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'combo',
   },
   {
@@ -30,7 +33,8 @@ export const productsData: Product[] = [
     name: 'MOCHILA/BOLSO MATERO NEGRO + TERMO ACERO MM + IMPERIAL "GUARDA ACERO" + YERB + AZUC + BOMB CHATA',
     original_price: 55000,
     discount_price: 28992,
-    image: 'test/mochila-negro.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'kit',
   },
   {
@@ -38,7 +42,8 @@ export const productsData: Product[] = [
     name: 'CANASTA MATERA NEGRA ECO + TERMO ACERO MM + IMPERIAL "GUARDA ACERO" + YERB + AZUC + BOMB CHATA',
     original_price: 55000,
     discount_price: 28992,
-    image: 'test/canasta-negra.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'termo',
   },
   {
@@ -46,7 +51,8 @@ export const productsData: Product[] = [
     name: 'KIT VIAJERO NEGRO bolso matero clásico + yerb + azuc + mate térmico vasito + bombilla chata',
     original_price: 16000,
     discount_price: 11990,
-    image: 'test/negro-kit.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'termo',
   },
   {
@@ -54,7 +60,8 @@ export const productsData: Product[] = [
     name: 'KIT VIAJERO NEGRO bolso matero clásico + yerb + azuc + mate térmico vasito + bombilla chata',
     original_price: 16500,
     discount_price: 12990,
-    image: 'test/negro-kit.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'kit',
   },
   {
@@ -62,7 +69,8 @@ export const productsData: Product[] = [
     name: 'Kit Viajero (ROSA) bolso matero + yerb + azuc + mate + bombilla',
     original_price: 16000,
     discount_price: 11990,
-    image: 'test/negro-kit.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'mate',
   },
   {
@@ -70,7 +78,8 @@ export const productsData: Product[] = [
     name: 'KIT VIAJERO NEGRO bolso matero clásico + yerb + azuc + mate térmico vasito + bombilla chata',
     original_price: 16000,
     discount_price: 11990,
-    image: 'test/negro-kit.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'combo',
   },
   {
@@ -78,7 +87,8 @@ export const productsData: Product[] = [
     name: 'Chaulata de tela CLASICO COLOR NEGRO x10 COMBOS incluye yerbero y azucarero (X10 COMBOS)',
     original_price: 18000,
     discount_price: 12990,
-    image: 'test/negro-kit.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'mate',
   },
   {
@@ -86,7 +96,8 @@ export const productsData: Product[] = [
     name: 'Promo 5 imperiales ALPACA int. calabaza recubierta tamaño mediano + 5 bombillas inox c/filtro',
     original_price: 16000,
     discount_price: 11990,
-    image: 'test/negro-kit.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'combo',
   },
   {
@@ -94,7 +105,8 @@ export const productsData: Product[] = [
     name: 'Promo 5 imperiales ALPACA int. calabaza recubierta tamaño mediano + 5 bombillas inox c/filtro',
     original_price: 16000,
     discount_price: 11990,
-    image: 'test/imperial-mate.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'mate',
   },
   {
@@ -102,7 +114,8 @@ export const productsData: Product[] = [
     name: 'Imperial de goma int.termico blanco',
     original_price: 15500,
     discount_price: 10990,
-    image: 'test/negro-combo.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'combo',
   },
   {
@@ -110,7 +123,8 @@ export const productsData: Product[] = [
     name: 'Imperial de goma int.termico blanco',
     original_price: 16000,
     discount_price: 11990,
-    image: 'test/negro-kit.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'kit',
   },
   {
@@ -118,7 +132,8 @@ export const productsData: Product[] = [
     name: 'Kit Viajero (ROSA) bolso matero + yerb + azuc + mate + bombilla',
     original_price: 17000,
     discount_price: 12950,
-    image: 'test/rosa-termo.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'termo',
   },
   {
@@ -126,7 +141,8 @@ export const productsData: Product[] = [
     name: 'Imperial de goma int.termico blanco',
     original_price: 17500,
     discount_price: 12990,
-    image: 'test/imperial-termo.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'termo',
   },
   {
@@ -134,7 +150,8 @@ export const productsData: Product[] = [
     name: 'Imperial de goma int.termico blanco',
     original_price: 17500,
     discount_price: 12990,
-    image: 'test/imperial-termo.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'termo',
   },
   {
@@ -142,7 +159,8 @@ export const productsData: Product[] = [
     name: 'Imperial de goma int.termico blanco',
     original_price: 17500,
     discount_price: 12990,
-    image: 'test/imperial-termo.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'mate',
   },
   {
@@ -150,7 +168,8 @@ export const productsData: Product[] = [
     name: 'Imperial de goma int.termico blanco',
     original_price: 17500,
     discount_price: 12990,
-    image: 'test/imperial-termo.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'combo',
   },
   {
@@ -158,7 +177,8 @@ export const productsData: Product[] = [
     name: 'Imperial de goma int.termico blanco',
     original_price: 17500,
     discount_price: 12990,
-    image: 'test/imperial-termo.jpg',
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
     category: 'kit',
   },
 ];

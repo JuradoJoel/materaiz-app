@@ -129,7 +129,7 @@ const ROUTES: RouteObject[] = [
         ],
       },
       {
-        path: 'category/:category',
+        path: 'category/:id',
         element: <LazyCategoryPage />,
       },
 
