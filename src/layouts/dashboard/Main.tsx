@@ -3,7 +3,7 @@ import { Box, BoxProps } from '@mui/material';
 // hooks
 import useResponsive from '../../hooks/useResponsive';
 // config
-import { HEADER, NAV } from '../../config';
+import { FOOTER, HEADER, NAV } from '../../config';
 // components
 import { useSettingsContext } from '../../components/settings';
 
@@ -28,7 +28,6 @@ export default function Main({ children, sx, ...other }: BoxProps) {
           pt: `${HEADER.H_MOBILE + SPACING}px`,
           pb: `${HEADER.H_MOBILE + SPACING}px`,
           ...(isDesktop && {
-            px: 2,
             pt: `${HEADER.H_DASHBOARD_DESKTOP + 80}px`,
             pb: `${HEADER.H_DASHBOARD_DESKTOP + SPACING}px`,
           }),
@@ -44,9 +43,9 @@ export default function Main({ children, sx, ...other }: BoxProps) {
       component="main"
       sx={{
         flexGrow: 1,
+        minHeight: `calc(100vh - ${FOOTER.FOOTER_HEIGHT}px)`,
         py: `${HEADER.H_MOBILE + SPACING}px`,
         ...(isDesktop && {
-          px: 2,
           py: `${HEADER.H_DASHBOARD_DESKTOP + SPACING}px`,
           width: `calc(100% - ${NAV.W_DASHBOARD}px)`,
           ...(isNavMini && {

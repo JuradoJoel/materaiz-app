@@ -43,7 +43,7 @@ export const HEADER = {
 };
 
 export const FOOTER = {
-  FOOTER_HEIGHT: 330,
+  FOOTER_HEIGHT: 220,
 };
 
 export const NAV = {

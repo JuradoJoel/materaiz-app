@@ -10,6 +10,7 @@ import {
   MenuItem,
   Stack,
   Toolbar,
+  Typography,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 // utils
@@ -47,10 +48,12 @@ export default function Header({ onOpenNav, onClose, open }: Props) {
   const { t } = useTranslation();
   const { themeLayout } = useSettingsContext();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleSelectCategory = (id: number) => {
+    navigate(PATHS.exploreProducts.byCategory(id));
     setAnchorEl(null);
   };
 
@@ -91,15 +94,16 @@ export default function Header({ onOpenNav, onClose, open }: Props) {
                   {t('homePage.categories')}
                 </Button>
 
-                <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={() => setAnchorEl(null)}
+                >
                   {mockCategories.map((category: Category) => (
-                    <MenuItem key={category.id} onClick={handleClose}>
-                      <Link
-                        to={`/category/${category.id}`}
-                        style={{ textDecoration: 'none', color: 'inherit' }}
-                      >
+                    <MenuItem key={category.id} onClick={() => handleSelectCategory(category.id)}>
+                      <Typography color="inherit" sx={{ textTransform: 'uppercase' }}>
                         {category.name}
-                      </Link>
+                      </Typography>
                     </MenuItem>
                   ))}
                 </Menu>
