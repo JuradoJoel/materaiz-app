@@ -55,7 +55,7 @@ export const CategoriesNavButton = ({
                     sx={{ py: 2 }}
                     onClick={() => {
                       onClose();
-                      navigate(PATHS.home.root);
+                      navigate(PATHS.exploreProducts.byCategory(category.id));
                     }}
                   >
                     <ListItemText
