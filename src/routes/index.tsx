@@ -107,8 +107,14 @@ const ROUTES: RouteObject[] = [
         ),
       },
       {
-        path: 'category/:id',
-        element: <LazyCategoryPage />,
+        path: 'explore-products',
+        element: <DashboardLayout />,
+        children: [
+          {
+            path: 'category/:id',
+            element: <LazyCategoryPage />,
+          },
+        ],
       },
       // {
       //   path: 'auth',

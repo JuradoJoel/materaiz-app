@@ -9,6 +9,10 @@ export const PATHS = {
   home: {
     root: '/home',
   },
+  exploreProducts: {
+    root: '/explore-products',
+    byCategory: (id: number | string) => `/explore-products/category/${id}`,
+  },
   auth: {
     root: '/auth',
     login: '/auth/login',
@@ -18,15 +22,6 @@ export const PATHS = {
     verify: '/auth/verify',
     register: '/auth/register',
   },
-  dashboard: {
-    root: '/dashboard',
-    adminUsers: {
-      root: '/dashboard/admin-users',
-      list: '/dashboard/admin-users/list',
-      create: '/dashboard/admin-users/create',
-      edit: (id: number | string) => `/dashboard/admin-users/edit/${id}`,
-    },
-  },
 } as const;
 
 /**
@@ -35,12 +30,6 @@ export const PATHS = {
 export const PATHS_PER_ROLE = [
   {
     role: 'super_admin',
-    paths: [
-      PATHS.dashboard.root,
-      PATHS.dashboard.adminUsers.root,
-      PATHS.dashboard.adminUsers.list,
-      PATHS.dashboard.adminUsers.create,
-      PATHS.dashboard.adminUsers.edit(':id'),
-    ],
+    paths: [],
   },
 ];

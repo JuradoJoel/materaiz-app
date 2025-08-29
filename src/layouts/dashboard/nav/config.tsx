@@ -36,7 +36,7 @@ const navConfig = [
     items: [
       {
         title: 'User',
-        path: PATHS.dashboard.adminUsers.root,
+        path: PATHS.home.root,
         icon: ICONS.account,
       },
     ],

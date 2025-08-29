@@ -176,6 +176,7 @@ export default function Header({ onOpenNav, onClose, open }: Props) {
         sx={{
           height: 1,
           px: { lg: 3 },
+          backgroundColor: !isOffset ? 'neutral.darker' : 'unset',
         }}
       >
         {renderContent}

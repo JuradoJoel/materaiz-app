@@ -13,6 +13,7 @@ import NavHorizontal from './nav/NavHorizontal';
 import NavMini from './nav/NavMini';
 import NavVertical from './nav/NavVertical';
 import Footer from './footer';
+import { HEADER } from 'src/config';
 
 // ----------------------------------------------------------------------
 
@@ -77,7 +78,9 @@ export default function DashboardLayout({ children }: { children?: React.ReactNo
         }}
       >
         {renderNavVertical}
-        <Main>{children || <Outlet />}</Main>
+        <Main sx={{ px: 0, pt: `${isDesktop ? HEADER.H_DASHBOARD_DESKTOP : HEADER.H_MOBILE}px` }}>
+          {children || <Outlet />}
+        </Main>
       </Box>
       <Footer />
     </Box>
