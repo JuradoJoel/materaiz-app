@@ -1,5 +1,4 @@
 import { Product } from 'src/components/product/types';
-import { Category } from 'src/models/Category';
 
 export const productsData: Product[] = [
   {
