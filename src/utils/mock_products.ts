@@ -2,6 +2,20 @@ import { Product } from 'src/components/product/types';
 
 export const productsData: Product[] = [
   {
+    id: 0,
+    name: 'Imperial de goma int.termico blanco',
+    original_price: 17500,
+    discount_price: 12990,
+    image:
+      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
+    categories: [
+      {
+        id: 1,
+        name: 'Kit',
+      },
+    ],
+  },
+  {
     id: 1,
     name: 'Kit Viajero (ROSA) bolso matero + yerb + azuc + mate + bombilla',
     original_price: 17000,
@@ -264,20 +278,6 @@ export const productsData: Product[] = [
       {
         id: 2,
         name: 'Combo',
-      },
-    ],
-  },
-  {
-    id: 21,
-    name: 'Imperial de goma int.termico blanco',
-    original_price: 17500,
-    discount_price: 12990,
-    image:
-      'https://digaloconmatepormayor.com/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-10-at-19.39.38-scaled.jpeg',
-    categories: [
-      {
-        id: 1,
-        name: 'Kit',
       },
     ],
   },

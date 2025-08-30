@@ -84,6 +84,9 @@ const LazyHomePage = withLoadingSpinner(lazy(() => import('src/features/home/Hom
 const LazyCategoryPage = withLoadingSpinner(
   lazy(() => import('src/features/home/FilteredProducts'))
 );
+const LazyProductDetailpage = withLoadingSpinner(
+  lazy(() => import('src/features/product/ProductDetail'))
+);
 
 const ROUTES: RouteObject[] = [
   {
@@ -110,6 +113,14 @@ const ROUTES: RouteObject[] = [
             element: <LazyCategoryPage />,
           },
         ],
+      },
+      {
+        path: 'product/:id',
+        element: (
+          <DashboardLayout>
+            <LazyProductDetailpage />
+          </DashboardLayout>
+        ),
       },
       {
         element: <CompactLayout />,

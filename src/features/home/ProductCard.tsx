@@ -4,6 +4,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AddIcon from '@mui/icons-material/Add';
 import { Product } from 'src/components/product/types';
 import formatCurrency from 'src/utils/formatCurrency';
+import { Link } from 'react-router-dom';
 
 interface ProductCardProps {
   product: Product;
@@ -29,7 +30,14 @@ function ProductCard({ product }: ProductCardProps) {
           sx={{ width: '80px', height: '80px', mr: 2 }}
         />
         <CardContent sx={{ flexGrow: 1, p: 1 }}>
-          <Typography variant="body1">{product.name}</Typography>
+          <Typography
+            variant="body1"
+            component={Link}
+            to={`/product/${product.id}`}
+            sx={{ textDecoration: 'none', color: 'common.black', cursor: 'pointer' }}
+          >
+            {product.name}
+          </Typography>
           <Typography variant="body2">
             <Box
               component="span"
