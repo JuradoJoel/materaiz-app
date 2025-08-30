@@ -112,15 +112,11 @@ const ROUTES: RouteObject[] = [
             path: 'category/:id',
             element: <LazyCategoryPage />,
           },
+          {
+            path: 'product/:id',
+            element: <LazyProductDetailpage />,
+          },
         ],
-      },
-      {
-        path: 'product/:id',
-        element: (
-          <DashboardLayout>
-            <LazyProductDetailpage />
-          </DashboardLayout>
-        ),
       },
       {
         element: <CompactLayout />,

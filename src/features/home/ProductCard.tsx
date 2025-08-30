@@ -4,13 +4,16 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AddIcon from '@mui/icons-material/Add';
 import { Product } from 'src/components/product/types';
 import formatCurrency from 'src/utils/formatCurrency';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+import { PATHS } from 'src/routes/paths';
 
 interface ProductCardProps {
   product: Product;
 }
 
 function ProductCard({ product }: ProductCardProps) {
+  const navigate = useNavigate();
   return (
     <>
       <Card
@@ -32,8 +35,7 @@ function ProductCard({ product }: ProductCardProps) {
         <CardContent sx={{ flexGrow: 1, p: 1 }}>
           <Typography
             variant="body1"
-            component={Link}
-            to={`/product/${product.id}`}
+            onClick={() => navigate(PATHS.exploreProducts.byProduct(product.id))}
             sx={{ textDecoration: 'none', color: 'common.black', cursor: 'pointer' }}
           >
             {product.name}

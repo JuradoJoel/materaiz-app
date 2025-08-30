@@ -12,6 +12,7 @@ export const PATHS = {
   exploreProducts: {
     root: '/explore-products',
     byCategory: (id: number | string) => `/explore-products/category/${id}`,
+    byProduct: (id: number | string) => `/explore-products/product/${id}`,
   },
   auth: {
     root: '/auth',
