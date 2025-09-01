@@ -5,7 +5,6 @@ import AddIcon from '@mui/icons-material/Add';
 import { Product } from 'src/components/product/types';
 import formatCurrency from 'src/utils/formatCurrency';
 import { useNavigate } from 'react-router-dom';
-
 import { PATHS } from 'src/routes/paths';
 
 interface ProductCardProps {
@@ -63,6 +62,7 @@ function ProductCard({ product }: ProductCardProps) {
         </Box>
         <Button
           variant="contained"
+          onClick={() => navigate(PATHS.cart.root)}
           sx={{ bgcolor: 'secondary.main', '&:hover': { bgcolor: 'secondary.dark' } }}
         >
           <ShoppingCartIcon />
