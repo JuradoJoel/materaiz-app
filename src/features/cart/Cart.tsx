@@ -1,21 +1,19 @@
 import {
   Box,
-  Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
   Button,
-  RadioGroup,
+  Card,
+  CardContent,
+  Divider,
   FormControlLabel,
-  Radio,
+  Grid,
   IconButton,
+  Radio,
+  RadioGroup,
+  Typography,
 } from '@mui/material';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { productsData } from 'src/utils/mock_products';
-import { CloseIcon } from 'src/theme/overrides/CustomIcons';
 
 const Cart = () => {
   const cartProducts = [
@@ -30,114 +28,99 @@ const Cart = () => {
   );
 
   return (
-    <Box sx={{ padding: 5 }}>
-      <Typography variant="h6" gutterBottom>
-        Carrito
-      </Typography>
-      {/* Alerta hardcodeada */}
-      <Typography color="error" sx={{ mb: 2 }}>
-        El mínimo de compra es de $20.000 para finalizar tu pedido. El total de tu pedido actual es
-        de ${totalAmount}.
-      </Typography>
+    <Box sx={{ padding: 3, maxWidth: 1200, margin: '0 auto' }}>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={8}>
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+            <Typography variant="h6" sx={{ ml: 1 }}>
+              Carrito
+            </Typography>
+          </Box>
 
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell> </TableCell>
-            <TableCell>Producto</TableCell>
-            <TableCell align="right">Precio</TableCell>
-            <TableCell align="right">Cantidad</TableCell>
-            <TableCell align="right">Subtotal</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {cartProducts.map((item, index) => {
-            const subtotal = item.product.original_price * item.quantity;
-            return (
-              <TableRow
-                key={index}
-                sx={{
-                  '& td': {
-                    borderBottom: '1px solid #e0e0e0',
-                  },
-                }}
-              >
-                <TableCell align="right">
-                  <IconButton
+          {cartProducts.map((item, index) => (
+            <Card key={index} sx={{ mb: 2, p: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <img
+                  src={item.product.image}
+                  alt={item.product.name}
+                  style={{
+                    width: 80,
+                    height: 80,
+                    objectFit: 'cover',
+                    borderRadius: 10,
+                  }}
+                />
+
+                <Box sx={{ flex: 1 }}>
+                  <Typography
+                    variant="body1"
                     sx={{
-                      bgcolor: 'error.lighter',
-                      color: 'white',
-                      '&:hover': {
-                        bgcolor: 'error.light',
-                      },
+                      fontWeight: 500,
+                      mb: 1,
+                      textTransform: 'none',
                     }}
                   >
-                    <CloseIcon fontSize="small" />
-                  </IconButton>
-                </TableCell>
-                <TableCell>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <img
-                      src={item.product.image}
-                      alt={item.product.name}
-                      style={{ width: 50, marginRight: 10 }}
-                    />
-                    <Typography sx={{ textTransform: 'uppercase' }}>{item.product.name}</Typography>
-                  </Box>
-                </TableCell>
-                <TableCell align="right">${item.product.original_price}</TableCell>
-                <TableCell align="right">
-                  <IconButton sx={{ bgcolor: 'grey.300', margin: 1 }}>
-                    <RemoveIcon />
-                  </IconButton>
-                  {item.quantity}
-                  <IconButton sx={{ bgcolor: 'grey.300', margin: 1 }}>
-                    <AddIcon />
-                  </IconButton>
-                </TableCell>
+                    {item.product.name}
+                  </Typography>
+                  <Typography
+                    color="error"
+                    variant="body2"
+                    sx={{ cursor: 'pointer' }}
+                    onClick={() => {}}
+                  >
+                    Eliminar
+                  </Typography>
+                </Box>
 
-                <TableCell align="right">${subtotal.toFixed(2)}</TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-        <Button variant="contained" color="primary">
-          Actualizar carrito
-        </Button>
-      </Box>
+                <Box sx={{ textAlign: 'center', minWidth: 120 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    ${item.product.original_price.toLocaleString()}
+                  </Typography>
+                </Box>
 
-      <Box sx={{ mt: 2, textAlign: 'right', width: '50%' }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell colSpan={4}>
-                <Typography variant="h6">Totales del carrito</Typography>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow
-              sx={{
-                '& td': {
-                  borderBottom: '1px solid #e0e0e0',
-                },
-              }}
-            >
-              <TableCell>Subtotal</TableCell>
-              <TableCell align="right">${totalAmount}</TableCell>
-              <TableCell colSpan={2} />
-            </TableRow>
-            <TableRow
-              sx={{
-                '& td': {
-                  borderBottom: '1px solid #e0e0e0',
-                },
-              }}
-            >
-              <TableCell>Envío</TableCell>
-              <TableCell colSpan={3} align="left">
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <IconButton
+                    size="small"
+                    sx={{
+                      bgcolor: 'grey.200',
+                      '&:hover': { bgcolor: 'grey.300' },
+                    }}
+                  >
+                    <RemoveIcon fontSize="small" />
+                  </IconButton>
+                  <Typography sx={{ minWidth: 30, textAlign: 'center' }}>
+                    {item.quantity}
+                  </Typography>
+                  <IconButton
+                    size="small"
+                    sx={{
+                      bgcolor: 'grey.200',
+                      '&:hover': { bgcolor: 'grey.300' },
+                    }}
+                  >
+                    <AddIcon fontSize="small" />
+                  </IconButton>
+                </Box>
+              </Box>
+            </Card>
+          ))}
+        </Grid>
+
+        {/* resumen */}
+        <Grid item xs={12} md={4}>
+          <Card sx={{ position: 'sticky', top: 20 }}>
+            <CardContent>
+              <Typography variant="h6" sx={{ mb: 2 }}>
+                Resumen de compra
+              </Typography>
+
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                <Typography>Productos ({cartProducts.length})</Typography>
+                <Typography>${totalAmount.toLocaleString()}</Typography>
+              </Box>
+
+              <Box sx={{ mb: 2 }}>
+                <Typography sx={{ mb: 1 }}>Envío:</Typography>
                 <RadioGroup name="shipping" defaultValue="pickup">
                   <FormControlLabel
                     value="pickup"
@@ -151,26 +134,34 @@ const Cart = () => {
                   />
                   <FormControlLabel value="store" control={<Radio />} label="Retiro por local" />
                 </RadioGroup>
-              </TableCell>
-            </TableRow>
-            <TableRow
-              sx={{
-                '& td': {
-                  borderBottom: '1px solid #e0e0e0',
-                },
-              }}
-            >
-              <TableCell>Total</TableCell>
-              <TableCell align="right">${totalAmount}</TableCell>
-              <TableCell colSpan={2} align="right">
-                <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-                  Finalizar compra
-                </Button>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </Box>
+              </Box>
+
+              <Divider sx={{ my: 2 }} />
+
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
+                <Typography variant="h6">Total</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                  ${totalAmount.toLocaleString()}
+                </Typography>
+              </Box>
+
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                size="large"
+                sx={{
+                  py: 1.5,
+                  fontSize: '1.1rem',
+                  fontWeight: 'bold',
+                }}
+              >
+                Finalizar compra
+              </Button>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
