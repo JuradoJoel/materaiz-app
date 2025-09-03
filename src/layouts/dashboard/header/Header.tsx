@@ -8,7 +8,6 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Stack,
   Toolbar,
   Typography,
 } from '@mui/material';
@@ -40,9 +39,10 @@ type Props = {
   onOpenNav: VoidFunction;
   onClose: VoidFunction;
   open: boolean;
+  onOpenCart: VoidFunction;
 };
 
-export default function Header({ onOpenNav, onClose, open }: Props) {
+export default function Header({ onOpenNav, onClose, open, onOpenCart }: Props) {
   const theme = useTheme();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -126,7 +126,7 @@ export default function Header({ onOpenNav, onClose, open }: Props) {
           )}
           <Box display="flex" justifyContent="end" alignItems="center">
             <Searchbar />
-            <IconButton color="inherit">
+            <IconButton color="inherit" onClick={onOpenCart}>
               <Iconify icon="material-symbols:shopping-cart" color="white" width={32} height={32} />
             </IconButton>
             {!isDesktop && (
