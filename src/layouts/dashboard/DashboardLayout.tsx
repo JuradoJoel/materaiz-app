@@ -14,6 +14,7 @@ import NavMini from './nav/NavMini';
 import NavVertical from './nav/NavVertical';
 import Footer from './footer';
 import { HEADER } from 'src/config';
+import NavCartPanel from './nav/NavCartPanel';
 
 // ----------------------------------------------------------------------
 
@@ -27,6 +28,10 @@ export default function DashboardLayout({ children }: { children?: React.ReactNo
   const isNavHorizontal = themeLayout === 'horizontal';
 
   const isNavMini = themeLayout === 'mini';
+  const [openCart, setOpenCart] = useState(false);
+  const handleOpenCart = () => setOpenCart(true);
+  const handleCloseCart = () => setOpenCart(false);
+  const renderCart = <NavCartPanel openNavCart={openCart} onCloseNavCart={handleCloseCart} />;
 
   const handleOpen = () => {
     setOpen(true);
@@ -41,7 +46,12 @@ export default function DashboardLayout({ children }: { children?: React.ReactNo
   if (isNavHorizontal) {
     return (
       <>
-        <Header onOpenNav={handleOpen} onClose={handleClose} open={open} />
+        <Header
+          onOpenNav={handleOpen}
+          onClose={handleClose}
+          open={open}
+          onOpenCart={handleOpenCart}
+        />
 
         {isDesktop ? <NavHorizontal /> : renderNavVertical}
 
@@ -53,7 +63,12 @@ export default function DashboardLayout({ children }: { children?: React.ReactNo
   if (isNavMini) {
     return (
       <>
-        <Header onOpenNav={handleOpen} onClose={handleClose} open={open} />
+        <Header
+          onOpenNav={handleOpen}
+          onClose={handleClose}
+          open={open}
+          onOpenCart={handleOpenCart}
+        />
 
         <Box
           sx={{
@@ -70,7 +85,12 @@ export default function DashboardLayout({ children }: { children?: React.ReactNo
 
   return (
     <Box>
-      <Header onOpenNav={handleOpen} onClose={handleClose} open={open} />
+      <Header
+        onOpenNav={handleOpen}
+        onClose={handleClose}
+        open={open}
+        onOpenCart={handleOpenCart}
+      />
 
       <Box
         sx={{
@@ -82,6 +102,7 @@ export default function DashboardLayout({ children }: { children?: React.ReactNo
           {children || <Outlet />}
         </Main>
       </Box>
+      {renderCart}
       <Footer />
     </Box>
   );
