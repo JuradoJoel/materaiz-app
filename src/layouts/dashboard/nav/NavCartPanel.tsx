@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
-import { Box, Drawer, IconButton, Stack } from '@mui/material';
+import { Box, Container, Drawer, IconButton, Stack } from '@mui/material';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
 // config
@@ -10,8 +10,10 @@ import { NAV } from '../../../config';
 import Logo from '../../../components/logo';
 import Scrollbar from '../../../components/scrollbar';
 import Iconify from 'src/components/iconify';
+import ShoppingCart from 'src/components/shoppingCart/ShoppingCart';
+import CartSummary from 'src/components/cartSummary/CartSummary';
 //
-import { NavCartContent } from './NavCartContent';
+import { productsData } from 'src/utils/mock_products';
 
 type Props = {
   openNavCart: boolean;
@@ -19,6 +21,15 @@ type Props = {
 };
 
 export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
+  const cartProducts = [
+    { product: productsData[0], quantity: 1 },
+    { product: productsData[1], quantity: 2 },
+    { product: productsData[2], quantity: 3 },
+  ];
+  const totalAmount = cartProducts.reduce(
+    (total, item) => total + item.product.original_price * item.quantity,
+    0
+  );
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
@@ -59,9 +70,12 @@ export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
           <Iconify icon="material-symbols:close" />
         </IconButton>
       </Stack>
-      <Box>
-        <NavCartContent onCloseNavCart={onCloseNavCart} />
-      </Box>
+      <Container>
+        {cartProducts.map((item, index) => (
+          <ShoppingCart key={index} item={item} />
+        ))}
+        <CartSummary cartProducts={cartProducts} totalAmount={totalAmount} />
+      </Container>
     </Scrollbar>
   );
 
