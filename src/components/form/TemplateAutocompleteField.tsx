@@ -17,8 +17,13 @@ export type TemplateAutocompleteFieldProps<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > = BaseFieldProps<TFieldValues> &
   Omit<
-    AutocompleteProps<FieldPathValue<TFieldValues, TName>, false, false, false>,
-    'options' | 'renderInput'
+    AutocompleteProps<
+      { value: FieldPathValue<TFieldValues, TName>; label: ReactNode },
+      false,
+      false,
+      false
+    >,
+    'options' | 'renderInput' | 'renderOption'
   > & {
     options: { value: FieldPathValue<TFieldValues, TName>; label: ReactNode }[];
     field: {
@@ -53,7 +58,10 @@ export type TemplateAutocompleteFieldProps<
  *  />
  */
 
-export const TemplateAutocompleteField = <TValue extends FieldValues>({
+export const TemplateAutocompleteField = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
   label,
   colSpan,
   options,
@@ -61,9 +69,22 @@ export const TemplateAutocompleteField = <TValue extends FieldValues>({
   floatingLabel = false,
   field,
   fieldState,
+  formState,
   ...autocompleteProps
-}: TemplateAutocompleteFieldProps<TValue>) => {
+}: TemplateAutocompleteFieldProps<TFieldValues, TName>) => {
   const id = useId();
+
+  // Tipo para las opciones del autocomplete
+  type OptionType = { value: FieldPathValue<TFieldValues, TName>; label: ReactNode };
+
+  // Type guard para verificar si un objeto tiene la propiedad 'value'
+  const hasValueProperty = (obj: any): obj is OptionType =>
+    typeof obj === 'object' && obj !== null && 'value' in obj && typeof obj.value !== 'undefined';
+
+  // Type guard para verificar si es un valor primitivo
+  const isPrimitiveValue = (obj: any): obj is FieldPathValue<TFieldValues, TName> =>
+    typeof obj !== 'object' || obj === null;
+
   return (
     <GridItem colSpan={colSpan}>
       {!floatingLabel && (
@@ -77,11 +98,35 @@ export const TemplateAutocompleteField = <TValue extends FieldValues>({
           {...field}
           {...autocompleteProps}
           options={options}
-          getOptionLabel={(option) => {
+          getOptionLabel={(
+            option: FieldPathValue<TFieldValues, TName> | OptionType | null
+          ): string => {
+            if (option === null) return '';
             if (typeof option === 'string') return option;
-            return options.find((x) => x.value === option)?.label || '';
+            if (typeof option === 'object' && option !== null) {
+              const optionAny = option as any;
+              if (typeof optionAny.value !== 'undefined') {
+                const foundOption = options.find((x) => x.value === optionAny.value);
+                return foundOption ? String(foundOption.label) : '';
+              }
+            }
+            const foundOption = options.find((x) => x.value === option);
+            return foundOption ? String(foundOption.label) : '';
           }}
-          isOptionEqualToValue={(option, value) => option.value === value}
+          isOptionEqualToValue={(
+            option: OptionType,
+            value: FieldPathValue<TFieldValues, TName> | OptionType | null
+          ): boolean => {
+            if (value === null) return false;
+            if (typeof value === 'string') return option.value === value;
+            if (typeof value === 'object' && value !== null) {
+              const valueAny = value as any;
+              if (typeof valueAny.value !== 'undefined') {
+                return option.value === valueAny.value;
+              }
+            }
+            return option.value === value;
+          }}
           onChange={(event, newValue) => {
             field.onChange(newValue);
           }}
