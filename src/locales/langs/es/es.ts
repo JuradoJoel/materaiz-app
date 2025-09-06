@@ -15,6 +15,7 @@ import register from './register.json';
 import error404 from './error404.json';
 import not_allowed from './not_allowed.json';
 import field from './field.json';
+import homePage from './homePage.json';
 
 const es = {
   demo: {
@@ -88,6 +89,7 @@ const es = {
   field,
   token_reset_password,
   success_reset_password,
+  homePage,
 };
 
 export default es;

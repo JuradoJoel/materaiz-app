@@ -1,5 +1,5 @@
 // routes
-import LogoIcon from 'src/assets/logo2.png';
+import LogoIcon from 'src/assets/mate_raiz_logo.jpg';
 import { PATHS } from './routes/paths';
 
 // API
@@ -30,16 +30,20 @@ export const AUTH0_API = {
 export const MAPBOX_API = import.meta.env.VITE_MAPBOX_API;
 
 // ROOT PATH AFTER LOGIN SUCCESSFUL
-export const PATH_AFTER_LOGIN = PATHS.dashboard.adminUsers.root;
+export const PATH_AFTER_LOGIN = PATHS.home.root;
 
 // LAYOUT
 // ----------------------------------------------------------------------
 
 export const HEADER = {
   H_MOBILE: 64,
-  H_MAIN_DESKTOP: 88,
-  H_DASHBOARD_DESKTOP: 92,
-  H_DASHBOARD_DESKTOP_OFFSET: 92 - 32,
+  H_MAIN_DESKTOP: 100,
+  H_DASHBOARD_DESKTOP: 170,
+  H_DASHBOARD_DESKTOP_OFFSET: 250 - 150,
+};
+
+export const FOOTER = {
+  FOOTER_HEIGHT: 220,
 };
 
 export const NAV = {
@@ -67,4 +71,4 @@ export const ENABLED_FEATURES = {
 
 export const LOGO = LogoIcon;
 
-export const APP_NAME = 'Minimal template';
+export const APP_NAME = 'Mate Raiz';

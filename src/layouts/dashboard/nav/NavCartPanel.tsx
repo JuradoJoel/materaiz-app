@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
-import { Box, Drawer, IconButton, Stack } from '@mui/material';
+import { Box, Container, Drawer, IconButton, Stack } from '@mui/material';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
 // config
@@ -9,25 +9,34 @@ import { NAV } from '../../../config';
 // components
 import Logo from '../../../components/logo';
 import Scrollbar from '../../../components/scrollbar';
-//
 import Iconify from 'src/components/iconify';
-import { NavContent } from './NavContent';
-
-// ----------------------------------------------------------------------
+import ShoppingCart from 'src/components/shoppingCart/ShoppingCart';
+import CartSummary from 'src/components/cartSummary/CartSummary';
+//
+import { productsData } from 'src/utils/mock_products';
 
 type Props = {
-  openNav: boolean;
-  onCloseNav: VoidFunction;
+  openNavCart: boolean;
+  onCloseNavCart: VoidFunction;
 };
 
-export default function NavVertical({ openNav, onCloseNav }: Props) {
+export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
+  const cartProducts = [
+    { product: productsData[0], quantity: 1 },
+    { product: productsData[1], quantity: 2 },
+    { product: productsData[2], quantity: 3 },
+  ];
+  const totalAmount = cartProducts.reduce(
+    (total, item) => total + item.product.original_price * item.quantity,
+    0
+  );
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
 
   useEffect(() => {
-    if (openNav) {
-      onCloseNav();
+    if (openNavCart) {
+      onCloseNavCart();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
@@ -57,19 +66,16 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
         }}
       >
         <Logo />
-        {!isDesktop ? (
-          <IconButton
-            onClick={() => (openNav ? onCloseNav() : null)}
-            sx={{ color: 'text.primary' }}
-          >
-            <Iconify icon={openNav ? 'material-symbols:close' : 'eva:menu-fill'} />
-          </IconButton>
-        ) : null}
+        <IconButton onClick={onCloseNavCart} sx={{ color: 'text.primary' }}>
+          <Iconify icon="material-symbols:close" />
+        </IconButton>
       </Stack>
-      <Box mt={2}>
-        <NavContent onClose={onCloseNav} />
-      </Box>
-      {/*<NavDocs />*/}
+      <Container>
+        {cartProducts.map((item, index) => (
+          <ShoppingCart key={index} item={item} />
+        ))}
+        <CartSummary cartProducts={cartProducts} totalAmount={totalAmount} />
+      </Container>
     </Scrollbar>
   );
 
@@ -81,9 +87,9 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
       }}
     >
       <Drawer
-        anchor={isDesktop ? 'left' : 'top'}
-        open={openNav}
-        onClose={onCloseNav}
+        anchor={isDesktop ? 'right' : 'top'}
+        open={openNavCart}
+        onClose={onCloseNavCart}
         ModalProps={{
           keepMounted: true,
         }}

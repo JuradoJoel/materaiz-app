@@ -12,10 +12,13 @@ import Main from './Main';
 import NavHorizontal from './nav/NavHorizontal';
 import NavMini from './nav/NavMini';
 import NavVertical from './nav/NavVertical';
+import Footer from './footer';
+import { HEADER } from 'src/config';
+import NavCartPanel from './nav/NavCartPanel';
 
 // ----------------------------------------------------------------------
 
-export default function DashboardLayout() {
+export default function DashboardLayout({ children }: { children?: React.ReactNode }) {
   const { themeLayout } = useSettingsContext();
 
   const isDesktop = useResponsive('up', 'lg');
@@ -25,6 +28,10 @@ export default function DashboardLayout() {
   const isNavHorizontal = themeLayout === 'horizontal';
 
   const isNavMini = themeLayout === 'mini';
+  const [openCart, setOpenCart] = useState(false);
+  const handleOpenCart = () => setOpenCart(true);
+  const handleCloseCart = () => setOpenCart(false);
+  const renderCart = <NavCartPanel openNavCart={openCart} onCloseNavCart={handleCloseCart} />;
 
   const handleOpen = () => {
     setOpen(true);
@@ -39,13 +46,16 @@ export default function DashboardLayout() {
   if (isNavHorizontal) {
     return (
       <>
-        <Header onOpenNav={handleOpen} />
+        <Header
+          onOpenNav={handleOpen}
+          onClose={handleClose}
+          open={open}
+          onOpenCart={handleOpenCart}
+        />
 
         {isDesktop ? <NavHorizontal /> : renderNavVertical}
 
-        <Main>
-          <Outlet />
-        </Main>
+        <Main>{children || <Outlet />}</Main>
       </>
     );
   }
@@ -53,40 +63,47 @@ export default function DashboardLayout() {
   if (isNavMini) {
     return (
       <>
-        <Header onOpenNav={handleOpen} />
+        <Header
+          onOpenNav={handleOpen}
+          onClose={handleClose}
+          open={open}
+          onOpenCart={handleOpenCart}
+        />
 
         <Box
           sx={{
             display: { lg: 'flex' },
-            minHeight: { lg: 1 },
           }}
         >
           {isDesktop ? <NavMini /> : renderNavVertical}
-
-          <Main>
-            <Outlet />
-          </Main>
+          <Main>{children || <Outlet />}</Main>
         </Box>
+        <Footer />
       </>
     );
   }
 
   return (
-    <>
-      <Header onOpenNav={handleOpen} />
+    <Box>
+      <Header
+        onOpenNav={handleOpen}
+        onClose={handleClose}
+        open={open}
+        onOpenCart={handleOpenCart}
+      />
 
       <Box
         sx={{
           display: { lg: 'flex' },
-          minHeight: { lg: 1 },
         }}
       >
         {renderNavVertical}
-
-        <Main>
-          <Outlet />
+        <Main sx={{ px: 0, pt: `${isDesktop ? HEADER.H_DASHBOARD_DESKTOP : HEADER.H_MOBILE}px` }}>
+          {children || <Outlet />}
         </Main>
       </Box>
-    </>
+      {renderCart}
+      <Footer />
+    </Box>
   );
 }
