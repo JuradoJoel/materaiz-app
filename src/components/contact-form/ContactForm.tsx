@@ -1,37 +1,104 @@
-import { Box, Button, Container, Grid, TextField, Typography } from '@mui/material';
+import * as Yup from 'yup';
 
-const ContactForm = () => (
-  <Box sx={{ py: 4, mt: 6, mb: 6 }}>
-    <Container maxWidth="md">
-      <Typography variant="h5" sx={{ textAlign: 'center', mb: 3 }}>
-        Envíanos tu consulta
-      </Typography>
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Controller, useForm } from 'react-hook-form';
+// @mui
+import { TemplateTextField } from 'src/components/form';
+import { TemplateForm } from 'src/components/form/TemplateForm';
+import {
+  TemplateFormActions,
+  TemplateFormSubmitButton,
+} from 'src/components/form/TemplateFormActions';
+import { Box, Container, Typography } from '@mui/material';
 
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
-          <TextField fullWidth label="Nombre" variant="outlined" />
-        </Grid>
+export type ContactFormType = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  message: string;
+};
 
-        <Grid item xs={12} md={6}>
-          <TextField fullWidth label="Apellido" variant="outlined" />
-        </Grid>
+const ContactFormSchema: Yup.ObjectSchema<ContactFormType> = Yup.object().shape({
+  firstName: Yup.string().required('Nombre es requerido'),
+  lastName: Yup.string().required('Apellido es requerido'),
+  email: Yup.string().required('Email es requerido').email().email('Debe ser un email válido'),
+  message: Yup.string()
+    .required('Es necesario escribir su consulta')
+    .min(5, 'La consulta es muy corta'),
+});
 
-        <Grid item xs={12}>
-          <TextField fullWidth label="Email" type="email" variant="outlined" />
-        </Grid>
+const defaultValues = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  message: '',
+};
 
-        <Grid item xs={12}>
-          <TextField fullWidth label="Consulta" multiline rows={4} variant="outlined" />
-        </Grid>
+type Props = {
+  onSubmit?: (value: ContactFormType) => Promise<any>; // onSubmit es opcional para no hacer modificaciones en HomePage.tsx
+};
 
-        <Grid item xs={12} sx={{ textAlign: 'center', mt: 2 }}>
-          <Button variant="contained" size="large">
-            Enviar
-          </Button>
-        </Grid>
-      </Grid>
-    </Container>
-  </Box>
-);
+export default function ContactForm({ onSubmit }: Props) {
+  const hf = useForm<ContactFormType>({
+    resolver: yupResolver(ContactFormSchema),
+    defaultValues,
+    mode: 'onBlur',
+  });
+  const handleSubmit = async (values: ContactFormType) => {
+    if (onSubmit) {
+      await onSubmit(values);
+    } else {
+      console.log('Consulta enviada (mock):', values);
+    }
+  };
+  return (
+    <Box sx={{ py: 4, mt: 6, mb: 6 }}>
+      <Container maxWidth="md">
+        <Typography variant="h5" sx={{ textAlign: 'center', mb: 3 }}>
+          Envíanos tu consulta
+        </Typography>
+        <TemplateForm hf={hf} onSubmit={handleSubmit}>
+          <Controller
+            name="firstName"
+            control={hf.control}
+            render={(field) => <TemplateTextField {...field} label="Nombre" placeholder="Carlos" />}
+          />
 
-export default ContactForm;
+          <Controller
+            name="lastName"
+            control={hf.control}
+            render={(field) => (
+              <TemplateTextField {...field} label="Apellido" placeholder="Pérez" />
+            )}
+          />
+
+          <Controller
+            name="email"
+            control={hf.control}
+            render={(field) => (
+              <TemplateTextField {...field} label="Email" placeholder="correo@ejemplo.com" />
+            )}
+          />
+
+          <Controller
+            name="message"
+            control={hf.control}
+            render={(field) => (
+              <TemplateTextField
+                {...field}
+                label="Consulta"
+                placeholder="Escribe tu consulta..."
+                multiline
+                rows={4}
+              />
+            )}
+          />
+
+          <TemplateFormActions>
+            <TemplateFormSubmitButton>Enviar</TemplateFormSubmitButton>
+          </TemplateFormActions>
+        </TemplateForm>
+      </Container>
+    </Box>
+  );
+}
