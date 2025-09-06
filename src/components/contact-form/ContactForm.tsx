@@ -42,7 +42,7 @@ export default function ContactForm({ onSubmit }: Props) {
   const hf = useForm<ContactFormType>({
     resolver: yupResolver(ContactFormSchema),
     defaultValues,
-    mode: 'onBlur',
+    mode: 'onChange',
   });
   const handleSubmit = async (values: ContactFormType) => {
     if (onSubmit) {
