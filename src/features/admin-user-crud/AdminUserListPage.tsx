@@ -28,7 +28,7 @@ export function AdminUserListPage() {
           links={[{ name: 'Listado' }]}
           action={
             <Button
-              to={PATHS.dashboard.adminUsers.create}
+              to={PATHS.home.root}
               component={RouterLink}
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
