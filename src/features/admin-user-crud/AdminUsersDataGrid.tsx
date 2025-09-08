@@ -120,7 +120,7 @@ export const AdminUsersDataGrid: React.FC<Props> = ({ data, isLoading, onDelete 
           Eliminar
         </MenuItem>
 
-        <MenuItem component={Link} to={PATHS.dashboard.adminUsers.edit(selectedIdRef.current!)}>
+        <MenuItem component={Link} to={PATHS.home.root}>
           <Iconify icon="eva:edit-fill" />
           Editar
         </MenuItem>

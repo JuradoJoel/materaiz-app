@@ -30,13 +30,13 @@ export const AdminUserEditPage = () => {
   const handlePasswordChange = async (values: ChangePasswordFormType) => {
     await changePasswordMutation.mutateAsync({ ...values, id: Number(params.id) });
     enqueueSnackbar({ message: 'Password Changed!' });
-    navigate(PATHS.dashboard.adminUsers.list);
+    navigate(PATHS.home.root);
   };
 
   const handleUserUpdate = async (values: EditUserFormType) => {
     await editUsuarioMutation.mutateAsync({ ...values, id: Number(params.id) });
     enqueueSnackbar({ message: 'User Updated!' });
-    navigate(PATHS.dashboard.adminUsers.list);
+    navigate(PATHS.home.root);
   };
 
   return (
@@ -48,7 +48,7 @@ export const AdminUserEditPage = () => {
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
           heading="Editar - Administradores"
-          links={[{ name: 'Listado', href: PATHS.dashboard.adminUsers.list }, { name: 'Editar' }]}
+          links={[{ name: 'Listado', href: PATHS.home.root }, { name: 'Editar' }]}
         />
 
         <Tabs value={currentTab} onChange={(event, newValue) => setCurrentTab(newValue)}>

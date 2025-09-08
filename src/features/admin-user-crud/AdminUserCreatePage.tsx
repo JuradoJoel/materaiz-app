@@ -18,7 +18,7 @@ export const AdminUserCreatePage = () => {
   const handleSubmit = async (values: CreateUserFormType) => {
     await createUsuarioMutation.mutateAsync(values);
     enqueueSnackbar({ message: 'User created!' });
-    navigate(PATHS.dashboard.adminUsers.list);
+    navigate(PATHS.home.root);
   };
 
   return (
@@ -30,7 +30,7 @@ export const AdminUserCreatePage = () => {
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
           heading="Alta - Administradores"
-          links={[{ name: 'Listado', href: PATHS.dashboard.adminUsers.list }, { name: 'Alta' }]}
+          links={[{ name: 'Listado', href: PATHS.home.root }, { name: 'Alta' }]}
         />
 
         <Card sx={{ p: 3 }}>
