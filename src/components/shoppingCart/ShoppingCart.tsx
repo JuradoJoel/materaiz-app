@@ -11,6 +11,8 @@ const ShoppingCart = ({ item }: { item: any }) => (
           alt={item.product.name}
           style={{
             width: '100%',
+            maxWidth: 80,
+            maxHeight: 80,
             aspectRatio: 1,
             objectFit: 'cover',
             borderRadius: 10,
