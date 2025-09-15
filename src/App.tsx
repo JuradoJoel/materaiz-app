@@ -15,6 +15,7 @@ import ScrollToTop from './components/scroll-to-top';
 import { ThemeSettings } from './components/settings';
 import SnackbarProvider from './components/snackbar/SnackbarProvider';
 import { AuthProvider } from './features/auth/AuthContext';
+import { CartProvider } from 'src/features/product/CartContext';
 import SpanishLang from './lang/es.json';
 moment.locale('es');
 // ----------------------------------------------------------------------
@@ -40,7 +41,9 @@ export default function App() {
                     }}
                   >
                     <ScrollToTop />
-                    <Outlet />
+                    <CartProvider>
+                      <Outlet />
+                    </CartProvider>
                   </ConfirmActionProvider>
                 </SnackbarProvider>
               </ThemeLocalization>
