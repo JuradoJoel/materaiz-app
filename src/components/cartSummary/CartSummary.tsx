@@ -9,6 +9,7 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material';
+import formatCurrency from 'src/utils/formatCurrency';
 
 interface CartSummaryProps {
   cartProducts: any[];
@@ -24,7 +25,7 @@ const CartSummary = ({ cartProducts, totalAmount }: CartSummaryProps) => (
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
         <Typography>Productos ({cartProducts.length})</Typography>
-        <Typography>${totalAmount.toLocaleString()}</Typography>
+        <Typography>{formatCurrency(totalAmount)}</Typography>
       </Box>
 
       <Box sx={{ mb: 2 }}>
@@ -49,7 +50,7 @@ const CartSummary = ({ cartProducts, totalAmount }: CartSummaryProps) => (
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
         <Typography variant="h6">Total</Typography>
         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-          ${totalAmount.toLocaleString()}
+          {formatCurrency(totalAmount)}
         </Typography>
       </Box>
 

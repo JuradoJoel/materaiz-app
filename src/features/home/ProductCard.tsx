@@ -1,20 +1,13 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Grid,
-  IconButton,
-  Typography,
-} from '@mui/material';
-import RemoveIcon from '@mui/icons-material/Remove';
+import { Badge, Box, Button, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import AddIcon from '@mui/icons-material/Add';
 import { Product } from 'src/components/product/types';
+import { useSnackbar } from 'src/components/snackbar';
 import formatCurrency from 'src/utils/formatCurrency';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from 'src/routes/paths';
+import { useCart } from 'src/features/product/CartContext';
+import AddToCartButton from 'src/components/cart-buttons/AddToCartButton';
+import RemoveFromCartButton from 'src/components/cart-buttons/RemoveFromCartButton';
 
 interface ProductCardProps {
   product: Product;
@@ -22,6 +15,21 @@ interface ProductCardProps {
 
 function ProductCard({ product }: ProductCardProps) {
   const navigate = useNavigate();
+  const { addToCart, cart, updateQuantity } = useCart();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const cartItem = cart.find((item) => item.product.id === product.id);
+  const quantity = cartItem ? cartItem.quantity : 0;
+
+  const handleAddToCart = () => {
+    if (quantity === 0) {
+      addToCart({ product, quantity: 1 });
+      enqueueSnackbar({ message: 'Producto agregado al carrito', variant: 'info' });
+    } else {
+      updateQuantity(product.id, quantity + 1);
+    }
+    navigate(PATHS.cart.root);
+  };
 
   return (
     <Card
@@ -67,23 +75,30 @@ function ProductCard({ product }: ProductCardProps) {
 
         <Grid item xs={12}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton sx={{ bgcolor: 'grey.300' }}>
-              <RemoveIcon />
-            </IconButton>
-            <Typography sx={{ mx: 1 }}>1</Typography>
-            <IconButton sx={{ bgcolor: 'grey.300' }}>
-              <AddIcon />
-            </IconButton>
+            <RemoveFromCartButton
+              productId={product.id}
+              quantity={quantity}
+              sx={{ bgcolor: 'grey.300' }}
+              disabled={quantity === 0}
+            />
+            <Typography sx={{ mx: 1 }}>{quantity}</Typography>
+            <AddToCartButton
+              productId={product.id}
+              quantity={quantity}
+              sx={{ bgcolor: 'grey.300' }}
+            />
             <Button
               variant="contained"
-              onClick={() => navigate(PATHS.cart.root)}
+              onClick={handleAddToCart}
               sx={{
                 bgcolor: 'secondary.main',
                 '&:hover': { bgcolor: 'secondary.dark' },
                 ml: 'auto',
               }}
             >
-              <ShoppingCartIcon />
+              <Badge badgeContent={quantity} color="info">
+                <ShoppingCartIcon />
+              </Badge>
             </Button>
           </Box>
         </Grid>
@@ -118,24 +133,31 @@ function ProductCard({ product }: ProductCardProps) {
           </Typography>
         </CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
-          <IconButton sx={{ bgcolor: 'grey.300' }}>
-            <RemoveIcon />
-          </IconButton>
-          <Typography sx={{ mx: 1 }}>1</Typography>
-          <IconButton sx={{ bgcolor: 'grey.300' }}>
-            <AddIcon />
-          </IconButton>
+          <RemoveFromCartButton
+            productId={product.id}
+            quantity={quantity}
+            sx={{ bgcolor: 'grey.300' }}
+            disabled={quantity === 0}
+          />
+          <Typography sx={{ mx: 1 }}>{quantity}</Typography>
+          <AddToCartButton
+            productId={product.id}
+            quantity={quantity}
+            sx={{ bgcolor: 'grey.300' }}
+          />
         </Box>
         <Button
           variant="contained"
-          onClick={() => navigate(PATHS.cart.root)}
+          onClick={handleAddToCart}
           sx={{
             bgcolor: 'secondary.main',
             '&:hover': { bgcolor: 'secondary.dark' },
             mt: { xs: 1, sm: 0 },
           }}
         >
-          <ShoppingCartIcon />
+          <Badge badgeContent={quantity} color="info">
+            <ShoppingCartIcon />
+          </Badge>
         </Button>
       </Box>
     </Card>
