@@ -4,8 +4,6 @@ import { useLocation } from 'react-router-dom';
 import { Box, Container, Drawer, IconButton, Stack, Typography } from '@mui/material';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
-// config
-import { NAV } from '../../../config';
 // components
 import Logo from '../../../components/logo';
 import Scrollbar from '../../../components/scrollbar';
@@ -101,7 +99,7 @@ export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
         }}
         PaperProps={{
           sx: {
-            width: isDesktop ? NAV.W_DASHBOARD : '100%',
+            width: isDesktop ? 400 : '100%',
             height: '100%',
           },
         }}
