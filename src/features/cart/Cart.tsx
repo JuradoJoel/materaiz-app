@@ -1,14 +1,15 @@
 import { Box, Card, Grid, Typography } from '@mui/material';
 import ShoppingCart from 'src/components/shoppingCart/ShoppingCart';
 import CartSummary from 'src/components/cartSummary/CartSummary';
-import { useCart } from 'src/features/product/CartContext';
+import { useCart } from 'src/components/cart/CartContext';
 import { CartItem } from 'src/components/product/types';
 import formatCurrency from 'src/utils/formatCurrency';
-import AddToCartButton from 'src/components/cart-buttons/AddToCartButton';
-import RemoveFromCartButton from 'src/components/cart-buttons/RemoveFromCartButton';
+import CartQuantityControl from 'src/components/cart/CartQuantityControl';
+import { useSnackbar } from 'src/components/snackbar';
 
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart } = useCart();
+  const { enqueueSnackbar } = useSnackbar();
 
   const totalAmount = cart.reduce(
     (total, item: CartItem) => total + item.product.original_price * item.quantity,
@@ -84,22 +85,23 @@ const Cart = () => {
                       {formatCurrency(item.product.original_price)}
                     </Typography>
                   </Box>
-
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <RemoveFromCartButton
+                    <CartQuantityControl
                       productId={item.product.id}
                       quantity={item.quantity}
                       size="small"
                       sx={{ bgcolor: 'grey.200', '&:hover': { bgcolor: 'grey.300' } }}
-                    />
-                    <Typography sx={{ minWidth: 30, textAlign: 'center' }}>
-                      {item.quantity}
-                    </Typography>
-                    <AddToCartButton
-                      productId={item.product.id}
-                      quantity={item.quantity}
-                      size="small"
-                      sx={{ bgcolor: 'grey.200', '&:hover': { bgcolor: 'grey.300' } }}
+                      onQuantityChange={(newQuantity, action) => {
+                        if (action === 'remove') {
+                          enqueueSnackbar({
+                            message:
+                              newQuantity <= 0
+                                ? 'Se eliminó el producto del carrito'
+                                : `Se eliminó 1 unidad del producto`,
+                            variant: 'info',
+                          });
+                        }
+                      }}
                     />
                   </Box>
                 </Box>

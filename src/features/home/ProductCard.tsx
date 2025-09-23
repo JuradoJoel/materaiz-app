@@ -5,9 +5,8 @@ import { useSnackbar } from 'src/components/snackbar';
 import formatCurrency from 'src/utils/formatCurrency';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from 'src/routes/paths';
-import { useCart } from 'src/features/product/CartContext';
-import AddToCartButton from 'src/components/cart-buttons/AddToCartButton';
-import RemoveFromCartButton from 'src/components/cart-buttons/RemoveFromCartButton';
+import { useCart } from 'src/components/cart/CartContext';
+import CartQuantityControl from 'src/components/cart/CartQuantityControl';
 
 interface ProductCardProps {
   product: Product;
@@ -15,20 +14,15 @@ interface ProductCardProps {
 
 function ProductCard({ product }: ProductCardProps) {
   const navigate = useNavigate();
-  const { addToCart, cart, updateQuantity } = useCart();
+  const { addToCart, cart } = useCart();
   const { enqueueSnackbar } = useSnackbar();
 
   const cartItem = cart.find((item) => item.product.id === product.id);
   const quantity = cartItem ? cartItem.quantity : 0;
 
   const handleAddToCart = () => {
-    if (quantity === 0) {
-      addToCart({ product, quantity: 1 });
-      enqueueSnackbar({ message: 'Producto agregado al carrito', variant: 'info' });
-    } else {
-      updateQuantity(product.id, quantity + 1);
-    }
-    navigate(PATHS.cart.root);
+    addToCart({ product, quantity: 1 });
+    enqueueSnackbar({ message: 'Producto agregado al carrito', variant: 'info' });
   };
 
   return (
@@ -74,32 +68,51 @@ function ProductCard({ product }: ProductCardProps) {
         </Grid>
 
         <Grid item xs={12}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <RemoveFromCartButton
-              productId={product.id}
-              quantity={quantity}
-              sx={{ bgcolor: 'grey.300' }}
-              disabled={quantity === 0}
-            />
-            <Typography sx={{ mx: 1 }}>{quantity}</Typography>
-            <AddToCartButton
-              productId={product.id}
-              quantity={quantity}
-              sx={{ bgcolor: 'grey.300' }}
-            />
-            <Button
-              variant="contained"
-              onClick={handleAddToCart}
-              sx={{
-                bgcolor: 'secondary.main',
-                '&:hover': { bgcolor: 'secondary.dark' },
-                ml: 'auto',
-              }}
-            >
-              <Badge badgeContent={quantity} color="info">
-                <ShoppingCartIcon />
-              </Badge>
-            </Button>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              width: '100%',
+            }}
+          >
+            {quantity === 0 ? (
+              <Button
+                variant="contained"
+                onClick={handleAddToCart}
+                sx={{
+                  bgcolor: 'secondary.main',
+                  '&:hover': { bgcolor: 'secondary.dark' },
+                }}
+              >
+                <Badge badgeContent={quantity} color="info">
+                  <ShoppingCartIcon />
+                </Badge>
+              </Button>
+            ) : (
+              <CartQuantityControl
+                productId={product.id}
+                quantity={quantity}
+                product={quantity === 0 ? product : undefined}
+                sx={{ bgcolor: 'grey.300' }}
+                onQuantityChange={(newQuantity, action) => {
+                  if (action === 'remove') {
+                    enqueueSnackbar({
+                      message:
+                        newQuantity <= 0
+                          ? 'Se eliminó el producto del carrito'
+                          : `Se eliminó 1 unidad del producto`,
+                      variant: 'info',
+                    });
+                  } else if (action === 'add') {
+                    enqueueSnackbar({
+                      message: 'Producto agregado al carrito',
+                      variant: 'info',
+                    });
+                  }
+                }}
+              />
+            )}
           </Box>
         </Grid>
       </Grid>
@@ -133,20 +146,46 @@ function ProductCard({ product }: ProductCardProps) {
           </Typography>
         </CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
-          <RemoveFromCartButton
-            productId={product.id}
-            quantity={quantity}
-            sx={{ bgcolor: 'grey.300' }}
-            disabled={quantity === 0}
-          />
-          <Typography sx={{ mx: 1 }}>{quantity}</Typography>
-          <AddToCartButton
-            productId={product.id}
-            quantity={quantity}
-            sx={{ bgcolor: 'grey.300' }}
-          />
+          {quantity === 0 ? (
+            <Button
+              variant="contained"
+              onClick={handleAddToCart}
+              sx={{
+                bgcolor: 'secondary.main',
+                '&:hover': { bgcolor: 'secondary.dark' },
+                mt: { xs: 1, sm: 0 },
+              }}
+            >
+              <Badge badgeContent={quantity} color="info">
+                <ShoppingCartIcon />
+              </Badge>
+            </Button>
+          ) : (
+            <CartQuantityControl
+              productId={product.id}
+              quantity={quantity}
+              product={quantity === 0 ? product : undefined}
+              sx={{ bgcolor: 'grey.300' }}
+              onQuantityChange={(newQuantity, action) => {
+                if (action === 'remove') {
+                  enqueueSnackbar({
+                    message:
+                      newQuantity <= 0
+                        ? 'Se eliminó el producto del carrito'
+                        : `Se eliminó 1 unidad del producto`,
+                    variant: 'info',
+                  });
+                } else if (action === 'add') {
+                  enqueueSnackbar({
+                    message: 'Producto agregado al carrito',
+                    variant: 'info',
+                  });
+                }
+              }}
+            />
+          )}
         </Box>
-        <Button
+        {/* <Button
           variant="contained"
           onClick={handleAddToCart}
           sx={{
@@ -158,7 +197,7 @@ function ProductCard({ product }: ProductCardProps) {
           <Badge badgeContent={quantity} color="info">
             <ShoppingCartIcon />
           </Badge>
-        </Button>
+        </Button> */}
       </Box>
     </Card>
   );

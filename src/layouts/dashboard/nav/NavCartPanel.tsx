@@ -11,7 +11,7 @@ import Iconify from 'src/components/iconify';
 import ShoppingCart from 'src/components/shoppingCart/ShoppingCart';
 import CartSummary from 'src/components/cartSummary/CartSummary';
 //
-import { useCart } from 'src/features/product/CartContext';
+import { useCart } from 'src/components/cart/CartContext';
 import { CartItem } from 'src/components/product/types';
 
 type Props = {

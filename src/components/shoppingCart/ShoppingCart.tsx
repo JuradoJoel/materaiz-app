@@ -1,8 +1,7 @@
 import { Box, Grid, Typography } from '@mui/material';
 import { CartItem } from 'src/components/product/types';
 import formatCurrency from 'src/utils/formatCurrency';
-import AddToCartButton from 'src/components/cart-buttons/AddToCartButton';
-import RemoveFromCartButton from 'src/components/cart-buttons/RemoveFromCartButton';
+import CartQuantityControl from 'src/components/cart/CartQuantityControl';
 
 interface ShoppingCartProps {
   item: CartItem;
@@ -57,19 +56,13 @@ const ShoppingCart = ({ item, onUpdateQuantity, onRemoveFromCart }: ShoppingCart
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <RemoveFromCartButton
+            <CartQuantityControl
               productId={item.product.id}
               quantity={item.quantity}
               size="small"
               sx={{ bgcolor: 'grey.200', '&:hover': { bgcolor: 'grey.300' } }}
-            />
-            <Typography sx={{ minWidth: 15, textAlign: 'center' }}>{item.quantity}</Typography>
-            <AddToCartButton
-              productId={item.product.id}
-              quantity={item.quantity}
-              size="small"
-              sx={{ bgcolor: 'grey.200', '&:hover': { bgcolor: 'grey.300' } }}
-              onAdd={onUpdateQuantity}
+              onUpdateQuantity={onUpdateQuantity}
+              onRemoveFromCart={onRemoveFromCart}
             />
           </Box>
           <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
