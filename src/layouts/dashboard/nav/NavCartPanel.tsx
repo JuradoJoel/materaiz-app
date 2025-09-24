@@ -73,6 +73,7 @@ export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
             <ShoppingCart
               key={item.product.id}
               item={item}
+              compact
               onUpdateQuantity={updateQuantity}
               onRemoveFromCart={removeFromCart}
             />
