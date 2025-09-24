@@ -1,8 +1,15 @@
-import { Box, Grid, IconButton, Typography } from '@mui/material';
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
+import { Box, Grid, Typography } from '@mui/material';
+import { CartItem } from 'src/components/product/types';
+import formatCurrency from 'src/utils/formatCurrency';
+import CartQuantityControl from 'src/components/cart/CartQuantityControl';
 
-const ShoppingCart = ({ item }: { item: any }) => (
+interface ShoppingCartProps {
+  item: CartItem;
+  onUpdateQuantity: (productId: number, newQuantity: number) => void;
+  onRemoveFromCart: (productId: number) => void;
+}
+
+const ShoppingCart = ({ item, onUpdateQuantity, onRemoveFromCart }: ShoppingCartProps) => (
   <Box>
     <Grid container spacing={2}>
       <Grid item xs={4}>
@@ -37,7 +44,7 @@ const ShoppingCart = ({ item }: { item: any }) => (
           color="error"
           variant="body2"
           sx={{ cursor: 'pointer', mb: 1 }}
-          onClick={() => {}}
+          onClick={() => onRemoveFromCart(item.product.id)}
         >
           Eliminar
         </Typography>
@@ -49,16 +56,17 @@ const ShoppingCart = ({ item }: { item: any }) => (
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <IconButton size="small" sx={{ bgcolor: 'grey.200' }}>
-              <RemoveIcon fontSize="small" />
-            </IconButton>
-            <Typography sx={{ minWidth: 15, textAlign: 'center' }}>{item.quantity}</Typography>
-            <IconButton size="small" sx={{ bgcolor: 'grey.200' }}>
-              <AddIcon fontSize="small" />
-            </IconButton>
+            <CartQuantityControl
+              productId={item.product.id}
+              quantity={item.quantity}
+              size="small"
+              sx={{ bgcolor: 'grey.200', '&:hover': { bgcolor: 'grey.300' } }}
+              onUpdateQuantity={onUpdateQuantity}
+              onRemoveFromCart={onRemoveFromCart}
+            />
           </Box>
           <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            ${item.product.original_price.toLocaleString()}
+            {formatCurrency(item.product.original_price)}
           </Typography>
         </Box>
       </Grid>

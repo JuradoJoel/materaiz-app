@@ -1,20 +1,12 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Grid,
-  IconButton,
-  Typography,
-} from '@mui/material';
-import RemoveIcon from '@mui/icons-material/Remove';
+import { Badge, Box, Button, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import AddIcon from '@mui/icons-material/Add';
 import { Product } from 'src/components/product/types';
+import { useSnackbar } from 'src/components/snackbar';
 import formatCurrency from 'src/utils/formatCurrency';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from 'src/routes/paths';
+import { useCart } from 'src/components/cart/CartContext';
+import CartQuantityControl from 'src/components/cart/CartQuantityControl';
 
 interface ProductCardProps {
   product: Product;
@@ -22,6 +14,16 @@ interface ProductCardProps {
 
 function ProductCard({ product }: ProductCardProps) {
   const navigate = useNavigate();
+  const { addToCart, cart } = useCart();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const cartItem = cart.find((item) => item.product.id === product.id);
+  const quantity = cartItem ? cartItem.quantity : 0;
+
+  const handleAddToCart = () => {
+    addToCart({ product, quantity: 1 });
+    enqueueSnackbar({ message: 'Producto agregado al carrito', variant: 'info' });
+  };
 
   return (
     <Card
@@ -66,25 +68,51 @@ function ProductCard({ product }: ProductCardProps) {
         </Grid>
 
         <Grid item xs={12}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton sx={{ bgcolor: 'grey.300' }}>
-              <RemoveIcon />
-            </IconButton>
-            <Typography sx={{ mx: 1 }}>1</Typography>
-            <IconButton sx={{ bgcolor: 'grey.300' }}>
-              <AddIcon />
-            </IconButton>
-            <Button
-              variant="contained"
-              onClick={() => navigate(PATHS.cart.root)}
-              sx={{
-                bgcolor: 'secondary.main',
-                '&:hover': { bgcolor: 'secondary.dark' },
-                ml: 'auto',
-              }}
-            >
-              <ShoppingCartIcon />
-            </Button>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              width: '100%',
+            }}
+          >
+            {quantity === 0 ? (
+              <Button
+                variant="contained"
+                onClick={handleAddToCart}
+                sx={{
+                  bgcolor: 'secondary.main',
+                  '&:hover': { bgcolor: 'secondary.dark' },
+                }}
+              >
+                <Badge badgeContent={quantity} color="info">
+                  <ShoppingCartIcon />
+                </Badge>
+              </Button>
+            ) : (
+              <CartQuantityControl
+                productId={product.id}
+                quantity={quantity}
+                product={quantity === 0 ? product : undefined}
+                sx={{ bgcolor: 'grey.300' }}
+                onQuantityChange={(newQuantity, action) => {
+                  if (action === 'remove') {
+                    enqueueSnackbar({
+                      message:
+                        newQuantity <= 0
+                          ? 'Se eliminó el producto del carrito'
+                          : `Se eliminó 1 unidad del producto`,
+                      variant: 'info',
+                    });
+                  } else if (action === 'add') {
+                    enqueueSnackbar({
+                      message: 'Producto agregado al carrito',
+                      variant: 'info',
+                    });
+                  }
+                }}
+              />
+            )}
           </Box>
         </Grid>
       </Grid>
@@ -118,25 +146,58 @@ function ProductCard({ product }: ProductCardProps) {
           </Typography>
         </CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
-          <IconButton sx={{ bgcolor: 'grey.300' }}>
-            <RemoveIcon />
-          </IconButton>
-          <Typography sx={{ mx: 1 }}>1</Typography>
-          <IconButton sx={{ bgcolor: 'grey.300' }}>
-            <AddIcon />
-          </IconButton>
+          {quantity === 0 ? (
+            <Button
+              variant="contained"
+              onClick={handleAddToCart}
+              sx={{
+                bgcolor: 'secondary.main',
+                '&:hover': { bgcolor: 'secondary.dark' },
+                mt: { xs: 1, sm: 0 },
+              }}
+            >
+              <Badge badgeContent={quantity} color="info">
+                <ShoppingCartIcon />
+              </Badge>
+            </Button>
+          ) : (
+            <CartQuantityControl
+              productId={product.id}
+              quantity={quantity}
+              product={quantity === 0 ? product : undefined}
+              sx={{ bgcolor: 'grey.300' }}
+              onQuantityChange={(newQuantity, action) => {
+                if (action === 'remove') {
+                  enqueueSnackbar({
+                    message:
+                      newQuantity <= 0
+                        ? 'Se eliminó el producto del carrito'
+                        : `Se eliminó 1 unidad del producto`,
+                    variant: 'info',
+                  });
+                } else if (action === 'add') {
+                  enqueueSnackbar({
+                    message: 'Producto agregado al carrito',
+                    variant: 'info',
+                  });
+                }
+              }}
+            />
+          )}
         </Box>
-        <Button
+        {/* <Button
           variant="contained"
-          onClick={() => navigate(PATHS.cart.root)}
+          onClick={handleAddToCart}
           sx={{
             bgcolor: 'secondary.main',
             '&:hover': { bgcolor: 'secondary.dark' },
             mt: { xs: 1, sm: 0 },
           }}
         >
-          <ShoppingCartIcon />
-        </Button>
+          <Badge badgeContent={quantity} color="info">
+            <ShoppingCartIcon />
+          </Badge>
+        </Button> */}
       </Box>
     </Card>
   );

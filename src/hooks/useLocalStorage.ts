@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // ----------------------------------------------------------------------
+type Updater<T> = (currentValue: T) => T;
 
 export default function useLocalStorage<ValueType>(key: string, defaultValue: ValueType) {
   const [value, setValue] = useState<ValueType>(() => {
@@ -22,9 +23,10 @@ export default function useLocalStorage<ValueType>(key: string, defaultValue: Va
     };
   }, [key, defaultValue]);
 
-  const setValueInLocalStorage = (newValue: ValueType) => {
+  const setValueInLocalStorage = (newValue: ValueType | Updater<ValueType>) => {
     setValue((currentValue: ValueType) => {
-      const result = typeof newValue === 'function' ? newValue(currentValue) : newValue;
+      const result =
+        typeof newValue === 'function' ? (newValue as Updater<ValueType>)(currentValue) : newValue;
 
       localStorage.setItem(key, JSON.stringify(result));
 

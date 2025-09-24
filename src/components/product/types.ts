@@ -8,3 +8,10 @@ export interface Product {
   image: string;
   categories: Category[];
 }
+
+export interface CartItem {
+  product: Product;
+  quantity: number;
+}
+
+export type Cart = CartItem[];
