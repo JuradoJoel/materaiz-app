@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from '@mui/material';
-import { CartItem } from 'src/components/product/types';
 import formatCurrency from 'src/utils/formatCurrency';
 import CartQuantityControl from 'src/components/cart/CartQuantityControl';
+import { CartItem } from 'src/models/Product';
 
 interface ShoppingCartProps {
   item: CartItem;
@@ -25,7 +25,7 @@ const ShoppingCart = ({
     <Grid container spacing={2} alignItems="center">
       <Grid item xs={3} sm={compact ? 2 : 2} md={compact ? 1.5 : 1.5} lg={compact ? 2.5 : 1.5}>
         <img
-          src={item.product.image}
+          src={item.product.images[0].image_url}
           alt={item.product.name}
           style={{
             width: '100%',
