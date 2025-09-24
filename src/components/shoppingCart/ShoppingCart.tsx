@@ -1,13 +1,31 @@
-import { Box, Grid, IconButton, Typography } from '@mui/material';
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
+import { Box, Grid, Typography } from '@mui/material';
+import formatCurrency from 'src/utils/formatCurrency';
+import CartQuantityControl from 'src/components/cart/CartQuantityControl';
+import { CartItem } from 'src/models/Product';
 
-const ShoppingCart = ({ item }: { item: any }) => (
-  <Box>
-    <Grid container spacing={2}>
-      <Grid item xs={4}>
+interface ShoppingCartProps {
+  item: CartItem;
+  onUpdateQuantity: (productId: number, newQuantity: number) => void;
+  onRemoveFromCart: (productId: number) => void;
+  compact?: boolean;
+}
+
+const ShoppingCart = ({
+  item,
+  onUpdateQuantity,
+  onRemoveFromCart,
+  compact = false,
+}: ShoppingCartProps) => (
+  <Box
+    sx={{
+      px: compact ? 1.5 : 0,
+      py: compact ? 0.5 : 0,
+    }}
+  >
+    <Grid container spacing={2} alignItems="center">
+      <Grid item xs={3} sm={compact ? 2 : 2} md={compact ? 1.5 : 1.5} lg={compact ? 2.5 : 1.5}>
         <img
-          src={item.product.image}
+          src={item.product.images[0].image_url}
           alt={item.product.name}
           style={{
             width: '100%',
@@ -19,7 +37,8 @@ const ShoppingCart = ({ item }: { item: any }) => (
           }}
         />
       </Grid>
-      <Grid item xs={8}>
+
+      <Grid item xs={9} sm={compact ? 9.5 : 10} md={compact ? 10 : 10.5} lg={compact ? 9.5 : 10.5}>
         <Typography
           variant="body2"
           sx={{
@@ -37,7 +56,7 @@ const ShoppingCart = ({ item }: { item: any }) => (
           color="error"
           variant="body2"
           sx={{ cursor: 'pointer', mb: 1 }}
-          onClick={() => {}}
+          onClick={() => onRemoveFromCart(item.product.id)}
         >
           Eliminar
         </Typography>
@@ -49,16 +68,17 @@ const ShoppingCart = ({ item }: { item: any }) => (
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <IconButton size="small" sx={{ bgcolor: 'grey.200' }}>
-              <RemoveIcon fontSize="small" />
-            </IconButton>
-            <Typography sx={{ minWidth: 15, textAlign: 'center' }}>{item.quantity}</Typography>
-            <IconButton size="small" sx={{ bgcolor: 'grey.200' }}>
-              <AddIcon fontSize="small" />
-            </IconButton>
+            <CartQuantityControl
+              productId={item.product.id}
+              quantity={item.quantity}
+              size="small"
+              sx={{ bgcolor: 'grey.200', '&:hover': { bgcolor: 'grey.300' } }}
+              onUpdateQuantity={onUpdateQuantity}
+              onRemoveFromCart={onRemoveFromCart}
+            />
           </Box>
           <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            ${item.product.original_price.toLocaleString()}
+            {formatCurrency(item.product.original_price)}
           </Typography>
         </Box>
       </Grid>

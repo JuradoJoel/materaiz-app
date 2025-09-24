@@ -30,7 +30,7 @@ const ProductDetail = () => {
             <Zoom>
               <CardMedia
                 component="img"
-                image={product.image}
+                image={product.images[0].image_url}
                 alt={product.name}
                 sx={{ cursor: 'zoom-in' }}
               />

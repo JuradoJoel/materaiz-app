@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
-import { Box, Container, Drawer, IconButton, Stack } from '@mui/material';
+import { Box, Container, Drawer, IconButton, Stack, Typography } from '@mui/material';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
-// config
-import { NAV } from '../../../config';
 // components
 import Logo from '../../../components/logo';
 import Scrollbar from '../../../components/scrollbar';
@@ -13,7 +11,8 @@ import Iconify from 'src/components/iconify';
 import ShoppingCart from 'src/components/shoppingCart/ShoppingCart';
 import CartSummary from 'src/components/cartSummary/CartSummary';
 //
-import { productsData } from 'src/utils/mock_products';
+import { useCart } from 'src/components/cart/CartContext';
+import { CartItem } from 'src/models/Product';
 
 type Props = {
   openNavCart: boolean;
@@ -21,13 +20,9 @@ type Props = {
 };
 
 export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
-  const cartProducts = [
-    { product: productsData[0], quantity: 1 },
-    { product: productsData[1], quantity: 2 },
-    { product: productsData[2], quantity: 3 },
-  ];
-  const totalAmount = cartProducts.reduce(
-    (total, item) => total + item.product.original_price * item.quantity,
+  const { cart, updateQuantity, removeFromCart } = useCart();
+  const totalAmount = cart.reduce(
+    (total, item: CartItem) => total + item.product.original_price * item.quantity,
     0
   );
   const { pathname } = useLocation();
@@ -71,10 +66,20 @@ export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
         </IconButton>
       </Stack>
       <Container>
-        {cartProducts.map((item, index) => (
-          <ShoppingCart key={index} item={item} />
-        ))}
-        <CartSummary cartProducts={cartProducts} totalAmount={totalAmount} />
+        {cart.length === 0 ? (
+          <Typography sx={{ p: 2 }}>El carrito está vacío.</Typography>
+        ) : (
+          cart.map((item: CartItem) => (
+            <ShoppingCart
+              key={item.product.id}
+              item={item}
+              compact
+              onUpdateQuantity={updateQuantity}
+              onRemoveFromCart={removeFromCart}
+            />
+          ))
+        )}
+        <CartSummary cartProducts={cart} totalAmount={totalAmount} fromNav />
       </Container>
     </Scrollbar>
   );
@@ -95,7 +100,7 @@ export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
         }}
         PaperProps={{
           sx: {
-            width: isDesktop ? NAV.W_DASHBOARD : '100%',
+            width: isDesktop ? 400 : '100%',
             height: '100%',
           },
         }}

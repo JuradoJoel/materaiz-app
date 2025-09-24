@@ -49,36 +49,7 @@ const lazyWithReload = (factory: () => Promise<{ default: ElementType }>) =>
   lazy(() => importOrReload(factory()));
 
 const LazyPage404 = withLoadingScreen(lazyWithReload(() => import('../pages/Page404')));
-// const LazyLoginPage = withLoadingScreen(
-//   lazyWithReload(() => import('src/features/auth/login/LoginPage'))
-// );
-// const LazyRegisterPage = withLoadingScreen(
-//   lazyWithReload(() => import('src/features/auth/register/RegisterPage'))
-// );
-// const LazyForgotPasswordPage = withLoadingScreen(
-//   lazyWithReload(() => import('src/features/auth/forgot-password/ForgotPasswordPage'))
-// );
-// const LazyNewPasswordPage = withLoadingScreen(
-//   lazyWithReload(() => import('src/features/auth/new-password/NewPasswordPage'))
-// );
-// const LazyVerifyCodePage = withLoadingScreen(
-//   lazyWithReload(() => import('src/features/auth/verify-code/VerifyCodePage'))
-// );
-// const LazyAdminUsersListPage = withLoadingSpinner(
-//   lazy(() => import('src/features/admin-user-crud/AdminUserListPage'))
-// );
-// const LazyAdminUsersCreatePage = withLoadingSpinner(
-//   lazyWithReload(() => import('src/features/admin-user-crud/AdminUserCreatePage'))
-// );
-// const LazyAdminUsersEditPage = withLoadingSpinner(
-//   lazyWithReload(() => import('src/features/admin-user-crud/AdminUserEditPage'))
-// );
-// const LazyResetPasswordPage = withLoadingSpinner(
-//   lazy(() => import('src/features/auth/reset-password/ResetPasswordPage'))
-// );
-// const LazySuccessfullyResetPasswordPage = withLoadingSpinner(
-//   lazy(() => import('src/features/auth/reset-password/SuccessfullyResetPasswordPage'))
-// );
+
 const LazyHomePage = withLoadingSpinner(lazy(() => import('src/features/home/HomePage')));
 
 const LazyCategoryPage = withLoadingSpinner(
