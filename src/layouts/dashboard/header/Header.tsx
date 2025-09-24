@@ -24,7 +24,7 @@ import Iconify from '../../../components/iconify';
 import { useSettingsContext } from '../../../components/settings';
 //
 import Searchbar from './Searchbar';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { PATHS } from 'src/routes/paths';
 import { LOGO, HEADER } from 'src/config';
 import { mockCategories } from 'src/utils/mock_categories';
@@ -45,6 +45,7 @@ type Props = {
 export default function Header({ onOpenNav, onClose, open, onOpenCart }: Props) {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { t } = useTranslation();
   const { themeLayout } = useSettingsContext();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -56,6 +57,8 @@ export default function Header({ onOpenNav, onClose, open, onOpenCart }: Props) 
     navigate(PATHS.exploreProducts.byCategory(id));
     setAnchorEl(null);
   };
+
+  const isCartPage = pathname === PATHS.cart.root;
 
   const isNavHorizontal = themeLayout === 'horizontal';
 
@@ -126,9 +129,16 @@ export default function Header({ onOpenNav, onClose, open, onOpenCart }: Props) 
           )}
           <Box display="flex" justifyContent="end" alignItems="center">
             <Searchbar />
-            <IconButton color="inherit" onClick={onOpenCart}>
-              <Iconify icon="material-symbols:shopping-cart" color="white" width={32} height={32} />
-            </IconButton>
+            {!isCartPage && (
+              <IconButton color="inherit" onClick={onOpenCart}>
+                <Iconify
+                  icon="material-symbols:shopping-cart"
+                  color="white"
+                  width={32}
+                  height={32}
+                />
+              </IconButton>
+            )}
             {!isDesktop && (
               <IconButton onClick={open ? onClose : onOpenNav} sx={{ color: 'text.primary' }}>
                 <Iconify

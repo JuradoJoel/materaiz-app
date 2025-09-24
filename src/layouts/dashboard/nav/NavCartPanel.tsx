@@ -79,7 +79,7 @@ export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
             />
           ))
         )}
-        <CartSummary cartProducts={cart} totalAmount={totalAmount} />
+        <CartSummary cartProducts={cart} totalAmount={totalAmount} fromNav />
       </Container>
     </Scrollbar>
   );
