@@ -2,10 +2,10 @@ import { Box, Card, Grid, Typography } from '@mui/material';
 import ShoppingCart from 'src/components/shoppingCart/ShoppingCart';
 import CartSummary from 'src/components/cartSummary/CartSummary';
 import { useCart } from 'src/components/cart/CartContext';
-import { CartItem } from 'src/components/product/types';
 import formatCurrency from 'src/utils/formatCurrency';
 import CartQuantityControl from 'src/components/cart/CartQuantityControl';
 import { useSnackbar } from 'src/components/snackbar';
+import { CartItem } from 'src/models/Product';
 
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart } = useCart();
@@ -49,7 +49,7 @@ const Cart = () => {
                   }}
                 >
                   <img
-                    src={item.product.image}
+                    src={item.product.images[0].image_url}
                     alt={item.product.name}
                     style={{
                       width: 80,

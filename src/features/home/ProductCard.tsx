@@ -1,12 +1,12 @@
 import { Badge, Box, Button, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Product } from 'src/components/product/types';
 import { useSnackbar } from 'src/components/snackbar';
 import formatCurrency from 'src/utils/formatCurrency';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from 'src/routes/paths';
 import { useCart } from 'src/components/cart/CartContext';
 import CartQuantityControl from 'src/components/cart/CartQuantityControl';
+import { Product } from 'src/models/Product';
 
 interface ProductCardProps {
   product: Product;
@@ -40,7 +40,7 @@ function ProductCard({ product }: ProductCardProps) {
         <Grid item xs={3}>
           <CardMedia
             component="img"
-            image={product.image}
+            image={product.images[0].image_url}
             alt={product.name}
             sx={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: 1 }}
           />
@@ -62,7 +62,7 @@ function ProductCard({ product }: ProductCardProps) {
               {formatCurrency(product.original_price)}
             </Box>
             <Box component="span" sx={{ color: 'error.main', fontWeight: 'bold' }}>
-              {formatCurrency(product.discount_price)}
+              {formatCurrency(product.discount_price || 0)}
             </Box>
           </Typography>
         </Grid>
@@ -120,7 +120,7 @@ function ProductCard({ product }: ProductCardProps) {
       <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', flexGrow: 1 }}>
         <CardMedia
           component="img"
-          image={product.image}
+          image={product.images[0].image_url}
           alt={product.name}
           sx={{ width: '80px', height: '80px', mr: 2 }}
         />
@@ -141,7 +141,7 @@ function ProductCard({ product }: ProductCardProps) {
               {formatCurrency(product.original_price)}
             </Box>
             <Box component="span" sx={{ color: 'error.main', fontWeight: 'bold' }}>
-              {formatCurrency(product.discount_price)}
+              {formatCurrency(product.discount_price || 0)}
             </Box>
           </Typography>
         </CardContent>

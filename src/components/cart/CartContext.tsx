@@ -1,6 +1,6 @@
 import { createContext, useContext, ReactNode } from 'react';
 import useLocalStorage from 'src/hooks/useLocalStorage';
-import { Cart, CartItem } from 'src/components/product/types';
+import { Cart, CartItem } from 'src/models/Product';
 
 interface CartContextType {
   cart: Cart;

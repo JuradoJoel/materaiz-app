@@ -12,7 +12,7 @@ import ShoppingCart from 'src/components/shoppingCart/ShoppingCart';
 import CartSummary from 'src/components/cartSummary/CartSummary';
 //
 import { useCart } from 'src/components/cart/CartContext';
-import { CartItem } from 'src/components/product/types';
+import { CartItem } from 'src/models/Product';
 
 type Props = {
   openNavCart: boolean;

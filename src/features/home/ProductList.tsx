@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import ProductCard from './ProductCard';
-import { Product } from 'src/components/product/types';
+import { Product } from 'src/models/Product';
 
 interface ProductListProps {
   products: Product[];
