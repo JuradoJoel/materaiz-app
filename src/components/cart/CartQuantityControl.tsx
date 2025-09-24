@@ -2,7 +2,7 @@ import { Box, IconButton, Typography, IconButtonProps } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useCart } from 'src/components/cart/CartContext';
-import { Product } from 'src/components/product/types';
+import { Product } from 'src/models/Product';
 
 interface CartQuantityControlProps extends IconButtonProps {
   productId: number;
