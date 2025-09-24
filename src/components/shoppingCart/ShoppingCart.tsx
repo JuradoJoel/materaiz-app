@@ -7,12 +7,23 @@ interface ShoppingCartProps {
   item: CartItem;
   onUpdateQuantity: (productId: number, newQuantity: number) => void;
   onRemoveFromCart: (productId: number) => void;
+  compact?: boolean;
 }
 
-const ShoppingCart = ({ item, onUpdateQuantity, onRemoveFromCart }: ShoppingCartProps) => (
-  <Box>
-    <Grid container spacing={2}>
-      <Grid item xs={4}>
+const ShoppingCart = ({
+  item,
+  onUpdateQuantity,
+  onRemoveFromCart,
+  compact = false,
+}: ShoppingCartProps) => (
+  <Box
+    sx={{
+      px: compact ? 1.5 : 0,
+      py: compact ? 0.5 : 0,
+    }}
+  >
+    <Grid container spacing={2} alignItems="center">
+      <Grid item xs={3} sm={compact ? 2 : 2} md={compact ? 1.5 : 1.5} lg={compact ? 2.5 : 1.5}>
         <img
           src={item.product.image}
           alt={item.product.name}
@@ -26,7 +37,8 @@ const ShoppingCart = ({ item, onUpdateQuantity, onRemoveFromCart }: ShoppingCart
           }}
         />
       </Grid>
-      <Grid item xs={8}>
+
+      <Grid item xs={9} sm={compact ? 9.5 : 10} md={compact ? 10 : 10.5} lg={compact ? 9.5 : 10.5}>
         <Typography
           variant="body2"
           sx={{
