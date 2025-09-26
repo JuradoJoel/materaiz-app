@@ -28,9 +28,9 @@ export const productsData: Product[] = [
   },
   {
     id: 2,
-    name: 'Imperial de goma int.termico blanco',
+    name: 'Imperial de goma int.termico negro',
     description: 'lorem ipsum dolor sit amet',
-    original_price: 17500,
+    original_price: 16500,
     discount_price: 12990,
     images: [
       {
@@ -53,9 +53,9 @@ export const productsData: Product[] = [
   },
   {
     id: 3,
-    name: 'Imperial de goma int.termico blanco',
+    name: 'Imperial de metal int.termico blanco',
     description: 'lorem ipsum dolor sit amet',
-    original_price: 17500,
+    original_price: 17999,
     discount_price: 12990,
     images: [
       {
@@ -78,9 +78,9 @@ export const productsData: Product[] = [
   },
   {
     id: 4,
-    name: 'Imperial de goma int.termico blanco',
+    name: 'Imperial de metal int.termico negro',
     description: 'lorem ipsum dolor sit amet',
-    original_price: 17500,
+    original_price: 18500,
     discount_price: 12990,
     images: [
       {
