@@ -1,26 +1,21 @@
-import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  Card,
-  CardMedia,
-  CardContent,
-  IconButton,
-  Grid,
-  Typography,
-} from '@mui/material';
-import { productsData } from 'src/utils/mock_products';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { Box, Card, CardMedia, CardContent, Grid, Typography } from '@mui/material';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
-
-const product = productsData[0]; //momentáneamente hardcodeado sólo para mostrar la página del producto
+import { useOneProductQuery } from 'src/api/productRepository';
+import CartQuantityControl from 'src/components/cart/CartQuantityControl';
+import formatCurrency from 'src/utils/formatCurrency';
 
 const ProductDetail = () => {
-  const [quantity, setQuantity] = useState(1);
-  const handleIncrease = () => setQuantity(quantity + 1);
-  const handleDecrease = () => quantity > 1 && setQuantity(quantity - 1);
+  const { id } = useParams<{ id: string }>();
+  const { data: product } = useOneProductQuery(Number(id));
+
+  if (!id || isNaN(Number(id))) {
+    return <Typography>ID de producto inválido</Typography>;
+  } else if (!product) {
+    return <Typography>Producto no encontrado</Typography>;
+  }
 
   return (
     <Box sx={{ padding: 4 }}>
@@ -44,29 +39,12 @@ const ProductDetail = () => {
                 {product.name}
               </Typography>
               <Typography variant="h5" color="primary" gutterBottom>
-                {product.original_price}
+                {formatCurrency(product.original_price)}
               </Typography>
               <Typography variant="body1" paragraph>
                 Descripción del producto
               </Typography>
-              <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-                Añadir al carrito
-              </Button>
-              <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
-                <IconButton
-                  onClick={handleDecrease}
-                  disabled={quantity <= 1}
-                  sx={{ bgcolor: 'grey.300' }}
-                >
-                  <RemoveIcon />
-                </IconButton>
-                <Typography variant="h6" sx={{ mx: 2 }}>
-                  {quantity}
-                </Typography>
-                <IconButton onClick={handleIncrease} sx={{ bgcolor: 'grey.300' }}>
-                  <AddIcon />
-                </IconButton>
-              </Box>
+              <CartQuantityControl product={product} sx={{ mt: 2, bgcolor: 'grey.300' }} />
             </CardContent>
           </Card>
         </Grid>

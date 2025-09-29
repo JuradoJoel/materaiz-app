@@ -4,12 +4,10 @@ import CartSummary from 'src/components/cartSummary/CartSummary';
 import { useCart } from 'src/components/cart/CartContext';
 import formatCurrency from 'src/utils/formatCurrency';
 import CartQuantityControl from 'src/components/cart/CartQuantityControl';
-import { useSnackbar } from 'src/components/snackbar';
 import { CartItem } from 'src/models/Product';
 
 const Cart = () => {
-  const { cart, updateQuantity, removeFromCart } = useCart();
-  const { enqueueSnackbar } = useSnackbar();
+  const { cart, removeFromCart } = useCart();
 
   const totalAmount = cart.reduce(
     (total, item: CartItem) => total + item.product.original_price * item.quantity,
@@ -33,11 +31,7 @@ const Cart = () => {
               <Card key={item.product.id} sx={{ mb: 2, p: 2 }}>
                 {/* mobile */}
                 <Box sx={{ display: { xs: 'block', md: 'none' } }}>
-                  <ShoppingCart
-                    item={item}
-                    onUpdateQuantity={updateQuantity}
-                    onRemoveFromCart={removeFromCart}
-                  />
+                  <ShoppingCart item={item} />
                 </Box>
 
                 {/* desktop */}
@@ -87,21 +81,10 @@ const Cart = () => {
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     <CartQuantityControl
-                      productId={item.product.id}
+                      product={item.product}
                       quantity={item.quantity}
                       size="small"
                       sx={{ bgcolor: 'grey.200', '&:hover': { bgcolor: 'grey.300' } }}
-                      onQuantityChange={(newQuantity, action) => {
-                        if (action === 'remove') {
-                          enqueueSnackbar({
-                            message:
-                              newQuantity <= 0
-                                ? 'Se eliminó el producto del carrito'
-                                : `Se eliminó 1 unidad del producto`,
-                            variant: 'info',
-                          });
-                        }
-                      }}
                     />
                   </Box>
                 </Box>

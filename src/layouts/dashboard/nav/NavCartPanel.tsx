@@ -20,7 +20,7 @@ type Props = {
 };
 
 export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
-  const { cart, updateQuantity, removeFromCart } = useCart();
+  const { cart } = useCart();
   const totalAmount = cart.reduce(
     (total, item: CartItem) => total + item.product.original_price * item.quantity,
     0
@@ -69,15 +69,7 @@ export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
         {cart.length === 0 ? (
           <Typography sx={{ p: 2 }}>El carrito está vacío.</Typography>
         ) : (
-          cart.map((item: CartItem) => (
-            <ShoppingCart
-              key={item.product.id}
-              item={item}
-              compact
-              onUpdateQuantity={updateQuantity}
-              onRemoveFromCart={removeFromCart}
-            />
-          ))
+          cart.map((item: CartItem) => <ShoppingCart key={item.product.id} item={item} compact />)
         )}
         <CartSummary cartProducts={cart} totalAmount={totalAmount} fromNav />
       </Container>
