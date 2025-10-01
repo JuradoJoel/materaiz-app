@@ -60,6 +60,10 @@ const LazyProductDetailpage = withLoadingSpinner(
 );
 const LazyCartPage = withLoadingSpinner(lazy(() => import('src/features/cart/Cart')));
 
+const LazyWholesalePage = withLoadingSpinner(
+  lazy(() => import('src/features/product/WholesaleFilteredProducts'))
+);
+
 const ROUTES: RouteObject[] = [
   {
     path: '/',
@@ -83,6 +87,24 @@ const ROUTES: RouteObject[] = [
           {
             path: 'category/:id',
             element: <LazyCategoryPage />,
+          },
+          {
+            path: 'product/:id',
+            element: <LazyProductDetailpage />,
+          },
+        ],
+      },
+      {
+        path: 'wholesale',
+        element: <DashboardLayout />,
+        children: [
+          {
+            path: '',
+            element: <LazyWholesalePage />,
+          },
+          {
+            path: 'category/:id',
+            element: <LazyWholesalePage />,
           },
           {
             path: 'product/:id',
