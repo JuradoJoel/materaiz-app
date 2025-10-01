@@ -96,7 +96,6 @@ export default function Header({ onOpenNav, onClose, open, onOpenCart }: Props) 
                 >
                   {t('homePage.categories')}
                 </Button>
-
                 <Menu
                   anchorEl={anchorEl}
                   open={Boolean(anchorEl)}
@@ -110,6 +109,14 @@ export default function Header({ onOpenNav, onClose, open, onOpenCart }: Props) 
                     </MenuItem>
                   ))}
                 </Menu>
+                <Button
+                  color="inherit"
+                  component={Link}
+                  to={PATHS.wholesale.root}
+                  sx={{ textTransform: 'none' }}
+                >
+                  Lista Mayorista
+                </Button>
               </Box>
             </Box>
           )}
