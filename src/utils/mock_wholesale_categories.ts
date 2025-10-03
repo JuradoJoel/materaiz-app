@@ -1,4 +1,3 @@
-// src/utils/mock_wholesale_categories.ts
 export const mockWholesaleCategories = [
   {
     id: 0,
