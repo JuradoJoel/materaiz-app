@@ -6,12 +6,13 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
-import { mockCategories } from 'src/utils/mock_categories';
 import { Category } from 'src/models/Category';
+import { useAllCategoriesQuery } from 'src/api/categoryRepository';
 
 function Header() {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { data: categories } = useAllCategoriesQuery();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -50,7 +51,7 @@ function Header() {
                 </Button>
 
                 <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-                  {mockCategories.map((category: Category) => (
+                  {categories?.map((category: Category) => (
                     <MenuItem key={category.id} onClick={handleClose}>
                       <Link
                         to={`/category/${category.id}`}

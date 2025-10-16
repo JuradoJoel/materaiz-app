@@ -15,7 +15,7 @@ import { useAuthContext } from 'src/features/auth/useAuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { CategoriesNavButton } from './components/CategoriesNavButton';
-import { mockCategories } from 'src/utils/mock_categories';
+import { useAllCategoriesQuery } from 'src/api/categoryRepository';
 
 interface Props {
   onClose: () => void;
@@ -24,7 +24,7 @@ interface Props {
 export const NavContent = ({ onClose }: Props) => {
   const { logout, isAuthenticated } = useAuthContext();
   const [giftListOpen, setGiftListOpen] = useState<boolean>(false);
-
+  const { data: categories } = useAllCategoriesQuery();
   type NavigateItem = {
     label: string;
     icon: string;
@@ -35,39 +35,15 @@ export const NavContent = ({ onClose }: Props) => {
 
   const firstNavigation: NavigateItem[] = [
     {
-      label: 'Buscar una lista',
+      label: 'Buscar productos',
       icon: 'eva:search-fill',
       onClick: () => {},
       navigateTo: '',
       authRequired: false,
     },
-    {
-      label: 'Crear una lista',
-      icon: 'material-symbols:playlist-add',
-      navigateTo: PATHS.home.root,
-      authRequired: false,
-    },
-    {
-      label: 'Mis direcciones',
-      icon: 'material-symbols:location-on',
-      navigateTo: PATHS.home.root,
-      authRequired: true,
-    },
-    {
-      label: 'Datos bancarios',
-      icon: 'material-symbols:account-balance',
-      navigateTo: PATHS.home.root,
-      authRequired: true,
-    },
   ];
 
   const secondNavigation: NavigateItem[] = [
-    {
-      label: 'Explorar productos',
-      icon: 'bi:shop',
-      navigateTo: PATHS.home.root,
-      authRequired: false,
-    },
     {
       label: 'Cómo funciona',
       icon: 'material-symbols:format-list-numbered',
@@ -134,7 +110,7 @@ export const NavContent = ({ onClose }: Props) => {
               </ListItemButton>
             ))}
           <CategoriesNavButton
-            categories={mockCategories}
+            categories={categories}
             isOpen={giftListOpen}
             onClose={onClose}
             onToggle={() => setGiftListOpen(!giftListOpen)}

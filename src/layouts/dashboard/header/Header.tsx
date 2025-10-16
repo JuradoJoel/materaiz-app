@@ -27,12 +27,12 @@ import Searchbar from './Searchbar';
 import { useLocation, useNavigate } from 'react-router';
 import { PATHS } from 'src/routes/paths';
 import { LOGO, HEADER } from 'src/config';
-import { mockCategories } from 'src/utils/mock_categories';
 import { Category } from 'src/models/Category';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
+import { useAllCategoriesQuery } from 'src/api/categoryRepository';
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -49,6 +49,7 @@ export default function Header({ onOpenNav, onClose, open, onOpenCart }: Props) 
   const { t } = useTranslation();
   const { themeLayout } = useSettingsContext();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { data: categories } = useAllCategoriesQuery();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -96,13 +97,12 @@ export default function Header({ onOpenNav, onClose, open, onOpenCart }: Props) 
                 >
                   {t('homePage.categories')}
                 </Button>
-
                 <Menu
                   anchorEl={anchorEl}
                   open={Boolean(anchorEl)}
                   onClose={() => setAnchorEl(null)}
                 >
-                  {mockCategories.map((category: Category) => (
+                  {categories?.map((category: Category) => (
                     <MenuItem key={category.id} onClick={() => handleSelectCategory(category.id)}>
                       <Typography color="inherit" sx={{ textTransform: 'uppercase' }}>
                         {category.name}
@@ -110,6 +110,14 @@ export default function Header({ onOpenNav, onClose, open, onOpenCart }: Props) 
                     </MenuItem>
                   ))}
                 </Menu>
+                <Button
+                  color="inherit"
+                  component={Link}
+                  to={PATHS.wholesale.root}
+                  sx={{ textTransform: 'none' }}
+                >
+                  Lista Mayorista
+                </Button>
               </Box>
             </Box>
           )}
