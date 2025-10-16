@@ -1,12 +1,12 @@
 const environments = {
   dev: {
-    backEnd: 'https://backend.com/api/',
-    baseURL: 'https://backend.com/api/',
+    backEnd: 'https://materaiz-back.onrender.com/api/',
+    baseURL: 'https://materaiz-back.onrender.com/',
     production: false,
   },
   prod: {
-    backEnd: 'https://backend.com/api/',
-    baseURL: 'https://backend.com/api/',
+    backEnd: 'https://materaiz-back.onrender.com/api/',
+    baseURL: 'https://materaiz-back.onrender.com/',
     production: true,
   },
 };
