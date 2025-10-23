@@ -1,6 +1,6 @@
 const environments = {
   dev: {
-    backEnd: 'https://materaiz-back.onrender.com/api/',
+    backEnd: 'http://localhost:3000/api/',
     baseURL: 'https://materaiz-back.onrender.com/',
     production: false,
   },
