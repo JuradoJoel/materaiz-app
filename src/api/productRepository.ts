@@ -9,12 +9,12 @@ export class ProductRepository {
   };
 
   getAll = async () => {
-    const { data } = await httpClient.get<Product[]>('products');
+    const { data } = await httpClient.get<Product[]>('app/products');
     return data;
   };
 
   getOne = async (id: number) => {
-    const { data } = await httpClient.get<Product>(`products/${id}`);
+    const { data } = await httpClient.get<Product>(`app/products/${id}`);
     return data;
   };
 }
