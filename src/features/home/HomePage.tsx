@@ -4,10 +4,9 @@ import Body from './Body';
 import ProductList from './ProductList';
 import ContactForm from 'src/components/contact-form/ContactForm';
 import { useAllProductsQuery } from 'src/api/productRepository';
-import { productsData } from 'src/utils/mock_products';
 
 function HomePage() {
-  // const { data: products } = useAllProductsQuery();
+  const { data: products } = useAllProductsQuery();
 
   return (
     <>
@@ -15,7 +14,7 @@ function HomePage() {
         <title> Home | {APP_NAME}</title>
       </Helmet>
       <Body />
-      <ProductList products={productsData} />
+      <ProductList products={products} />
       <ContactForm />
     </>
   );
