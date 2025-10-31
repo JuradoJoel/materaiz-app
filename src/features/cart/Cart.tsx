@@ -5,9 +5,15 @@ import { useCart } from 'src/components/cart/CartContext';
 import formatCurrency from 'src/utils/formatCurrency';
 import CartQuantityControl from 'src/components/cart/CartQuantityControl';
 import { CartItem } from 'src/models/Product';
+import { useState } from 'react';
+import { CheckoutForm } from './CheckoutForm';
+import { CheckoutResponse } from 'src/api/OrderRepository';
+import { useSnackbar } from 'src/components/snackbar';
 
 const Cart = () => {
   const { cart, removeFromCart } = useCart();
+  const [showCheckoutForm, setShowCheckoutForm] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const totalAmount = cart.reduce(
     (total, item: CartItem) => total + item.product.original_price * item.quantity,
@@ -95,8 +101,36 @@ const Cart = () => {
 
         {/* resumen */}
         <Grid item xs={12} md={4}>
-          <CartSummary cartProducts={cart} totalAmount={totalAmount} />
+          <CartSummary
+            cartProducts={cart}
+            totalAmount={totalAmount}
+            showCheckoutForm={showCheckoutForm}
+            onCheckout={() => setShowCheckoutForm(true)}
+          />
         </Grid>
+
+        {/* Formulario de checkout */}
+        {showCheckoutForm && (
+          <Card sx={{ mt: 3, p: 3, maxWidth: 'sm' }}>
+            <Typography variant="h6" gutterBottom>
+              Completa tus datos para finalizar la compra
+            </Typography>
+
+            <CheckoutForm
+              cart={cart}
+              totalAmount={totalAmount}
+              onSuccess={(result: CheckoutResponse) => {
+                enqueueSnackbar({
+                  message: '¡Compra confirmada!',
+                  variant: 'success',
+                });
+                cart.forEach((item) => removeFromCart(item.product.id));
+                setShowCheckoutForm(false);
+              }}
+              onCancel={() => setShowCheckoutForm(false)}
+            />
+          </Card>
+        )}
       </Grid>
     </Box>
   );

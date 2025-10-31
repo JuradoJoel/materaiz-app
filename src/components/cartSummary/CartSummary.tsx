@@ -17,16 +17,24 @@ interface CartSummaryProps {
   cartProducts: any[];
   totalAmount: number;
   fromNav?: boolean;
+  onCheckout?: () => void;
+  showCheckoutForm: boolean;
 }
 
-const CartSummary = ({ cartProducts, totalAmount, fromNav }: CartSummaryProps) => {
+export default function CartSummary({
+  cartProducts,
+  totalAmount,
+  fromNav,
+  onCheckout,
+  showCheckoutForm,
+}: CartSummaryProps) {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
     if (fromNav) {
       navigate(PATHS.cart.root);
     } else {
-      console.log('checkout');
+      onCheckout?.();
     }
   };
 
@@ -68,23 +76,23 @@ const CartSummary = ({ cartProducts, totalAmount, fromNav }: CartSummaryProps) =
           </Typography>
         </Box>
 
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          size="large"
-          onClick={handleButtonClick}
-          sx={{
-            py: 1.5,
-            fontSize: '1rem',
-            fontWeight: 'bold',
-          }}
-        >
-          {fromNav ? 'Continuar compra' : 'Finalizar compra'}
-        </Button>
+        {!showCheckoutForm && (
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            size="large"
+            onClick={handleButtonClick}
+            sx={{
+              py: 1.5,
+              fontSize: '1rem',
+              fontWeight: 'bold',
+            }}
+          >
+            Continuar compra
+          </Button>
+        )}
       </CardContent>
     </Card>
   );
-};
-
-export default CartSummary;
+}
