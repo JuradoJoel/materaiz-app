@@ -18,7 +18,7 @@ interface CartSummaryProps {
   totalAmount: number;
   fromNav?: boolean;
   onCheckout?: () => void;
-  showCheckoutForm: boolean;
+  showCheckoutForm?: boolean;
 }
 
 export default function CartSummary({
