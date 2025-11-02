@@ -1,5 +1,5 @@
 import { httpClient } from 'src/utils/httpClient';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 export interface CheckoutPayload {
   customer: {
@@ -26,7 +26,7 @@ export interface CheckoutResponse {
 
 export class OrderRepository {
   keys = {
-    create: () => ['orders', 'create'],
+    list: () => ['orders', 'list'] as const,
   };
 
   create = async (payload: CheckoutPayload): Promise<CheckoutResponse> => {
@@ -38,14 +38,7 @@ export class OrderRepository {
 const repo = new OrderRepository();
 
 // Hook para usar en el formulario
-export const useCreateOrderMutation = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationKey: repo.keys.create(),
-    mutationFn: repo.create,
-    onSuccess: () => {
-      // queryClient.invalidateQueries({ queryKey: ['orders'] });
-    },
+export const useCreateOrderMutation = () =>
+  useMutation({
+    mutationFn: (data: CheckoutPayload) => repo.create(data),
   });
-};

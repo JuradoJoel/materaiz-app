@@ -20,6 +20,15 @@ const Cart = () => {
     0
   );
 
+  const handleCheckoutSuccess = (_result: CheckoutResponse) => {
+    enqueueSnackbar({
+      message: '¡Compra confirmada!',
+      variant: 'success',
+    });
+    cart.forEach((item) => removeFromCart(item.product.id));
+    setShowCheckoutForm(false);
+  };
+
   return (
     <Box sx={{ padding: 3, maxWidth: 1200, margin: '0 auto' }}>
       <Grid container spacing={3}>
@@ -33,7 +42,7 @@ const Cart = () => {
           {cart.length === 0 ? (
             <Typography>El carrito está vacío.</Typography>
           ) : (
-            cart.map((item: CartItem, index: number) => (
+            cart.map((item: CartItem) => (
               <Card key={item.product.id} sx={{ mb: 2, p: 2 }}>
                 {/* mobile */}
                 <Box sx={{ display: { xs: 'block', md: 'none' } }}>
@@ -119,14 +128,7 @@ const Cart = () => {
             <CheckoutForm
               cart={cart}
               totalAmount={totalAmount}
-              onSuccess={(result: CheckoutResponse) => {
-                enqueueSnackbar({
-                  message: '¡Compra confirmada!',
-                  variant: 'success',
-                });
-                cart.forEach((item) => removeFromCart(item.product.id));
-                setShowCheckoutForm(false);
-              }}
+              onSuccess={handleCheckoutSuccess}
               onCancel={() => setShowCheckoutForm(false)}
             />
           </Card>
