@@ -20,18 +20,34 @@ export const CheckoutSchema = Yup.object().shape({
     .required('El teléfono es obligatorio')
     .matches(/^[0-9+\-\s()]+$/, 'Solo números, espacios, + y guiones')
     .min(10, 'Mínimo 10 caracteres'),
+  delivery_method: Yup.string()
+    .oneOf(['pickup', 'delivery'] as const)
+    .required('Debe seleccionar un método de entrega'),
+  address: Yup.string().when('delivery_method', {
+    is: 'delivery',
+    then: (schema) => schema.required('La dirección es obligatoria para envío a domicilio'),
+    otherwise: (schema) => schema.optional().default(''),
+  }),
 });
-
 export type CheckoutFormValues = Yup.InferType<typeof CheckoutSchema>;
 
 export type CheckoutFormProps = {
   cart: CartItem[];
   totalAmount: number;
+  shippingCost: number;
+  isHomeDelivery: boolean;
   onSuccess: (response: CheckoutResponse) => void;
   onCancel: () => void;
 };
 
-export const CheckoutForm = ({ cart, totalAmount, onSuccess, onCancel }: CheckoutFormProps) => {
+export const CheckoutForm = ({
+  cart,
+  totalAmount,
+  shippingCost,
+  isHomeDelivery,
+  onSuccess,
+  onCancel,
+}: CheckoutFormProps) => {
   const hf = useForm<CheckoutFormValues>({
     resolver: yupResolver(CheckoutSchema),
     defaultValues: {
@@ -39,6 +55,8 @@ export const CheckoutForm = ({ cart, totalAmount, onSuccess, onCancel }: Checkou
       last_name: '',
       email: '',
       phone: '',
+      address: '',
+      delivery_method: isHomeDelivery ? 'delivery' : 'pickup',
     },
   });
 
@@ -52,8 +70,11 @@ export const CheckoutForm = ({ cart, totalAmount, onSuccess, onCancel }: Checkou
         last_name: data.last_name,
         email: data.email,
         phone: data.phone,
+        address: data.delivery_method === 'delivery' ? data.address : null,
       },
       total_amount: totalAmount,
+      shipping_cost: shippingCost,
+      is_home_delivery: data.delivery_method === 'delivery',
       items: cart.map((item) => ({
         product_id: item.product.id,
         product_name: item.product.name,
@@ -129,6 +150,28 @@ export const CheckoutForm = ({ cart, totalAmount, onSuccess, onCancel }: Checkou
           />
         )}
       />
+
+      {/* Campo dirección solo si el método es envío */}
+      {isHomeDelivery && (
+        <Controller
+          name="address"
+          control={control}
+          render={({ field, fieldState }) => (
+            <TemplateTextField
+              field={{
+                ...field,
+                value: field.value ?? '',
+                onChange: (e) => field.onChange(e.target.value),
+              }}
+              fieldState={fieldState}
+              formState={formState}
+              label="Dirección de envío"
+              placeholder="Av. Corrientes 1234, Piso 5, Dto A"
+              multiline
+            />
+          )}
+        />
+      )}
 
       <TemplateFormActions>
         <Button onClick={onCancel} variant="outlined" color="inherit">
