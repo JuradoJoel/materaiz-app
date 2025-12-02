@@ -1,4 +1,4 @@
-import { Box, Container, Link, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { FOOTER } from 'src/config';
 
@@ -16,7 +16,7 @@ function Footer() {
       height={FOOTER.FOOTER_HEIGHT}
     >
       <Container>
-        <Box
+        {/* <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -30,17 +30,12 @@ function Footer() {
           <Link href="/privacy-policy" sx={{ textDecoration: 'none', color: 'info.dark' }}>
             {t('homePage.privacyPolicy')}
           </Link>
-        </Box>
+        </Box> */}
         <Typography variant="body2" color="text.secondary" textAlign="center" mt={2}>
           {t('homePage.copyright')} |{' '}
-          <Link
-            href="https://google.com"
-            target="_blank"
-            rel="noopener"
-            sx={{ textDecoration: 'none', color: 'info.lighter' }}
-          >
+          <span style={{ color: 'var(--mui-palette-info-lighter)' }}>
             {t('homePage.designAndDevelop')}
-          </Link>
+          </span>
         </Typography>
       </Container>
     </Box>

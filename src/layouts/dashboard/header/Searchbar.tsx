@@ -24,6 +24,8 @@ import { NavListProps } from '../../../components/nav-section';
 import SearchNotFound from '../../../components/search-not-found';
 //
 import useNavConfig from '../nav/config';
+import { useAllProductsQuery } from 'src/api/productRepository';
+import { formatText } from 'src/utils/formatText';
 
 // ----------------------------------------------------------------------
 
@@ -147,6 +149,7 @@ function Searchbar() {
       handleClick(searchQuery);
     }
   };
+  const { data: products = [] } = useAllProductsQuery();
 
   return (
     <ClickAwayListener onClickAway={handleClose}>
@@ -166,24 +169,30 @@ function Searchbar() {
               disableClearable
               popupIcon={null}
               PopperComponent={StyledPopper}
-              onInputChange={(event, value) => setSearchQuery(value)}
-              noOptionsText={<SearchNotFound query={searchQuery} sx={{ py: 10 }} />}
-              options={allItems.sort((a, b) => -b.group.localeCompare(a.group))}
-              groupBy={(option) => option.group}
-              getOptionLabel={(option) => option.path}
-              isOptionEqualToValue={(option, value) => option.path === value.path}
+              options={products}
+              getOptionLabel={(option) => option.name}
               filterOptions={createFilterOptions({
-                matchFrom: 'start',
-                stringify: (option) => option.title || option.path,
+                matchFrom: 'any',
+                stringify: (option) => option.name,
               })}
+              noOptionsText={<SearchNotFound query={searchQuery} sx={{ py: 10 }} />}
+              onInputChange={(event, value) => setSearchQuery(value)}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               renderInput={(params) => (
                 <InputBase
                   {...params.InputProps}
                   inputProps={params.inputProps}
                   fullWidth
                   autoFocus
-                  placeholder="Search..."
-                  onKeyUp={handleKeyUp}
+                  placeholder="Buscar productos..."
+                  onKeyUp={(e) => {
+                    if (e.key === 'Enter') {
+                      const found = products.find((p) =>
+                        p.name.toLowerCase().includes(searchQuery.toLowerCase())
+                      );
+                      if (found) navigate(`/explore-products/product/${found.id}`);
+                    }
+                  }}
                   startAdornment={
                     <InputAdornment position="start">
                       <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
@@ -192,48 +201,20 @@ function Searchbar() {
                   sx={{ height: 1, typography: 'h6' }}
                 />
               )}
-              renderOption={(props, option, { inputValue }) => {
-                const { title, path } = option;
+              renderOption={(props, option) => (
+                <Box
+                  component="li"
+                  {...props}
+                  onClick={() => navigate(`/explore-products/product/${option.id}`)}
+                  sx={{ display: 'flex', flexDirection: 'column' }}
+                >
+                  <Box sx={{ fontWeight: 'bold' }}>{formatText(option.name)}</Box>
 
-                const partsTitle = parse(title, match(title, inputValue));
-
-                const partsPath = parse(path, match(path, inputValue));
-
-                return (
-                  <Box component="li" {...props} onClick={() => handleClick(path)}>
-                    <div>
-                      {partsTitle.map((part, index) => (
-                        <Box
-                          key={index}
-                          component="span"
-                          sx={{
-                            typography: 'subtitle2',
-                            textTransform: 'capitalize',
-                            color: part.highlight ? 'primary.main' : 'text,primary',
-                          }}
-                        >
-                          {part.text}
-                        </Box>
-                      ))}
-                    </div>
-
-                    <div>
-                      {partsPath.map((part, index) => (
-                        <Box
-                          key={index}
-                          component="span"
-                          sx={{
-                            typography: 'caption',
-                            color: part.highlight ? 'primary.main' : 'text.secondary',
-                          }}
-                        >
-                          {part.text}
-                        </Box>
-                      ))}
-                    </div>
-                  </Box>
-                );
-              }}
+                  {option.description && (
+                    <Box sx={{ fontSize: 12, opacity: 0.7 }}>{formatText(option.description)}</Box>
+                  )}
+                </Box>
+              )}
             />
           </StyledSearchbar>
         </Slide>

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { PATHS } from 'src/routes/paths';
 import CartQuantityControl from 'src/components/cart/CartQuantityControl';
 import { Product } from 'src/models/Product';
+import { formatText } from 'src/utils/formatText';
 
 interface ProductCardProps {
   product: Product;
@@ -39,7 +40,7 @@ function ProductCard({ product }: ProductCardProps) {
             onClick={() => navigate(PATHS.exploreProducts.byProduct(product.id))}
             sx={{ textDecoration: 'none', color: 'common.black', cursor: 'pointer' }}
           >
-            {product.name}
+            {formatText(product.name)}
           </Typography>
           <Typography variant="body2">
             <Box
@@ -82,7 +83,7 @@ function ProductCard({ product }: ProductCardProps) {
             onClick={() => navigate(PATHS.exploreProducts.byProduct(product.id))}
             sx={{ textDecoration: 'none', color: 'common.black', cursor: 'pointer' }}
           >
-            {product.name}
+            {formatText(product.name)}
           </Typography>
           <Typography variant="body2">
             <Box
