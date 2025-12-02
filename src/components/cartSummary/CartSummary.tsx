@@ -132,7 +132,18 @@ export default function CartSummary({
   };
   const loadingShipping = mutation.isPending;
   const hasNetworkError = mutation.isError;
-
+  if (cartProducts.length === 0) {
+    return (
+      <Card sx={{ position: 'sticky', top: 20 }}>
+        <CardContent>
+          <Typography variant="h6">Resumen de compra</Typography>
+          <Typography color="text.secondary" sx={{ mt: 1 }}>
+            No hay productos en el carrito.
+          </Typography>
+        </CardContent>
+      </Card>
+    );
+  }
   return (
     <Card sx={{ position: 'sticky', top: 20 }}>
       <CardContent>

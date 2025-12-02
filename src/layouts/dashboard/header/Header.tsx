@@ -89,7 +89,9 @@ export default function Header({ onOpenNav, onClose, open, onOpenCart }: Props) 
                 <Button component={Link} to="/home" color="inherit">
                   {t('homePage.navBar1')}
                 </Button>
-                <Button color="inherit">{t('homePage.navBar2')}</Button>
+                <Button sx={{ display: 'none' }} color="inherit">
+                  {t('homePage.navBar2')}
+                </Button>
                 <Button
                   color="inherit"
                   onClick={handleClick}
@@ -114,7 +116,7 @@ export default function Header({ onOpenNav, onClose, open, onOpenCart }: Props) 
                   color="inherit"
                   component={Link}
                   to={PATHS.wholesale.root}
-                  sx={{ textTransform: 'none' }}
+                  sx={{ display: 'none', textTransform: 'none' }}
                 >
                   Lista Mayorista
                 </Button>
