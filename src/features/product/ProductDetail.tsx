@@ -39,7 +39,6 @@ const ProductDetail = () => {
               <Typography variant="h4" gutterBottom>
                 {formatText(product.name)}
               </Typography>
-              {/* Mostrar precios según si hay descuento */}
               {product.discount_price && product.discount_price > 0 ? (
                 <>
                   <Typography
