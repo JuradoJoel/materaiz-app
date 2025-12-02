@@ -39,9 +39,31 @@ const ProductDetail = () => {
               <Typography variant="h4" gutterBottom>
                 {formatText(product.name)}
               </Typography>
-              <Typography variant="h5" color="primary" gutterBottom>
-                {formatCurrency(product.original_price)}
-              </Typography>
+              {/* Mostrar precios según si hay descuento */}
+              {product.discount_price && product.discount_price > 0 ? (
+                <>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    sx={{ textDecoration: 'line-through', color: 'neutral.main' }}
+                  >
+                    {formatCurrency(product.original_price)}
+                  </Typography>
+
+                  <Typography
+                    variant="h4"
+                    gutterBottom
+                    sx={{ color: 'error.main', fontWeight: 'bold' }}
+                  >
+                    {formatCurrency(product.discount_price)}
+                  </Typography>
+                </>
+              ) : (
+                <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  {formatCurrency(product.original_price)}
+                </Typography>
+              )}
+
               <Typography variant="body1" paragraph>
                 {formatText(product.description) + '.'}
               </Typography>

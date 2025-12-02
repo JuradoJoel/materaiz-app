@@ -132,7 +132,7 @@ export const CheckoutForm = ({
             fieldState={fieldState}
             formState={formState}
             label="Email"
-            placeholder="juan@example.com"
+            placeholder="correo@ejemplo.com"
           />
         )}
       />
