@@ -3,22 +3,27 @@ import { Box, Container, Divider, Typography } from '@mui/material';
 import { APP_NAME } from 'src/config';
 import ProductList from './ProductList';
 import { useParams } from 'react-router-dom';
-import { mockCategories } from 'src/utils/mock_categories';
-import { productsData } from 'src/utils/mock_products';
+import { useAllCategoriesQuery } from 'src/api/categoryRepository';
+import { useAllProductsQuery } from 'src/api/productRepository';
 
 function FilteredProducts() {
   const { id } = useParams<{ id: string }>();
+  const categoryId = Number(id);
 
-  const category = mockCategories.find((category) => category.id === Number(id));
-  const products = productsData.filter((product) =>
-    product.categories.some((category) => category.id === Number(id))
+  const { data: categories } = useAllCategoriesQuery();
+  const { data: products } = useAllProductsQuery();
+
+  const category = categories?.find((cat) => cat.id === categoryId);
+  const filteredProducts = products?.filter((product) =>
+    product.categories?.some((c) => c.id === categoryId)
   );
 
-  const hasProducts = products.length > 0;
+  const hasProducts = filteredProducts && filteredProducts.length > 0;
+
   return (
     <>
       <Helmet>
-        <title> Categorías | {APP_NAME}</title>
+        <title>Categorías | {APP_NAME}</title>
       </Helmet>
 
       <Container>
@@ -26,9 +31,11 @@ function FilteredProducts() {
           <Typography variant="h4" sx={{ textTransform: 'uppercase', marginTop: 2 }}>
             {category?.name}
           </Typography>
+
           <Divider sx={{ width: '100%', height: '1px', backgroundColor: 'neutral.light' }} />
+
           {hasProducts ? (
-            <ProductList products={products} />
+            <ProductList products={filteredProducts} />
           ) : (
             <Typography variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
               No hay productos en esta categoría
