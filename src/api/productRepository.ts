@@ -9,13 +9,25 @@ export class ProductRepository {
   };
 
   getAll = async () => {
-    const { data } = await httpClient.get<Product[]>('app/products');
-    return data;
+    const { data } = await httpClient.get<any[]>('app/products');
+
+    const normalized: Product[] = data.map((p) => ({
+      ...p,
+      categories: [{ id: p.category_id, name: '' }],
+    }));
+
+    return normalized;
   };
 
   getOne = async (id: number) => {
-    const { data } = await httpClient.get<Product>(`app/products/${id}`);
-    return data;
+    const { data } = await httpClient.get<any>(`app/products/${id}`);
+
+    const normalized: Product = {
+      ...data,
+      categories: [{ id: data.category_id, name: '' }],
+    };
+
+    return normalized;
   };
 }
 
