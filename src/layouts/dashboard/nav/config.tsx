@@ -32,7 +32,7 @@ const navConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
-    subheader: 'whalemate',
+    subheader: 'materaiz',
     items: [
       {
         title: 'User',
