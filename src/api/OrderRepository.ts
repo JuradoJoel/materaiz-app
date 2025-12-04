@@ -7,8 +7,11 @@ export interface CheckoutPayload {
     last_name: string;
     email: string;
     phone: string;
+    address?: string | null;
   };
   total_amount: number;
+  shipping_cost: number;
+  is_home_delivery: boolean;
   items: {
     product_id: number;
     product_name: string;

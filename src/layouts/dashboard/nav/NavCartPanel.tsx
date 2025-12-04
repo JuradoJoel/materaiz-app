@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
 import { Box, Container, Drawer, IconButton, Stack, Typography } from '@mui/material';
@@ -21,6 +21,7 @@ type Props = {
 
 export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
   const { cart } = useCart();
+  const [isHomeDelivery, setIsHomeDelivery] = useState(false);
   const totalAmount = cart.reduce(
     (total, item: CartItem) => total + item.product.original_price * item.quantity,
     0
@@ -71,7 +72,13 @@ export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
         ) : (
           cart.map((item: CartItem) => <ShoppingCart key={item.product.id} item={item} compact />)
         )}
-        <CartSummary cartProducts={cart} totalAmount={totalAmount} fromNav />
+        <CartSummary
+          cartProducts={cart}
+          totalAmount={totalAmount}
+          fromNav
+          isHomeDelivery={isHomeDelivery}
+          onIsHomeDeliveryChange={setIsHomeDelivery}
+        />
       </Container>
     </Scrollbar>
   );

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { PATHS } from 'src/routes/paths';
 import CartQuantityControl from 'src/components/cart/CartQuantityControl';
 import { Product } from 'src/models/Product';
+import { formatText } from 'src/utils/formatText';
 
 interface ProductCardProps {
   product: Product;
@@ -25,12 +26,17 @@ function ProductCard({ product }: ProductCardProps) {
     >
       <Grid container spacing={1} sx={{ display: { xs: 'flex', sm: 'none' } }}>
         <Grid item xs={3}>
-          <CardMedia
-            component="img"
-            image={product.images[0].image_url}
-            alt={product.name}
-            sx={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: 1 }}
-          />
+          <Box
+            onClick={() => navigate(PATHS.exploreProducts.byProduct(product.id))}
+            sx={{ cursor: 'pointer' }}
+          >
+            <CardMedia
+              component="img"
+              image={product.images[0].image_url}
+              alt={product.name}
+              sx={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: 1 }}
+            />
+          </Box>
         </Grid>
 
         <Grid item xs={9}>
@@ -39,18 +45,24 @@ function ProductCard({ product }: ProductCardProps) {
             onClick={() => navigate(PATHS.exploreProducts.byProduct(product.id))}
             sx={{ textDecoration: 'none', color: 'common.black', cursor: 'pointer' }}
           >
-            {product.name}
+            {formatText(product.name)}
           </Typography>
           <Typography variant="body2">
-            <Box
-              component="span"
-              sx={{ textDecoration: 'line-through', color: 'neutral.main', mr: 1 }}
-            >
-              {formatCurrency(product.original_price)}
-            </Box>
-            <Box component="span" sx={{ color: 'error.main', fontWeight: 'bold' }}>
-              {formatCurrency(product.discount_price || 0)}
-            </Box>
+            {product.discount_price && product.discount_price > 0 ? (
+              <>
+                <Box
+                  component="span"
+                  sx={{ textDecoration: 'line-through', color: 'neutral.main', mr: 1 }}
+                >
+                  {formatCurrency(product.original_price)}
+                </Box>
+                <Box component="span" sx={{ color: 'error.main', fontWeight: 'bold' }}>
+                  {formatCurrency(product.discount_price)}
+                </Box>
+              </>
+            ) : (
+              <Box component="span">{formatCurrency(product.original_price)}</Box>
+            )}
           </Typography>
         </Grid>
 
@@ -69,12 +81,17 @@ function ProductCard({ product }: ProductCardProps) {
       </Grid>
 
       <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', flexGrow: 1 }}>
-        <CardMedia
-          component="img"
-          image={product.images[0].image_url}
-          alt={product.name}
-          sx={{ width: '80px', height: '80px', mr: 2 }}
-        />
+        <Box
+          onClick={() => navigate(PATHS.exploreProducts.byProduct(product.id))}
+          sx={{ cursor: 'pointer', mr: 2 }}
+        >
+          <CardMedia
+            component="img"
+            image={product.images[0].image_url}
+            alt={product.name}
+            sx={{ width: '80px', height: '80px' }}
+          />
+        </Box>
         <CardContent sx={{ flexGrow: 1, p: 1, minWidth: 0 }}>
           <Typography
             variant="body1"
@@ -82,18 +99,24 @@ function ProductCard({ product }: ProductCardProps) {
             onClick={() => navigate(PATHS.exploreProducts.byProduct(product.id))}
             sx={{ textDecoration: 'none', color: 'common.black', cursor: 'pointer' }}
           >
-            {product.name}
+            {formatText(product.name)}
           </Typography>
           <Typography variant="body2">
-            <Box
-              component="span"
-              sx={{ textDecoration: 'line-through', color: 'neutral.main', marginRight: 1 }}
-            >
-              {formatCurrency(product.original_price)}
-            </Box>
-            <Box component="span" sx={{ color: 'error.main', fontWeight: 'bold' }}>
-              {formatCurrency(product.discount_price || 0)}
-            </Box>
+            {product.discount_price && product.discount_price > 0 ? (
+              <>
+                <Box
+                  component="span"
+                  sx={{ textDecoration: 'line-through', color: 'neutral.main', marginRight: 1 }}
+                >
+                  {formatCurrency(product.original_price)}
+                </Box>
+                <Box component="span" sx={{ color: 'error.main', fontWeight: 'bold' }}>
+                  {formatCurrency(product.discount_price)}
+                </Box>
+              </>
+            ) : (
+              <Box component="span">{formatCurrency(product.original_price)}</Box>
+            )}
           </Typography>
         </CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>

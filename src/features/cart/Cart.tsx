@@ -13,6 +13,7 @@ import { useSnackbar } from 'src/components/snackbar';
 const Cart = () => {
   const { cart, removeFromCart } = useCart();
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
+  const [isHomeDelivery, setIsHomeDelivery] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   const totalAmount = cart.reduce(
@@ -20,6 +21,8 @@ const Cart = () => {
     0
   );
 
+  const [finalTotal, setFinalTotal] = useState(totalAmount);
+  const [shippingCostFromAPI, setShippingCostFromAPI] = useState(0);
   const handleCheckoutSuccess = (_result: CheckoutResponse) => {
     enqueueSnackbar({
       message: '¡Compra confirmada!',
@@ -115,6 +118,12 @@ const Cart = () => {
             totalAmount={totalAmount}
             showCheckoutForm={showCheckoutForm}
             onCheckout={() => setShowCheckoutForm(true)}
+            isHomeDelivery={isHomeDelivery}
+            onIsHomeDeliveryChange={setIsHomeDelivery}
+            onTotalChange={(total, shipping) => {
+              setFinalTotal(total);
+              setShippingCostFromAPI(shipping);
+            }}
           />
         </Grid>
 
@@ -127,7 +136,9 @@ const Cart = () => {
 
             <CheckoutForm
               cart={cart}
-              totalAmount={totalAmount}
+              totalAmount={finalTotal}
+              shippingCost={shippingCostFromAPI}
+              isHomeDelivery={isHomeDelivery}
               onSuccess={handleCheckoutSuccess}
               onCancel={() => setShowCheckoutForm(false)}
             />
