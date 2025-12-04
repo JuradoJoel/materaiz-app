@@ -1,8 +1,14 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Grid } from '@mui/material';
 import catalogoImagen from '../../assets/catalogImage.png';
-import Iconify from 'src/components/iconify';
-
-import { Trans, useTranslation } from 'react-i18next';
+import {
+  AboutUs,
+  ShippingInfo,
+  HomeDelivery,
+  Promise,
+  ComingSoon,
+  PaymentMethods,
+} from './Sections';
+import { useTranslation } from 'react-i18next';
 
 function Body() {
   const { t } = useTranslation();
@@ -22,11 +28,11 @@ function Body() {
           color: '#fff',
         }}
       >
-        <Typography
-          variant="h2"
-          fontWeight="bold"
+        <Box
+          component="h2"
           sx={{
-            position: 'relative',
+            fontSize: { xs: '2rem', md: '3rem' },
+            fontWeight: 'bold',
             textTransform: 'uppercase',
             color: '#fff',
             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
@@ -35,61 +41,30 @@ function Body() {
           }}
         >
           {t('homePage.title')}
-        </Typography>
-      </Box>
-      <Container
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          textAlign: 'center',
-          alignItems: 'center',
-          paddingTop: '5rem',
-        }}
-      >
-        <Iconify icon="solar:info-circle-linear" width={40} height={40} />
-        <Typography variant="h4" sx={{ textTransform: 'uppercase', margin: 1 }}>
-          {t('homePage.bulkPurchase')}
-        </Typography>
-        <Typography paragraph sx={{ color: 'text.primary' }}>
-          <Trans i18nKey="homePage.bulkPurchaseText" />
-        </Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3, paddingTop: '2rem' }}>
-          <Box
-            sx={{
-              flex: 1,
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Iconify icon="solar:hand-money-bold" width={40} height={40} />
-            <Typography variant="h4" sx={{ textTransform: 'uppercase', margin: 1 }}>
-              {t('homePage.payment')}
-            </Typography>
-            <Typography paragraph sx={{ color: 'text.primary', flexGrow: 1 }}>
-              <Trans i18nKey="homePage.paymentText" />
-            </Typography>
-          </Box>
-
-          <Box
-            sx={{
-              flex: 1,
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Iconify icon="eva:car-outline" width={40} height={40} />
-            <Typography variant="h4" sx={{ textTransform: 'uppercase', margin: 1 }}>
-              {t('homePage.shipping')}
-            </Typography>
-            <Typography paragraph sx={{ color: 'text.primary', flexGrow: 1 }}>
-              {t('homePage.shippingText')}
-            </Typography>
-          </Box>
         </Box>
+      </Box>
+
+      <Container sx={{ pt: 8, pb: 8 }}>
+        <Grid container spacing={6}>
+          <Grid item xs={12}>
+            <AboutUs />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <ShippingInfo />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <HomeDelivery />
+          </Grid>{' '}
+          <Grid item xs={12} md={6}>
+            <PaymentMethods />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Promise />
+          </Grid>
+          <Grid item xs={12}>
+            <ComingSoon />
+          </Grid>
+        </Grid>
       </Container>
     </>
   );
