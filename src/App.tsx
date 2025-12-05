@@ -17,6 +17,7 @@ import SnackbarProvider from './components/snackbar/SnackbarProvider';
 import { AuthProvider } from './features/auth/AuthContext';
 import { CartProvider } from 'src/components/cart/CartContext';
 import SpanishLang from './lang/es.json';
+import WhatsappButton from './components/float-buttons/WhatsappButton';
 moment.locale('es');
 // ----------------------------------------------------------------------
 
@@ -41,6 +42,7 @@ export default function App() {
                     }}
                   >
                     <ScrollToTop />
+                    <WhatsappButton />
                     <CartProvider>
                       <Outlet />
                     </CartProvider>
