@@ -33,35 +33,25 @@ export const NavContent = ({ onClose }: Props) => {
     authRequired: boolean;
   };
 
-  const firstNavigation: NavigateItem[] = [
-    {
-      label: 'Buscar productos',
-      icon: 'eva:search-fill',
-      onClick: () => {},
-      navigateTo: '',
-      authRequired: false,
-    },
-  ];
-
   const secondNavigation: NavigateItem[] = [
-    {
-      label: 'Cómo funciona',
-      icon: 'material-symbols:format-list-numbered',
-      navigateTo: PATHS.home.root,
-      authRequired: false,
-    },
-    {
-      label: 'Preguntas frecuentes',
-      icon: 'solar:question-circle-linear',
-      navigateTo: PATHS.home.root,
-      authRequired: false,
-    },
-    {
-      label: 'Soporte',
-      icon: 'cil:speech',
-      navigateTo: PATHS.home.root,
-      authRequired: false,
-    },
+    // {
+    //   label: 'Cómo funciona',
+    //   icon: 'material-symbols:format-list-numbered',
+    //   navigateTo: PATHS.home.root,
+    //   authRequired: false,
+    // },
+    // {
+    //   label: 'Preguntas frecuentes',
+    //   icon: 'solar:question-circle-linear',
+    //   navigateTo: PATHS.home.root,
+    //   authRequired: false,
+    // },
+    // {
+    //   label: 'Soporte',
+    //   icon: 'cil:speech',
+    //   navigateTo: PATHS.home.root,
+    //   authRequired: false,
+    // },
   ];
 
   const navigate = useNavigate();
@@ -84,31 +74,6 @@ export const NavContent = ({ onClose }: Props) => {
     >
       <Card sx={{ width: '100%' }}>
         <List disablePadding>
-          {firstNavigation
-            .filter((item) => !item.authRequired || isAuthenticated)
-            .map((item, index) => (
-              <ListItemButton
-                key={index}
-                onClick={() =>
-                  item.navigateTo ? navigate(item.navigateTo) : item.onClick && item.onClick()
-                }
-              >
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  width={'100%'}
-                >
-                  <Box display="flex">
-                    <ListItemIcon>
-                      <Iconify icon={item.icon} />
-                    </ListItemIcon>
-                    <ListItemText sx={{ fontSize: 14 }} primary={item.label} />
-                  </Box>
-                  <Iconify icon="material-symbols:chevron-right" />
-                </Box>
-              </ListItemButton>
-            ))}
           <CategoriesNavButton
             categories={categories}
             isOpen={giftListOpen}
