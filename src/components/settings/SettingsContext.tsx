@@ -6,6 +6,7 @@ import {
   useEffect,
   useLayoutEffect,
   useMemo,
+  useRef,
 } from 'react';
 // hooks
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -70,6 +71,7 @@ type SettingsProviderProps = {
 
 export function SettingsProvider({ children }: SettingsProviderProps) {
   const [settings, setSettings] = useLocalStorage('settings', defaultSettings);
+  const workerStartedRef = useRef(false);
 
   const langStorage = typeof window !== 'undefined' ? localStorage.getItem('i18nextLng') : '';
 
@@ -172,11 +174,17 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
 
   useLayoutEffect(() => {
     if (settings.mockServer) {
-      worker.start({
-        onUnhandledRequest: 'bypass',
-      });
+      if (!workerStartedRef.current) {
+        worker.start({
+          onUnhandledRequest: 'bypass',
+        });
+        workerStartedRef.current = true;
+      }
     } else {
-      worker.stop();
+      if (workerStartedRef.current) {
+        worker.stop();
+        workerStartedRef.current = false;
+      }
     }
   }, [settings.mockServer]);
 

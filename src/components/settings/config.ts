@@ -10,5 +10,5 @@ export const defaultSettings: SettingsValueProps = {
   themeLayout: 'vertical',
   themeColorPresets: 'default',
   themeStretch: false,
-  mockServer: true,
+  mockServer: false,
 };
