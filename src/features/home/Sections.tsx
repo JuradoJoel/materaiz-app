@@ -35,25 +35,6 @@ export const ShippingInfo = () => (
       transporte principal será <strong>Correo Argentino</strong>, brindándote seguimiento y
       confianza.
     </Typography>
-
-    <Typography paragraph>
-      Pero también entendemos que cada cliente tiene su preferencia, por eso: si querés, podés
-      elegir tu propio transporte de confianza.
-    </Typography>
-
-    <Typography paragraph>
-      <strong>Opciones:</strong>
-    </Typography>
-
-    <ul style={{ textAlign: 'left', margin: '0 auto', maxWidth: 350 }}>
-      <li>Correo Argentino (principal)</li>
-      <li>Transporte de tu elección</li>
-      <li>Coordinación personalizada</li>
-    </ul>
-
-    <Typography paragraph sx={{ mt: 2 }}>
-      Vos decidís cómo recibir tu compra.
-    </Typography>
   </Box>
 );
 
@@ -122,11 +103,6 @@ export const PaymentMethods = () => (
 
     <Typography paragraph sx={{ mt: 2 }}>
       Por el momento aceptamos solo transferencias bancarias.
-    </Typography>
-
-    <Typography paragraph sx={{ fontWeight: 'bold' }}>
-      Al realizar tu pago por transferencia, se aplica un recargo del 5% correspondiente a los
-      costos del servicio.
     </Typography>
 
     <Typography paragraph sx={{ mt: 2 }}>

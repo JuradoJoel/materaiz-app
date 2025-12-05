@@ -1,5 +1,5 @@
 import { Box, Container, Grid } from '@mui/material';
-import catalogoImagen from '../../assets/catalogImage.png';
+import catalogoImagen from '../../assets/catalogImage.jpeg';
 import {
   AboutUs,
   ShippingInfo,
@@ -16,12 +16,12 @@ function Body() {
     <>
       <Box
         sx={{
-          height: '475px',
+          height: '700px',
           width: '100%',
           backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(${catalogoImagen})`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPosition: 'center 65%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -53,16 +53,7 @@ function Body() {
             <ShippingInfo />
           </Grid>
           <Grid item xs={12} md={6}>
-            <HomeDelivery />
-          </Grid>{' '}
-          <Grid item xs={12} md={6}>
             <PaymentMethods />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Promise />
-          </Grid>
-          <Grid item xs={12}>
-            <ComingSoon />
           </Grid>
         </Grid>
       </Container>
