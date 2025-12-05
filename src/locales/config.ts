@@ -25,4 +25,4 @@ export const allLangs = [
   },
 ];
 
-export const defaultLang = allLangs[0]; // English
+export const defaultLang = allLangs[1]; // Spanish (es)

@@ -4,9 +4,6 @@ import ThemeProvider from './theme';
 // locales
 import ThemeLocalization from './locales';
 // components
-
-import moment from 'moment';
-import 'moment/dist/locale/es';
 import { IntlProvider } from 'react-intl';
 import { Outlet } from 'react-router';
 import { MotionLazyContainer } from './components/animate';
@@ -18,7 +15,6 @@ import { AuthProvider } from './features/auth/AuthContext';
 import { CartProvider } from 'src/components/cart/CartContext';
 import SpanishLang from './lang/es.json';
 import WhatsappButton from './components/float-buttons/WhatsappButton';
-moment.locale('es');
 // ----------------------------------------------------------------------
 
 const locale = 'es';

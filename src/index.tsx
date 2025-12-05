@@ -16,6 +16,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { RouterProvider } from 'react-router-dom';
 // components
 import { SettingsProvider } from './components/settings';
+import LoadingScreen from './components/loading-screen';
 
 // Check our docs
 // https://docs.minimals.cc/authentication/ts-version
@@ -61,7 +62,7 @@ root.render(
     <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={locale}>
       <HelmetProvider>
         <SettingsProvider>
-          <RouterProvider router={router} />
+          <RouterProvider router={router} fallbackElement={<LoadingScreen />} />
         </SettingsProvider>
       </HelmetProvider>
     </LocalizationProvider>

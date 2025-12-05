@@ -4,6 +4,7 @@ import { useSettingsContext } from '../components/settings';
 //
 import { allLangs, defaultLang } from './config';
 import { setLocale } from 'yup';
+import { loadLanguage } from './i18n';
 
 // ----------------------------------------------------------------------
 
@@ -16,8 +17,10 @@ export default function useLocales() {
 
   const currentLang = allLangs.find((_lang) => _lang.value === langStorage) || defaultLang;
 
-  const handleChangeLanguage = (newlang: string) => {
+  const handleChangeLanguage = async (newlang: string) => {
     const newLangObj = allLangs.find((_lang) => _lang.value === newlang) || defaultLang;
+    // Cargar el idioma bajo demanda si no está cargado
+    await loadLanguage(newlang);
     i18n.changeLanguage(newlang);
     onChangeDirectionByLang(newlang);
     setLocale(newLangObj.yupLocale);

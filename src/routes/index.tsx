@@ -1,8 +1,5 @@
 import { createHashRouter, Navigate, RouteObject } from 'react-router-dom';
 //
-// layouts
-import CompactLayout from '../layouts/compact';
-import DashboardLayout from '../layouts/dashboard';
 // config
 import { PATH_AFTER_LOGIN } from '../config';
 
@@ -12,6 +9,10 @@ import { ElementType, lazy, Suspense } from 'react';
 import LoadingScreen from 'src/components/loading-screen';
 import { LoadingSpinner } from 'src/components/loading-spinner';
 import NotAllowedPage from 'src/pages/NotAllowedPage';
+
+// Lazy load layouts
+const LazyDashboardLayout = lazy(() => import('../layouts/dashboard'));
+const LazyCompactLayout = lazy(() => import('../layouts/compact'));
 
 /**
  * This will show a full screen spinner while the component is loading.
@@ -73,16 +74,20 @@ const ROUTES: RouteObject[] = [
       {
         path: 'home',
         element: (
-          <>
-            <DashboardLayout>
+          <Suspense fallback={<LoadingScreen />}>
+            <LazyDashboardLayout>
               <LazyHomePage />
-            </DashboardLayout>
-          </>
+            </LazyDashboardLayout>
+          </Suspense>
         ),
       },
       {
         path: 'explore-products',
-        element: <DashboardLayout />,
+        element: (
+          <Suspense fallback={<LoadingScreen />}>
+            <LazyDashboardLayout />
+          </Suspense>
+        ),
         children: [
           {
             path: 'category/:id',
@@ -96,7 +101,11 @@ const ROUTES: RouteObject[] = [
       },
       {
         path: 'wholesale',
-        element: <DashboardLayout />,
+        element: (
+          <Suspense fallback={<LoadingScreen />}>
+            <LazyDashboardLayout />
+          </Suspense>
+        ),
         children: [
           {
             path: '',
@@ -115,13 +124,19 @@ const ROUTES: RouteObject[] = [
       {
         path: 'cart',
         element: (
-          <DashboardLayout>
-            <LazyCartPage />
-          </DashboardLayout>
+          <Suspense fallback={<LoadingScreen />}>
+            <LazyDashboardLayout>
+              <LazyCartPage />
+            </LazyDashboardLayout>
+          </Suspense>
         ),
       },
       {
-        element: <CompactLayout />,
+        element: (
+          <Suspense fallback={<LoadingScreen />}>
+            <LazyCompactLayout />
+          </Suspense>
+        ),
         children: [
           { path: '404', element: <LazyPage404 /> },
           { path: 'not-allowed', element: <NotAllowedPage /> },
