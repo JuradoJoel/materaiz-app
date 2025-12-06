@@ -26,7 +26,7 @@ export default function WhatsappButton() {
       <Tooltip title="Whatsapp">
         <IconButtonAnimate
           color="primary"
-          onClick={() => window.open('https://wa.me/1161832176', '_blank')}
+          onClick={() => window.open('https://wa.me/+541161832176', '_blank')}
           sx={{ p: 1.25 }}
         >
           <img src={WhatsappIcon} alt="Whatsapp" width={42} height={42} />

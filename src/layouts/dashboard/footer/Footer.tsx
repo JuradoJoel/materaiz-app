@@ -66,7 +66,7 @@ function Footer() {
             <ListItem>
               <Link
                 style={{ textDecoration: 'none', color: 'white' }}
-                to="https://wa.me/1161832176"
+                to="https://wa.me/+541161832176"
                 target="_blank"
                 rel="noopener noreferrer"
               >
