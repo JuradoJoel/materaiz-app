@@ -63,9 +63,12 @@ const ProductDetail = () => {
                 </Typography>
               )}
 
-              <Typography variant="body1" paragraph>
-                {formatText(product.description) + '.'}
-              </Typography>
+              <Typography
+                variant="body1"
+                paragraph
+                component="div"
+                dangerouslySetInnerHTML={{ __html: product.description }}
+              />
               <CartQuantityControl product={product} sx={{ mt: 2, bgcolor: 'grey.300' }} />
             </CardContent>
           </Card>
