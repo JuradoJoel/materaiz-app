@@ -13,7 +13,7 @@ import { useSnackbar } from 'src/components/snackbar';
 const Cart = () => {
   const { cart, removeFromCart } = useCart();
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
-  const [isHomeDelivery, setIsHomeDelivery] = useState(false);
+  const [isHomeDelivery, setIsHomeDelivery] = useState(true);
   const { enqueueSnackbar } = useSnackbar();
 
   const totalAmount = cart.reduce(

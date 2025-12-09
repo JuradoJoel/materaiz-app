@@ -167,11 +167,11 @@ export default function CartSummary({
             value={isHomeDelivery ? 'delivery' : 'pickup'}
             onChange={(e) => handleDeliveryChange(e.target.value === 'delivery')}
           >
-            <FormControlLabel
+            {/* <FormControlLabel
               value="pickup"
               control={<Radio />}
               label="Retiro por local (Gratis)"
-            />
+            /> */}
             <FormControlLabel value="delivery" control={<Radio />} label="Envío a domicilio" />
           </RadioGroup>
         </Box>
