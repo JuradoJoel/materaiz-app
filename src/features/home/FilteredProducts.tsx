@@ -35,7 +35,7 @@ function FilteredProducts() {
           <Divider sx={{ width: '100%', height: '1px', backgroundColor: 'neutral.light' }} />
 
           {hasProducts ? (
-            <ProductList products={filteredProducts} />
+            <ProductList products={filteredProducts} hideCategoryTitle={true} />
           ) : (
             <Typography variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
               No hay productos en esta categoría
