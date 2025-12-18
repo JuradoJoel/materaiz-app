@@ -151,6 +151,18 @@ function Searchbar() {
   };
   const { data: products = [] } = useAllProductsQuery();
 
+  const truncateText = (html: string | undefined, maxLength: number = 130) => {
+    if (!html) return '';
+    const plainText = html
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (plainText.length <= maxLength) {
+      return plainText;
+    }
+    return plainText.slice(0, maxLength).trim() + '...';
+  };
+
   return (
     <ClickAwayListener onClickAway={handleClose}>
       <div>
@@ -211,7 +223,17 @@ function Searchbar() {
                   <Box sx={{ fontWeight: 'bold' }}>{formatText(option.name)}</Box>
 
                   {option.description && (
-                    <Box sx={{ fontSize: 12, opacity: 0.7 }}>{formatText(option.description)}</Box>
+                    <Box
+                      sx={{
+                        fontSize: '0.85rem',
+                        opacity: 0.8,
+                        color: 'text.secondary',
+                        mt: 0.5,
+                        lineHeight: 1.4,
+                      }}
+                    >
+                      {truncateText(option.description, 100)}
+                    </Box>
                   )}
                 </Box>
               )}
