@@ -13,7 +13,7 @@ import { useSnackbar } from 'src/components/snackbar';
 const Cart = () => {
   const { cart, removeFromCart } = useCart();
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
-  const [isHomeDelivery, setIsHomeDelivery] = useState(true);
+  const [isHomeDelivery, setIsHomeDelivery] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   const totalAmount = cart.reduce(
@@ -119,7 +119,10 @@ const Cart = () => {
             showCheckoutForm={showCheckoutForm}
             onCheckout={() => setShowCheckoutForm(true)}
             isHomeDelivery={isHomeDelivery}
-            onIsHomeDeliveryChange={setIsHomeDelivery}
+            onIsHomeDeliveryChange={(newValue: boolean) => {
+              setIsHomeDelivery(newValue);
+              setShowCheckoutForm(false);
+            }}
             onTotalChange={(total, shipping) => {
               setFinalTotal(total);
               setShippingCostFromAPI(shipping);
@@ -141,6 +144,7 @@ const Cart = () => {
               isHomeDelivery={isHomeDelivery}
               onSuccess={handleCheckoutSuccess}
               onCancel={() => setShowCheckoutForm(false)}
+              onResetCheckout={() => setShowCheckoutForm(false)}
             />
           </Card>
         )}

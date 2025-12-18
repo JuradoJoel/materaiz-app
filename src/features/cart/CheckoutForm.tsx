@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Alert, Button } from '@mui/material';
 import { CartItem } from 'src/models/Product';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -21,7 +21,7 @@ export const CheckoutSchema = Yup.object().shape({
     .matches(/^[0-9+\-\s()]+$/, 'Solo números, espacios, + y guiones')
     .min(10, 'Mínimo 10 caracteres'),
   delivery_method: Yup.string()
-    .oneOf(['pickup', 'delivery'] as const)
+    .oneOf(['freight', 'delivery'] as const)
     .required('Debe seleccionar un método de entrega'),
   address: Yup.string().when('delivery_method', {
     is: 'delivery',
@@ -38,6 +38,7 @@ export type CheckoutFormProps = {
   isHomeDelivery: boolean;
   onSuccess: (response: CheckoutResponse) => void;
   onCancel: () => void;
+  onResetCheckout: () => void;
 };
 
 export const CheckoutForm = ({
@@ -56,7 +57,7 @@ export const CheckoutForm = ({
       email: '',
       phone: '',
       address: '',
-      delivery_method: isHomeDelivery ? 'delivery' : 'pickup',
+      delivery_method: isHomeDelivery ? 'delivery' : 'freight',
     },
   });
 
@@ -150,29 +151,29 @@ export const CheckoutForm = ({
           />
         )}
       />
-
-      {/* Campo dirección solo si el método es envío */}
-      {isHomeDelivery && (
-        <Controller
-          name="address"
-          control={control}
-          render={({ field, fieldState }) => (
-            <TemplateTextField
-              field={{
-                ...field,
-                value: field.value ?? '',
-                onChange: (e) => field.onChange(e.target.value),
-              }}
-              fieldState={fieldState}
-              formState={formState}
-              label="Dirección de envío"
-              placeholder="Av. Corrientes 1234, Piso 5, Dto A"
-              multiline
-            />
-          )}
-        />
+      <Controller
+        name="address"
+        control={control}
+        render={({ field, fieldState }) => (
+          <TemplateTextField
+            field={{
+              ...field,
+              value: field.value ?? '',
+              onChange: (e) => field.onChange(e.target.value),
+            }}
+            fieldState={fieldState}
+            formState={formState}
+            label="Dirección de envío"
+            placeholder="Av. Corrientes 1234, Piso 5, Dto A"
+            multiline
+          />
+        )}
+      />
+      {!isHomeDelivery && (
+        <Alert severity="info" sx={{ mt: 2 }}>
+          El costo del flete se coordinará posteriormente con el vendedor.
+        </Alert>
       )}
-
       <TemplateFormActions>
         <Button onClick={onCancel} variant="outlined" color="inherit">
           Cancelar

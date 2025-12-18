@@ -16,7 +16,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from 'src/routes/paths';
 import formatCurrency from 'src/utils/formatCurrency';
-
 import { useCalculateShippingMutation } from 'src/api/shippingRepository';
 
 interface CartSummaryProps {
@@ -29,6 +28,7 @@ interface CartSummaryProps {
   isHomeDelivery: boolean;
   onIsHomeDeliveryChange: (value: boolean) => void;
   onTotalChange?: (finalTotal: number, shippingCost: number) => void;
+  onResetCheckout?: () => void;
 }
 
 interface ShippingOption {
@@ -48,17 +48,26 @@ export default function CartSummary({
   showCheckoutForm,
   isHomeDelivery,
   onIsHomeDeliveryChange,
-
   onTotalChange,
+  onResetCheckout,
 }: CartSummaryProps) {
   const navigate = useNavigate();
   const [postalCode, setPostalCode] = useState('');
+  const [postalCodeError, setPostalCodeError] = useState(false);
   const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([]);
-  const [selectedShipping, setSelectedShipping] = useState<string>('');
+  const [selectedShipping, setSelectedShipping] = useState('');
   const [shippingError, setShippingError] = useState('');
   const mutation = useCalculateShippingMutation();
 
-  // Costo de envío según si es domicilio
+  const handleContinue = () => {
+    if (isHomeDelivery && postalCode.trim() === '') {
+      setPostalCodeError(true);
+      return;
+    }
+    handleButtonClick();
+  };
+
+  // Costo de envío según si es domicilio - si isHomeDelivery es falso se toma como Flete a coordinar con el vendedor
   const shippingCost = isHomeDelivery
     ? shippingOptions.find((opt) => `${opt.deliveryType}-${opt.service}` === selectedShipping)
         ?.cost || 0
@@ -68,14 +77,15 @@ export default function CartSummary({
 
   useEffect(() => {
     onTotalChange?.(finalTotal, shippingCost);
-  }, [finalTotal, shippingCost]);
+  }, [finalTotal, shippingCost, onTotalChange]);
 
   // Cambio método de entrega
   const handleDeliveryChange = (value: boolean) => {
     onIsHomeDeliveryChange(value);
-
+    onResetCheckout?.();
     if (!value) {
       setPostalCode('');
+      setPostalCodeError(false);
       setShippingOptions([]);
       setSelectedShipping('');
       setShippingError('');
@@ -86,6 +96,7 @@ export default function CartSummary({
   const handlePostalCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '').slice(0, 8);
     setPostalCode(value);
+    setPostalCodeError(false);
     setShippingError('');
 
     if (value.length === 0) {
@@ -164,14 +175,19 @@ export default function CartSummary({
 
           <RadioGroup
             name="homeDelivery"
-            value={isHomeDelivery ? 'delivery' : 'pickup'}
+            value={isHomeDelivery ? 'delivery' : 'freight'}
             onChange={(e) => handleDeliveryChange(e.target.value === 'delivery')}
           >
-            {/* <FormControlLabel
-              value="pickup"
+            <FormControlLabel
+              value="freight"
               control={<Radio />}
-              label="Retiro por local (Gratis)"
-            /> */}
+              label="Flete a coordinar con el vendedor"
+            />
+            {/* {!isHomeDelivery && (
+              <Alert severity="info" sx={{ mt: 1 }}>
+                El costo del flete se coordinará posteriormente con el vendedor.
+              </Alert>
+            )} */}
             <FormControlLabel value="delivery" control={<Radio />} label="Envío a domicilio" />
           </RadioGroup>
         </Box>
@@ -191,7 +207,9 @@ export default function CartSummary({
                 onChange={handlePostalCodeChange}
                 inputProps={{ maxLength: 8 }}
                 sx={{ flex: 1 }}
-                error={!!shippingError}
+                required={isHomeDelivery}
+                error={postalCodeError}
+                helperText={postalCodeError ? 'Ingresá un código postal válido' : ''}
               />
 
               <Button
@@ -259,8 +277,8 @@ export default function CartSummary({
         ) : (
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
             <Typography>Envío</Typography>
-            <Typography color="success.main" sx={{ fontWeight: 500 }}>
-              Gratis
+            <Typography color="warning.main" sx={{ fontWeight: 500 }}>
+              A coordinar
             </Typography>
           </Box>
         )}
@@ -280,7 +298,8 @@ export default function CartSummary({
             color="primary"
             fullWidth
             size="large"
-            onClick={handleButtonClick}
+            onClick={handleContinue}
+            disabled={isHomeDelivery && postalCode.trim() === ''}
             sx={{ py: 1.5, fontSize: '1rem', fontWeight: 'bold' }}
           >
             Continuar compra

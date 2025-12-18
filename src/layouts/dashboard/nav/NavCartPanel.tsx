@@ -21,7 +21,7 @@ type Props = {
 
 export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
   const { cart } = useCart();
-  const [isHomeDelivery, setIsHomeDelivery] = useState(true);
+  const [isHomeDelivery, setIsHomeDelivery] = useState(false);
   const totalAmount = cart.reduce(
     (total, item: CartItem) => total + item.product.original_price * item.quantity,
     0
