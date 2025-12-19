@@ -4,7 +4,7 @@ import CartSummary from 'src/components/cartSummary/CartSummary';
 import { useCart } from 'src/components/cart/CartContext';
 import formatCurrency from 'src/utils/formatCurrency';
 import CartQuantityControl from 'src/components/cart/CartQuantityControl';
-import { CartItem } from 'src/models/Product';
+import { CartItem, Product } from 'src/models/Product';
 import { useState } from 'react';
 import { CheckoutForm } from './CheckoutForm';
 import { CheckoutResponse } from 'src/api/OrderRepository';
@@ -15,9 +15,10 @@ const Cart = () => {
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [isHomeDelivery, setIsHomeDelivery] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const getProductPrice = (product: Product) => product.discount_price ?? product.original_price;
 
   const totalAmount = cart.reduce(
-    (total, item: CartItem) => total + item.product.original_price * item.quantity,
+    (total, item: CartItem) => total + getProductPrice(item.product) * item.quantity,
     0
   );
 
@@ -94,7 +95,7 @@ const Cart = () => {
 
                   <Box sx={{ textAlign: 'center', minWidth: 120 }}>
                     <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                      {formatCurrency(item.product.original_price)}
+                      {formatCurrency(item.product.discount_price ?? item.product.original_price)}
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

@@ -78,7 +78,7 @@ const ShoppingCart = ({ item, compact = false }: ShoppingCartProps) => {
               />
             </Box>
             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-              {formatCurrency(item.product.original_price)}
+              {formatCurrency(item.product.discount_price ?? item.product.original_price)}
             </Typography>
           </Box>
         </Grid>

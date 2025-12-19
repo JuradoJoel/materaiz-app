@@ -71,18 +71,21 @@ export const CheckoutForm = ({
         last_name: data.last_name,
         email: data.email,
         phone: data.phone,
-        address: data.delivery_method === 'delivery' ? data.address : null,
+        address: data.address?.trim() || null,
       },
       total_amount: totalAmount,
       shipping_cost: shippingCost,
       is_home_delivery: data.delivery_method === 'delivery',
-      items: cart.map((item) => ({
-        product_id: item.product.id,
-        product_name: item.product.name,
-        quantity: item.quantity,
-        unit_price: item.product.original_price,
-        subtotal: item.product.original_price * item.quantity,
-      })),
+      items: cart.map((item) => {
+        const unitPrice = item.product.discount_price ?? item.product.original_price;
+        return {
+          product_id: item.product.id,
+          product_name: item.product.name,
+          quantity: item.quantity,
+          unit_price: unitPrice,
+          subtotal: unitPrice * item.quantity,
+        };
+      }),
     };
 
     try {

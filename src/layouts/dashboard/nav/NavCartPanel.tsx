@@ -22,8 +22,11 @@ type Props = {
 export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
   const { cart } = useCart();
   const [isHomeDelivery, setIsHomeDelivery] = useState(false);
+  const getProductPrice = (product: CartItem['product']) =>
+    product.discount_price ?? product.original_price;
+
   const totalAmount = cart.reduce(
-    (total, item: CartItem) => total + item.product.original_price * item.quantity,
+    (total, item: CartItem) => total + getProductPrice(item.product) * item.quantity,
     0
   );
   const { pathname } = useLocation();
