@@ -7,12 +7,17 @@ import { useAllProductsQuery } from 'src/api/productRepository';
 import { useSnackbar } from 'src/components/snackbar';
 import { useContactMutation } from 'src/api/contactMessagesRepository';
 import { useAllCategoriesQuery } from 'src/api/categoryRepository';
+import { LoadingSpinner } from 'src/components/loading-spinner';
+import { Box, Typography } from '@mui/material';
 
 function HomePage() {
-  const { data: products } = useAllProductsQuery();
+  const { data: products = [], isLoading, isFetching } = useAllProductsQuery();
   const { enqueueSnackbar } = useSnackbar();
   const contactMutation = useContactMutation();
-  const { data: categories } = useAllCategoriesQuery();
+  const { data: categories = [] } = useAllCategoriesQuery();
+
+  const isLoadingOrFetching = isLoading || isFetching;
+  const hasProducts = products.length > 0;
 
   const handleContactSubmit = (values: ContactFormType) => {
     contactMutation.mutate(values, {
@@ -36,7 +41,27 @@ function HomePage() {
         <title> Home | {APP_NAME}</title>
       </Helmet>
       <Body />
-      <ProductList products={products} categoryMap={categoryMap} />
+      {isLoadingOrFetching && (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <LoadingSpinner />
+          <Typography sx={{ textAlign: 'center' }}>Cargando productos...</Typography>
+        </Box>
+      )}
+      {!isLoadingOrFetching && hasProducts && (
+        <ProductList products={products} categoryMap={categoryMap} />
+      )}
+      {!isLoadingOrFetching && !hasProducts && (
+        <Typography sx={{ textAlign: 'center', fontWeight: 700 }}>
+          No hay productos disponibles
+        </Typography>
+      )}
       <ContactForm onSubmit={handleContactSubmit} isSubmitting={contactMutation.isPending} />
     </>
   );

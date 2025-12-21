@@ -6,29 +6,23 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from 'src/routes/paths';
 import Iconify from 'src/components/iconify';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { Category } from 'src/models/Category';
-
+import { useAllCategoriesQuery } from 'src/api/categoryRepository';
 interface CategoriesNavButtonProps {
-  categories: Category[] | undefined;
   isOpen: boolean;
   onToggle: () => void;
   onClose: () => void;
 }
 
-export const CategoriesNavButton = ({
-  categories,
-  isOpen,
-  onToggle,
-  onClose,
-}: CategoriesNavButtonProps) => {
+export const CategoriesNavButton = ({ isOpen, onToggle, onClose }: CategoriesNavButtonProps) => {
   const navigate = useNavigate();
-  if (!categories) return null;
-
+  const { data: categories = [], isLoading, isFetching } = useAllCategoriesQuery();
+  const isLoadingOrFetching = isLoading || isFetching;
   const categoriesData = categories || [];
   const hasCategories = categoriesData.length > 0;
 
@@ -47,7 +41,13 @@ export const CategoriesNavButton = ({
       </ListItemButton>
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {hasCategories ? (
+          {isLoadingOrFetching && (
+            <Box sx={{ display: 'flex' }} py={1}>
+              <Typography>Cargando categorías...</Typography>
+            </Box>
+          )}
+          {!isLoadingOrFetching &&
+            hasCategories &&
             categoriesData.map((category, index) => (
               <Box key={category.id}>
                 <Box sx={{ display: 'flex' }}>
@@ -82,8 +82,8 @@ export const CategoriesNavButton = ({
                 </Box>
                 {index !== categoriesData.length - 1 && <Divider variant="middle" />}
               </Box>
-            ))
-          ) : (
+            ))}
+          {!isLoadingOrFetching && !hasCategories && (
             <Box sx={{ display: 'flex' }} py={1}>
               <ListItemButton>
                 <ListItemText

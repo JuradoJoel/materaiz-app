@@ -1,6 +1,7 @@
 import { Product } from 'src/models/Product';
 import { httpClient } from 'src/utils/httpClient';
 import { useSuspenseQuery } from 'src/utils/useSupenseQuery';
+import { useQuery } from '@tanstack/react-query';
 
 export class ProductRepository {
   keys = {
@@ -34,7 +35,10 @@ export class ProductRepository {
 const repo = new ProductRepository();
 
 export const useAllProductsQuery = () =>
-  useSuspenseQuery({ queryKey: repo.keys.all(), queryFn: repo.getAll });
+  useQuery({
+    queryKey: repo.keys.all(),
+    queryFn: () => repo.getAll(),
+  });
 
 export const useOneProductQuery = (id: number) =>
   useSuspenseQuery({ queryKey: repo.keys.one(id), queryFn: () => repo.getOne(id) });

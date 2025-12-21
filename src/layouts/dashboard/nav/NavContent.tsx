@@ -15,7 +15,6 @@ import { useAuthContext } from 'src/features/auth/useAuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { CategoriesNavButton } from './components/CategoriesNavButton';
-import { useAllCategoriesQuery } from 'src/api/categoryRepository';
 
 interface Props {
   onClose: () => void;
@@ -23,8 +22,7 @@ interface Props {
 
 export const NavContent = ({ onClose }: Props) => {
   const { logout, isAuthenticated } = useAuthContext();
-  const [giftListOpen, setGiftListOpen] = useState<boolean>(false);
-  const { data: categories } = useAllCategoriesQuery();
+  const [categoriesListOpen, setCategoriesListOpen] = useState<boolean>(false);
   type NavigateItem = {
     label: string;
     icon: string;
@@ -75,10 +73,9 @@ export const NavContent = ({ onClose }: Props) => {
       <Card sx={{ width: '100%' }}>
         <List disablePadding>
           <CategoriesNavButton
-            categories={categories}
-            isOpen={giftListOpen}
+            isOpen={categoriesListOpen}
             onClose={onClose}
-            onToggle={() => setGiftListOpen(!giftListOpen)}
+            onToggle={() => setCategoriesListOpen(!categoriesListOpen)}
           />
         </List>
       </Card>

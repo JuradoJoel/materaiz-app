@@ -1,6 +1,6 @@
+import { useQuery } from '@tanstack/react-query';
 import { Category } from 'src/models/Category';
 import { httpClient } from 'src/utils/httpClient';
-import { useSuspenseQuery } from 'src/utils/useSupenseQuery';
 
 export class CategoryRepository {
   keys = {
@@ -16,4 +16,4 @@ export class CategoryRepository {
 const repo = new CategoryRepository();
 
 export const useAllCategoriesQuery = () =>
-  useSuspenseQuery({ queryKey: repo.keys.all(), queryFn: repo.getAll });
+  useQuery({ queryKey: repo.keys.all(), queryFn: repo.getAll });

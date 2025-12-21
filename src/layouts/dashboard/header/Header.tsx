@@ -49,8 +49,9 @@ export default function Header({ onOpenNav, onClose, open, onOpenCart }: Props) 
   const { t } = useTranslation();
   const { themeLayout } = useSettingsContext();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { data: categories } = useAllCategoriesQuery();
-
+  const { data: categories = [], isLoading, isFetching } = useAllCategoriesQuery();
+  const isLoadingOrFetching = isLoading || isFetching;
+  const hasCategories = categories.length > 0;
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -104,13 +105,29 @@ export default function Header({ onOpenNav, onClose, open, onOpenCart }: Props) 
                   open={Boolean(anchorEl)}
                   onClose={() => setAnchorEl(null)}
                 >
-                  {categories?.map((category: Category) => (
-                    <MenuItem key={category.id} onClick={() => handleSelectCategory(category.id)}>
+                  {!isLoadingOrFetching &&
+                    hasCategories &&
+                    categories.map((category: Category) => (
+                      <MenuItem key={category.id} onClick={() => handleSelectCategory(category.id)}>
+                        <Typography color="inherit" sx={{ textTransform: 'uppercase' }}>
+                          {category.name}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  {!isLoadingOrFetching && !hasCategories && (
+                    <MenuItem>
                       <Typography color="inherit" sx={{ textTransform: 'uppercase' }}>
-                        {category.name}
+                        No hay categorías
                       </Typography>
                     </MenuItem>
-                  ))}
+                  )}
+                  {isLoadingOrFetching && (
+                    <MenuItem>
+                      <Typography color="inherit" sx={{ textTransform: 'uppercase' }}>
+                        Cargando categorías...
+                      </Typography>
+                    </MenuItem>
+                  )}
                 </Menu>
                 <Button
                   color="inherit"
