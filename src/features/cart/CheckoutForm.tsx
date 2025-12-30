@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { TemplateForm } from 'src/components/form/TemplateForm';
 import { TemplateTextField } from 'src/components/form/TemplateTextField';
 import { TemplateNumberField } from 'src/components/form/TemplateNumberField';
+import { getBombillaPrice, getBombillaLabel } from 'src/constants/bombillas';
 import {
   TemplateFormActions,
   TemplateFormSubmitButton,
@@ -77,13 +78,20 @@ export const CheckoutForm = ({
       shipping_cost: shippingCost,
       is_home_delivery: data.delivery_method === 'delivery',
       items: cart.map((item) => {
-        const unitPrice = item.product.discount_price ?? item.product.original_price;
+        const basePrice = item.product.discount_price ?? item.product.original_price;
+        const bombillaPrice = getBombillaPrice(item.addonBombilla ?? null);
+        const unitPrice = basePrice + bombillaPrice;
+        const subtotal = unitPrice * item.quantity;
+
         return {
           product_id: item.product.id,
           product_name: item.product.name,
           quantity: item.quantity,
           unit_price: unitPrice,
-          subtotal: unitPrice * item.quantity,
+          subtotal: subtotal,
+          addon_bombilla: item.addonBombilla || null,
+          addon_bombilla_label: item.addonBombilla ? getBombillaLabel(item.addonBombilla) : null,
+          addon_bombilla_price: bombillaPrice,
         };
       }),
     };

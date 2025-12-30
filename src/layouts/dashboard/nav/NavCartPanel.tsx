@@ -13,6 +13,7 @@ import CartSummary from 'src/components/cartSummary/CartSummary';
 //
 import { useCart } from 'src/components/cart/CartContext';
 import { CartItem } from 'src/models/Product';
+import { calculateCartTotal } from 'src/utils/cartUtils';
 
 type Props = {
   openNavCart: boolean;
@@ -22,13 +23,8 @@ type Props = {
 export default function NavCartPanel({ openNavCart, onCloseNavCart }: Props) {
   const { cart } = useCart();
   const [isHomeDelivery, setIsHomeDelivery] = useState(false);
-  const getProductPrice = (product: CartItem['product']) =>
-    product.discount_price ?? product.original_price;
 
-  const totalAmount = cart.reduce(
-    (total, item: CartItem) => total + getProductPrice(item.product) * item.quantity,
-    0
-  );
+  const totalAmount = calculateCartTotal(cart);
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');

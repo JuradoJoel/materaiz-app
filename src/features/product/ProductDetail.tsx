@@ -5,8 +5,10 @@ import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import { useOneProductQuery } from 'src/api/productRepository';
 import CartQuantityControl from 'src/components/cart/CartQuantityControl';
+import MateAddonsSection from 'src/components/product/MateAddonsSection';
 import formatCurrency from 'src/utils/formatCurrency';
 import { formatText } from 'src/utils/formatText';
+import { isMateProduct } from 'src/utils/filterProductUtils';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -70,6 +72,8 @@ const ProductDetail = () => {
                 dangerouslySetInnerHTML={{ __html: product.description }}
               />
               <CartQuantityControl product={product} sx={{ mt: 2, bgcolor: 'grey.300' }} />
+
+              {isMateProduct(product) && <MateAddonsSection product={product} />}
             </CardContent>
           </Card>
         </Grid>

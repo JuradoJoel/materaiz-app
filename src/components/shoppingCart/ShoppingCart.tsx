@@ -3,6 +3,7 @@ import formatCurrency from 'src/utils/formatCurrency';
 import CartQuantityControl from 'src/components/cart/CartQuantityControl';
 import { CartItem } from 'src/models/Product';
 import { useCart } from 'src/components/cart/CartContext';
+import { getBombillaText, getItemUnitPrice } from 'src/utils/cartUtils';
 
 interface ShoppingCartProps {
   item: CartItem;
@@ -41,19 +42,38 @@ const ShoppingCart = ({ item, compact = false }: ShoppingCartProps) => {
           md={compact ? 10 : 10.5}
           lg={compact ? 9.5 : 10.5}
         >
-          <Typography
-            variant="body2"
-            sx={{
-              fontWeight: 500,
-              mb: 1,
-              textTransform: 'none',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {item.product.name}
-          </Typography>
+          <Box>
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: 500,
+                mb: 1,
+                textTransform: 'none',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {item.product.name}
+            </Typography>
+
+            {item.addonBombilla && (
+              <Typography
+                variant="caption"
+                color="success.main"
+                sx={{
+                  ml: 0,
+                  fontStyle: 'italic',
+                  display: 'block',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {getBombillaText(item)}
+              </Typography>
+            )}
+          </Box>
           <Typography
             color="error"
             variant="body2"
@@ -78,7 +98,7 @@ const ShoppingCart = ({ item, compact = false }: ShoppingCartProps) => {
               />
             </Box>
             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-              {formatCurrency(item.product.discount_price ?? item.product.original_price)}
+              {formatCurrency(getItemUnitPrice(item))}
             </Typography>
           </Box>
         </Grid>

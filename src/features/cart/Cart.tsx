@@ -4,23 +4,21 @@ import CartSummary from 'src/components/cartSummary/CartSummary';
 import { useCart } from 'src/components/cart/CartContext';
 import formatCurrency from 'src/utils/formatCurrency';
 import CartQuantityControl from 'src/components/cart/CartQuantityControl';
-import { CartItem, Product } from 'src/models/Product';
+import { CartItem } from 'src/models/Product';
 import { useState } from 'react';
 import { CheckoutForm } from './CheckoutForm';
 import { CheckoutResponse } from 'src/api/OrderRepository';
 import { useSnackbar } from 'src/components/snackbar';
+import { calculateCartTotal, getBombillaText, getItemUnitPrice } from 'src/utils/cartUtils';
 
 const Cart = () => {
   const { cart, removeFromCart } = useCart();
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [isHomeDelivery, setIsHomeDelivery] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const getProductPrice = (product: Product) => product.discount_price ?? product.original_price;
 
-  const totalAmount = cart.reduce(
-    (total, item: CartItem) => total + getProductPrice(item.product) * item.quantity,
-    0
-  );
+  const totalAmount = calculateCartTotal(cart);
+  console.log('Total calculado en Cart.tsx:', totalAmount);
 
   const [finalTotal, setFinalTotal] = useState(totalAmount);
   const [shippingCostFromAPI, setShippingCostFromAPI] = useState(0);
@@ -73,16 +71,28 @@ const Cart = () => {
                   />
 
                   <Box sx={{ flex: 1 }}>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        fontWeight: 500,
-                        mb: 1,
-                        textTransform: 'none',
-                      }}
-                    >
-                      {item.product.name}
-                    </Typography>
+                    <Box>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontWeight: 500,
+                          mb: 1,
+                          textTransform: 'none',
+                        }}
+                      >
+                        {item.product.name}
+                      </Typography>
+
+                      {item.addonBombilla && (
+                        <Typography
+                          variant="body2"
+                          color="success.main"
+                          sx={{ ml: 2, fontStyle: 'italic' }}
+                        >
+                          {getBombillaText(item)}
+                        </Typography>
+                      )}
+                    </Box>
                     <Typography
                       color="error"
                       variant="body2"
@@ -95,7 +105,7 @@ const Cart = () => {
 
                   <Box sx={{ textAlign: 'center', minWidth: 120 }}>
                     <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                      {formatCurrency(item.product.discount_price ?? item.product.original_price)}
+                      {formatCurrency(getItemUnitPrice(item))}
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

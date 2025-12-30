@@ -15,9 +15,14 @@ export interface Product {
   categories: Category[];
 }
 
+//tipo para la bombilla que el usuario quiera agregarle
+export type BombillaOption = 'pico-curva' | 'caño-redondo';
+export type SelectedBombilla = BombillaOption | null;
+
 export interface CartItem {
   product: Product;
   quantity: number;
+  addonBombilla?: BombillaOption;
 }
 
 export type Cart = CartItem[];
