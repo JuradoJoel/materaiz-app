@@ -83,15 +83,29 @@ const Cart = () => {
                         {item.product.name}
                       </Typography>
 
-                      {item.addonBombilla && (
-                        <Typography
-                          variant="body2"
-                          color="success.main"
-                          sx={{ ml: 2, fontStyle: 'italic' }}
-                        >
-                          {getBombillaText(item)}
-                        </Typography>
-                      )}
+                      {item.addons &&
+                        item.addons.length > 0 &&
+                        (() => {
+                          const bombillaLines = getBombillaText(item);
+                          return bombillaLines ? (
+                            <Box sx={{ mt: 0.5 }}>
+                              {bombillaLines.map((line, index) => (
+                                <Typography
+                                  key={index}
+                                  variant="body2"
+                                  color="success.main"
+                                  sx={{
+                                    fontStyle: 'italic',
+                                    wordWrap: 'break-word',
+                                    overflowWrap: 'break-word',
+                                  }}
+                                >
+                                  {line}
+                                </Typography>
+                              ))}
+                            </Box>
+                          ) : null;
+                        })()}
                     </Box>
                     <Typography
                       color="error"

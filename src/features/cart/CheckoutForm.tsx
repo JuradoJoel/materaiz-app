@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { TemplateForm } from 'src/components/form/TemplateForm';
 import { TemplateTextField } from 'src/components/form/TemplateTextField';
 import { TemplateNumberField } from 'src/components/form/TemplateNumberField';
-import { getBombillaPrice, getBombillaLabel } from 'src/constants/bombillas';
+import { getBombillaLabel } from 'src/constants/bombillas';
 import {
   TemplateFormActions,
   TemplateFormSubmitButton,
@@ -79,19 +79,20 @@ export const CheckoutForm = ({
       is_home_delivery: data.delivery_method === 'delivery',
       items: cart.map((item) => {
         const basePrice = item.product.discount_price ?? item.product.original_price;
-        const bombillaPrice = getBombillaPrice(item.addonBombilla ?? null);
-        const unitPrice = basePrice + bombillaPrice;
-        const subtotal = unitPrice * item.quantity;
+        const subtotal = basePrice * item.quantity;
+        const addonsPayload = (item.addons || []).map((addon) => ({
+          type: 'bombilla',
+          description: getBombillaLabel(addon.variant),
+          price: addon.price,
+        }));
 
         return {
           product_id: item.product.id,
           product_name: item.product.name,
           quantity: item.quantity,
-          unit_price: unitPrice,
+          unit_price: basePrice,
           subtotal: subtotal,
-          addon_bombilla: item.addonBombilla || null,
-          addon_bombilla_label: item.addonBombilla ? getBombillaLabel(item.addonBombilla) : null,
-          addon_bombilla_price: bombillaPrice,
+          addons: addonsPayload,
         };
       }),
     };

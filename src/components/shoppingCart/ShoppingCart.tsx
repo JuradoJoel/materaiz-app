@@ -57,21 +57,24 @@ const ShoppingCart = ({ item, compact = false }: ShoppingCartProps) => {
               {item.product.name}
             </Typography>
 
-            {item.addonBombilla && (
-              <Typography
-                variant="caption"
-                color="success.main"
-                sx={{
-                  ml: 0,
-                  fontStyle: 'italic',
-                  display: 'block',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {getBombillaText(item)}
-              </Typography>
+            {item.addons && item.addons.length > 0 && (
+              <Box sx={{ mt: 1, ml: 0 }}>
+                {getBombillaText(item)?.map((line, index) => (
+                  <Typography
+                    key={index}
+                    variant="body2"
+                    color="success.main"
+                    sx={{
+                      fontStyle: 'italic',
+                      wordWrap: 'break-word',
+                      overflowWrap: 'break-word',
+                      display: 'block',
+                    }}
+                  >
+                    {line}
+                  </Typography>
+                ))}
+              </Box>
             )}
           </Box>
           <Typography

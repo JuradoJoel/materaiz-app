@@ -1,35 +1,18 @@
 import { BombillaOption } from 'src/models/Product';
 
-type BombillaConfig = {
-  value: BombillaOption | null;
-  label: string;
-  price: number;
-};
-
-export const BOMBILLA_OPTIONS: BombillaConfig[] = [
-  {
-    value: null,
-    label: 'No',
-    price: 0,
-  },
-  {
-    value: 'pico-curva',
-    label: 'Bombilla pico curva de Acero',
-    price: 6000,
-  },
-  {
-    value: 'caño-redondo',
-    label: 'Bombilla de acero caño redondo con dije de bronce',
-    price: 8000,
-  },
+export const BOMBILLA_OPTIONS = [
+  { value: null, label: 'Ninguna', price: 0 },
+  { value: 'pico-curva' as BombillaOption, label: 'Bombilla Pico Curva de Acero', price: 8000 },
+  { value: 'caño-redondo' as BombillaOption, label: 'Bombilla Caño Redondo', price: 6000 },
 ];
 
-export const getBombillaLabel = (option: BombillaOption | null): string => {
-  const found = BOMBILLA_OPTIONS.find((opt) => opt.value === option);
-  return found?.label.replace('Bombilla ', '') || '';
+export const getBombillaPrice = (variant: BombillaOption | null): number => {
+  if (!variant) return 0;
+  const option = BOMBILLA_OPTIONS.find((opt) => opt.value === variant);
+  return option?.price || 0;
 };
 
-export const getBombillaPrice = (option: BombillaOption | null): number => {
-  const found = BOMBILLA_OPTIONS.find((opt) => opt.value === option);
-  return found?.price ?? 0;
+export const getBombillaLabel = (variant: BombillaOption): string => {
+  const option = BOMBILLA_OPTIONS.find((opt) => opt.value === variant);
+  return option?.label || '';
 };
