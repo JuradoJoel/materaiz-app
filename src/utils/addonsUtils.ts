@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'; // Asumiendo usas react-query 
 
 export const fetchCustomDesignPrice = async () =>
   // TODO: API call a /api/configs/custom_design_price
-  5000; // Simulado; reemplaza con fetch real
+  10000; // Simulado; reemplaza con fetch real
 
 export const useCustomDesignPrice = () =>
   useQuery({ queryKey: ['custom_design_price'], queryFn: fetchCustomDesignPrice });
