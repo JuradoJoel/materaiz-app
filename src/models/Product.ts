@@ -19,11 +19,21 @@ export interface Product {
 export type BombillaOption = 'pico-curva' | 'caño-redondo';
 export type SelectedBombilla = BombillaOption | null;
 
-export interface Addon {
+export interface BombillaAddon {
   type: 'bombilla';
   variant: BombillaOption;
   price: number;
+  details?: string;
 }
+
+export interface CustomDesignAddon {
+  type: 'custom_design';
+  variant?: null;
+  price: number;
+  details: string | null;
+}
+
+export type Addon = BombillaAddon | CustomDesignAddon;
 
 export interface CartItem {
   product: Product;

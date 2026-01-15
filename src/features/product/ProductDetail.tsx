@@ -6,6 +6,7 @@ import 'react-medium-image-zoom/dist/styles.css';
 import { useOneProductQuery } from 'src/api/productRepository';
 import CartQuantityControl from 'src/components/cart/CartQuantityControl';
 import MateAddonsSection from 'src/components/product/MateAddonsSection';
+import CustomDesignSection from 'src/components/product/CustomDesignSection';
 import formatCurrency from 'src/utils/formatCurrency';
 import { formatText } from 'src/utils/formatText';
 import { isMateProduct } from 'src/utils/filterProductUtils';
@@ -74,6 +75,7 @@ const ProductDetail = () => {
               <CartQuantityControl product={product} sx={{ mt: 2, bgcolor: 'grey.300' }} />
 
               {isMateProduct(product) && <MateAddonsSection product={product} />}
+              {isMateProduct(product) && <CustomDesignSection product={product} />}
             </CardContent>
           </Card>
         </Grid>

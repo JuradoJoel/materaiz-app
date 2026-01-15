@@ -1,4 +1,4 @@
-import { CartItem, Addon } from 'src/models/Product';
+import { CartItem, Addon, BombillaOption } from 'src/models/Product';
 import { getBombillaLabel } from 'src/constants/bombillas';
 import formatCurrency from 'src/utils/formatCurrency';
 
@@ -28,11 +28,18 @@ export const getBombillaText = (item: CartItem): string[] | null => {
   if (!item.addons || item.addons.length === 0) return null;
 
   const grouped = item.addons.reduce((acc, addon) => {
-    const key = addon.variant;
-    if (!acc[key]) {
-      acc[key] = { count: 0, label: getBombillaLabel(addon.variant), price: addon.price };
+    if (addon.type !== 'bombilla') return acc;
+
+    const variant = addon.variant ?? 'desconocida';
+
+    if (!acc[variant]) {
+      acc[variant] = {
+        count: 0,
+        label: getBombillaLabel(variant as BombillaOption),
+        price: addon.price,
+      };
     }
-    acc[key].count++;
+    acc[variant].count++;
     return acc;
   }, {} as Record<string, { count: number; label: string; price: number }>);
 
@@ -40,6 +47,28 @@ export const getBombillaText = (item: CartItem): string[] | null => {
     const countText = count > 1 ? `${count}× ` : '';
     return `+ Bombilla: ${countText}${label} (+${formatCurrency(price)})`;
   });
+
+  return lines.length > 0 ? lines : null;
+};
+
+export const getFormattedAddons = (item: CartItem): string[] | null => {
+  if (!item.addons || item.addons.length === 0) return null;
+
+  const lines: string[] = [];
+  const bombillaAddons = item.addons.filter((a) => a.type === 'bombilla');
+  if (bombillaAddons.length > 0) {
+    const bombillaLines = getBombillaText(item) || [];
+    lines.push(...bombillaLines);
+  }
+
+  const designAddons = item.addons.filter((a) => a.type === 'custom_design');
+  if (designAddons.length > 0) {
+    const designCount = designAddons.length;
+    const designPrice = designAddons[0]?.price || 0;
+    const countText = designCount > 1 ? `${designCount}× ` : '';
+
+    lines.push(`+ Diseño personalizado: ${countText}(+${formatCurrency(designPrice)})`);
+  }
 
   return lines.length > 0 ? lines : null;
 };

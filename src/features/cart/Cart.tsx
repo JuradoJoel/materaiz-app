@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { CheckoutForm } from './CheckoutForm';
 import { CheckoutResponse } from 'src/api/OrderRepository';
 import { useSnackbar } from 'src/components/snackbar';
-import { calculateCartTotal, getBombillaText, getItemUnitPrice } from 'src/utils/cartUtils';
+import { calculateCartTotal, getItemUnitPrice, getFormattedAddons } from 'src/utils/cartUtils';
 
 const Cart = () => {
   const { cart, removeFromCart } = useCart();
@@ -86,7 +86,7 @@ const Cart = () => {
                       {item.addons &&
                         item.addons.length > 0 &&
                         (() => {
-                          const bombillaLines = getBombillaText(item);
+                          const bombillaLines = getFormattedAddons(item);
                           return bombillaLines ? (
                             <Box sx={{ mt: 0.5 }}>
                               {bombillaLines.map((line, index) => (

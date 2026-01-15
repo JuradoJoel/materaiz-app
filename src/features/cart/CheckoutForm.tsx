@@ -11,7 +11,12 @@ import {
   TemplateFormSubmitButton,
 } from 'src/components/form/TemplateFormActions';
 import * as Yup from 'yup';
-import { CheckoutPayload, CheckoutResponse, useCreateOrderMutation } from 'src/api/OrderRepository';
+import {
+  AddonPayload,
+  CheckoutPayload,
+  CheckoutResponse,
+  useCreateOrderMutation,
+} from 'src/api/OrderRepository';
 
 export const CheckoutSchema = Yup.object().shape({
   first_name: Yup.string().required('El nombre es obligatorio'),
@@ -80,11 +85,30 @@ export const CheckoutForm = ({
       items: cart.map((item) => {
         const basePrice = item.product.discount_price ?? item.product.original_price;
         const subtotal = basePrice * item.quantity;
-        const addonsPayload = (item.addons || []).map((addon) => ({
-          type: 'bombilla',
-          description: getBombillaLabel(addon.variant),
-          price: addon.price,
-        }));
+        const addonsPayload = (item.addons || []).map<AddonPayload>((addon) => {
+          switch (addon.type) {
+            case 'bombilla':
+              return {
+                type: addon.type,
+                description: addon.variant
+                  ? getBombillaLabel(addon.variant)
+                  : 'Bombilla desconocida',
+                price: addon.price,
+              };
+
+            case 'custom_design':
+              return {
+                type: addon.type,
+                description: 'Grabado en la virola',
+                price: addon.price,
+                details: addon.details?.trim() || null,
+              };
+
+            default:
+              const _exhaustiveCheck: never = addon;
+              throw new Error(`Tipo de addon no soportado en checkout: ${(addon as any).type}`);
+          }
+        });
 
         return {
           product_id: item.product.id,

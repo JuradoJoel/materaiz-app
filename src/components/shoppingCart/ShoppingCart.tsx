@@ -3,7 +3,7 @@ import formatCurrency from 'src/utils/formatCurrency';
 import CartQuantityControl from 'src/components/cart/CartQuantityControl';
 import { CartItem } from 'src/models/Product';
 import { useCart } from 'src/components/cart/CartContext';
-import { getBombillaText, getItemUnitPrice } from 'src/utils/cartUtils';
+import { getItemUnitPrice, getFormattedAddons } from 'src/utils/cartUtils';
 
 interface ShoppingCartProps {
   item: CartItem;
@@ -59,7 +59,7 @@ const ShoppingCart = ({ item, compact = false }: ShoppingCartProps) => {
 
             {item.addons && item.addons.length > 0 && (
               <Box sx={{ mt: 1, ml: 0 }}>
-                {getBombillaText(item)?.map((line, index) => (
+                {getFormattedAddons(item)?.map((line, index) => (
                   <Typography
                     key={index}
                     variant="body2"

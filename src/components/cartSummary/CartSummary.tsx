@@ -183,11 +183,6 @@ export default function CartSummary({
               control={<Radio />}
               label="Flete a coordinar con el vendedor"
             />
-            {/* {!isHomeDelivery && (
-              <Alert severity="info" sx={{ mt: 1 }}>
-                El costo del flete se coordinará posteriormente con el vendedor.
-              </Alert>
-            )} */}
             <FormControlLabel value="delivery" control={<Radio />} label="Envío a domicilio" />
           </RadioGroup>
         </Box>

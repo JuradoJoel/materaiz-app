@@ -13,19 +13,13 @@ export interface CheckoutPayload {
   shipping_cost: number;
   is_home_delivery: boolean;
   items: OrderItemPayload[];
-  /* items: {
-    product_id: number;
-    product_name: string;
-    quantity: number;
-    unit_price: number;
-    subtotal: number;
-  }[]; */
 }
 
 export interface AddonPayload {
   type: string;
   description: string;
   price: number;
+  details?: string | null;
 }
 
 export interface OrderItemPayload {
