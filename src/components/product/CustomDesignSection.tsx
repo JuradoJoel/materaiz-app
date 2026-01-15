@@ -138,7 +138,7 @@ export default function CustomDesignSection({ product }: CustomDesignSectionProp
               </Typography>
               <Typography variant="body2">
                 {quantity} × Diseño personalizado con texto: "
-                {designText || 'Sin texto especificado'}"
+                {designText || 'Sin texto o descripción especificados'}"
               </Typography>
             </Box>
           )}
