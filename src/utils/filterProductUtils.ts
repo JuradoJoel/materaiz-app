@@ -33,5 +33,6 @@ export const isMateProduct = (product: Product): boolean => {
       return false;
     }
   }
-  return name.includes('mate') || name.includes('maté');
+  //return name.includes('mate') || name.includes('maté');
+  return true;
 };
