@@ -12,7 +12,7 @@ import {
 import { useCart } from 'src/components/cart/CartContext';
 import { Product, Addon, BombillaAddon, CustomDesignAddon } from 'src/models/Product';
 import formatCurrency from 'src/utils/formatCurrency';
-import { useCustomDesignPrice } from 'src/utils/addonsUtils';
+import { useCustomDesignPrice, useAddonPrices } from 'src/utils/addonsUtils';
 
 interface CustomDesignSectionProps {
   product: Product;
@@ -20,7 +20,9 @@ interface CustomDesignSectionProps {
 
 export default function CustomDesignSection({ product }: CustomDesignSectionProps) {
   const { cart, updateItem } = useCart();
-  const { data: designPrice = 5000 } = useCustomDesignPrice();
+  const { data: prices, isLoading } = useAddonPrices();
+
+  const designPrice = prices?.custom_design ?? 10000;
 
   const cartItem = cart.find((item) => item.product.id === product.id);
   const quantity = cartItem ? cartItem.quantity : 0;
@@ -108,11 +110,8 @@ export default function CustomDesignSection({ product }: CustomDesignSectionProp
             label={
               <Typography>
                 Sí, agregar diseño
-                <Typography
-                  component="span"
-                  sx={{ ml: 1, color: 'success.main', fontWeight: 'bold' }}
-                >
-                  (+{formatCurrency(designPrice)})
+                <Typography component="span" sx={{ ml: 1, color: 'success.main', fontWeight: 'bold' }}>
+                  {isLoading ? '(cargando...)' : `(+${formatCurrency(designPrice)})`}
                 </Typography>
               </Typography>
             }

@@ -16,7 +16,11 @@ import {
 } from '@mui/material';
 import { useCart } from 'src/components/cart/CartContext';
 import { Product, BombillaOption, Addon } from 'src/models/Product';
-import { BOMBILLA_OPTIONS, getBombillaPrice, getBombillaLabel } from 'src/constants/bombillas';
+import {
+  useBombillaOptions,
+  useBombillaPrice,
+  getBombillaLabel,
+} from 'src/constants/bombillas';
 import formatCurrency from 'src/utils/formatCurrency';
 
 interface MateAddonsSectionProps {
@@ -32,6 +36,19 @@ export default function MateAddonsSection({ product }: MateAddonsSectionProps) {
   const addons = cartItem?.addons ?? [];
   const isSyncingFromUI = useRef(false);
 
+  // Estados
+  const [defaultBombilla, setDefaultBombilla] = useState<BombillaOption | null>(null);
+  const [customize, setCustomize] = useState(false);
+  const [countPicoCurva, setCountPicoCurva] = useState(0);
+  const [countCanoRedondo, setCountCanoRedondo] = useState(0);
+
+  // Hooks de precios y opciones
+  const bombillaOptions = useBombillaOptions();
+  const picoCurvaPrice = useBombillaPrice('pico-curva');
+  const cañoRedondoPrice = useBombillaPrice('caño-redondo');
+  const selectedBombillaPrice = useBombillaPrice(defaultBombilla);
+
+  // Derivado
   const picoCountFromCart = addons.filter((a) => a.variant === 'pico-curva').length;
   const canoCountFromCart = addons.filter((a) => a.variant === 'caño-redondo').length;
 
@@ -43,12 +60,6 @@ export default function MateAddonsSection({ product }: MateAddonsSectionProps) {
     : isDefaultCano
     ? 'caño-redondo'
     : null;
-
-  // Estado local para la selección
-  const [defaultBombilla, setDefaultBombilla] = useState<BombillaOption | null>(null);
-  const [customize, setCustomize] = useState(false);
-  const [countPicoCurva, setCountPicoCurva] = useState(0);
-  const [countCanoRedondo, setCountCanoRedondo] = useState(0);
 
   useEffect(() => {
     if (quantity <= 1 && customize) {
@@ -68,7 +79,6 @@ export default function MateAddonsSection({ product }: MateAddonsSectionProps) {
     const pico = addons.filter((a) => a.variant === 'pico-curva').length;
     const cano = addons.filter((a) => a.variant === 'caño-redondo').length;
 
-    // Caso: todos iguales → selección simple
     if (pico === quantity && cano === 0) {
       setDefaultBombilla('pico-curva');
       setCustomize(false);
@@ -81,7 +91,6 @@ export default function MateAddonsSection({ product }: MateAddonsSectionProps) {
       return;
     }
 
-    // Caso: combinación personalizada
     if (pico > 0 && cano > 0) {
       setCustomize(true);
       setDefaultBombilla(null);
@@ -90,7 +99,6 @@ export default function MateAddonsSection({ product }: MateAddonsSectionProps) {
     }
   }, [cartItem, quantity, addons]);
 
-  // Actualizar addons en el carrito cuando cambian las selecciones
   useEffect(() => {
     if (!cartItem || quantity === 0) return;
 
@@ -105,14 +113,14 @@ export default function MateAddonsSection({ product }: MateAddonsSectionProps) {
           .map(() => ({
             type: 'bombilla' as const,
             variant: 'pico-curva' as const,
-            price: getBombillaPrice('pico-curva'),
+            price: picoCurvaPrice,
           })),
         ...Array(countCanoRedondo)
           .fill(null)
           .map(() => ({
             type: 'bombilla' as const,
             variant: 'caño-redondo' as const,
-            price: getBombillaPrice('caño-redondo'),
+            price: cañoRedondoPrice,
           })),
       ];
     } else if (defaultBombilla) {
@@ -121,11 +129,10 @@ export default function MateAddonsSection({ product }: MateAddonsSectionProps) {
         .map(() => ({
           type: 'bombilla' as const,
           variant: defaultBombilla,
-          price: getBombillaPrice(defaultBombilla),
+          price: selectedBombillaPrice,
         }));
     }
 
-    // Comparación por conteo para evitar actualizaciones innecesarias
     const currentPico = (cartItem.addons || []).filter((a) => a.variant === 'pico-curva').length;
     const currentCano = (cartItem.addons || []).filter((a) => a.variant === 'caño-redondo').length;
     const expectedPico = customize
@@ -149,12 +156,6 @@ export default function MateAddonsSection({ product }: MateAddonsSectionProps) {
       ...item,
       addons: newAddons.length > 0 ? newAddons : undefined,
     }));
-
-    // Actualización directa y segura usando updateItem
-    updateItem(product.id, (item) => ({
-      ...item,
-      addons: newAddons.length > 0 ? newAddons : undefined,
-    }));
   }, [
     defaultBombilla,
     customize,
@@ -164,6 +165,9 @@ export default function MateAddonsSection({ product }: MateAddonsSectionProps) {
     cartItem,
     updateItem,
     product.id,
+    picoCurvaPrice,
+    cañoRedondoPrice,
+    selectedBombillaPrice,
   ]);
 
   if (quantity === 0) return null;
@@ -206,7 +210,7 @@ export default function MateAddonsSection({ product }: MateAddonsSectionProps) {
               }
             }}
           >
-            {BOMBILLA_OPTIONS.map((option) => (
+            {bombillaOptions.map((option) => (
               <FormControlLabel
                 key={option.value ?? 'none'}
                 value={option.value ?? 'none'}
