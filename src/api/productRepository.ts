@@ -62,3 +62,22 @@ export const useProductsInfiniteQuery = () =>
     },
     staleTime: 5 * 60 * 1000,
   });
+
+  export const useHomeProducts = () => {
+    const query = useAllProductsQuery();
+  
+    return {
+      ...query,
+      products: query.data ?? [],
+    };
+  };
+  
+  export const useCustomDesignProducts = () => {
+    const query = useAllProductsQuery();
+  
+    return {
+      ...query,
+      products: (query.data ?? []).filter(p => p.is_custom_design),
+    };
+  };
+  

@@ -13,6 +13,7 @@ export interface Product {
   discount_price: number | null;
   images: ProductImage[];
   categories: Category[];
+  is_custom_design: boolean;
 }
 
 //tipo para la bombilla que el usuario quiera agregarle

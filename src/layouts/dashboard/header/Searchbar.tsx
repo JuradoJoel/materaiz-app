@@ -24,7 +24,7 @@ import { NavListProps } from '../../../components/nav-section';
 import SearchNotFound from '../../../components/search-not-found';
 //
 import useNavConfig from '../nav/config';
-import { useAllProductsQuery } from 'src/api/productRepository';
+import { useHomeProducts  } from 'src/api/productRepository';
 import { formatText } from 'src/utils/formatText';
 
 // ----------------------------------------------------------------------
@@ -149,7 +149,7 @@ function Searchbar() {
       handleClick(searchQuery);
     }
   };
-  const { data: products = [] } = useAllProductsQuery();
+  const { data: products = [] } = useHomeProducts();
 
   const truncateText = (html: string | undefined, maxLength: number = 130) => {
     if (!html) return '';

@@ -48,7 +48,12 @@ function HomePage() {
   }, {} as Record<number, string>);
 
   const allProducts = data?.pages.flatMap((page) => page) ?? [];
-  const hasProducts = allProducts.length > 0;
+  //allProducts contiene todos los productos, en products filtramos para que no se muestren los custom design en el homepage
+  const products = allProducts.filter(
+    (product) => !product.is_custom_design
+  );
+  
+  const hasProducts = products.length > 0;
 
   return (
     <>
@@ -81,7 +86,7 @@ function HomePage() {
 
       {hasProducts && (
         <>
-          <ProductList products={allProducts} categoryMap={categoryMap} />
+          <ProductList products={products} categoryMap={categoryMap} />
           <Box
             ref={loadMoreRef}
             sx={{

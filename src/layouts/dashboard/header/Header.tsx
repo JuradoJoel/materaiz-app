@@ -132,6 +132,13 @@ export default function Header({ onOpenNav, onClose, open, onOpenCart }: Props) 
                 <Button
                   color="inherit"
                   component={Link}
+                  to={PATHS.customDesigns.root}
+                >
+                  Diseños Personalizados
+                </Button>
+                <Button
+                  color="inherit"
+                  component={Link}
                   to={PATHS.wholesale.root}
                   sx={{ display: 'none', textTransform: 'none' }}
                 >

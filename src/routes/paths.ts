@@ -19,6 +19,9 @@ export const PATHS = {
     byCategory: (id: number | string) => `/wholesale/category/${id}`,
     byProduct: (id: number | string) => `/wholesale/product/${id}`,
   },
+  customDesigns: {
+    root: '/custom-designs',
+  },
   cart: {
     root: '/cart',
   },

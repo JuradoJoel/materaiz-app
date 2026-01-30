@@ -4,14 +4,14 @@ import { APP_NAME } from 'src/config';
 import ProductList from './ProductList';
 import { useParams } from 'react-router-dom';
 import { useAllCategoriesQuery } from 'src/api/categoryRepository';
-import { useAllProductsQuery } from 'src/api/productRepository';
+import { useHomeProducts } from 'src/api/productRepository';
 
 function FilteredProducts() {
+  const { products } = useHomeProducts();
   const { id } = useParams<{ id: string }>();
   const categoryId = Number(id);
 
   const { data: categories } = useAllCategoriesQuery();
-  const { data: products } = useAllProductsQuery();
 
   const category = categories?.find((cat) => cat.id === categoryId);
   const filteredProducts = products?.filter((product) =>

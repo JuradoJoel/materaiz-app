@@ -65,6 +65,10 @@ const LazyWholesalePage = withLoadingSpinner(
   lazy(() => import('src/features/product/WholesaleFilteredProducts'))
 );
 
+const LazyCustomDesignsPage = withLoadingSpinner(
+  lazy(() => import('src/features/product/CustomDesignsPage'))
+);
+
 const ROUTES: RouteObject[] = [
   {
     path: '/',
@@ -98,6 +102,16 @@ const ROUTES: RouteObject[] = [
             element: <LazyProductDetailpage />,
           },
         ],
+      },
+      {
+        path: 'custom-designs',
+        element: (
+          <Suspense fallback={<LoadingScreen />}>
+            <LazyDashboardLayout>
+              <LazyCustomDesignsPage />
+            </LazyDashboardLayout>
+          </Suspense>
+        ),
       },
       {
         path: 'wholesale',
