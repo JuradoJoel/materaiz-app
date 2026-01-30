@@ -7,6 +7,7 @@ export const wholesaleData: Product[] = [
     description: 'lorem ipsum dolor sit amet',
     original_price: 17500,
     discount_price: 10990,
+    is_custom_design: false,
     images: [
       {
         id: 1,
@@ -32,6 +33,7 @@ export const wholesaleData: Product[] = [
     description: 'lorem ipsum dolor sit amet',
     original_price: 20000,
     discount_price: 14990,
+    is_custom_design: false,
     images: [
       {
         id: 1,
