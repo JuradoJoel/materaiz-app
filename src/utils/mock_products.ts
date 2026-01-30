@@ -7,6 +7,7 @@ export const productsData: Product[] = [
     description: 'lorem ipsum dolor sit amet',
     original_price: 17500,
     discount_price: 12990,
+    is_custom_design: false,
     images: [
       {
         id: 1,
@@ -32,6 +33,7 @@ export const productsData: Product[] = [
     description: 'lorem ipsum dolor sit amet',
     original_price: 16500,
     discount_price: 12990,
+    is_custom_design: false,
     images: [
       {
         id: 1,
@@ -57,6 +59,7 @@ export const productsData: Product[] = [
     description: 'lorem ipsum dolor sit amet',
     original_price: 17999,
     discount_price: 12990,
+    is_custom_design: false,
     images: [
       {
         id: 1,
@@ -82,6 +85,7 @@ export const productsData: Product[] = [
     description: 'lorem ipsum dolor sit amet',
     original_price: 18500,
     discount_price: 12990,
+    is_custom_design: false,
     images: [
       {
         id: 1,
