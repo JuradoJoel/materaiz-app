@@ -8,7 +8,7 @@ import { useSnackbar } from 'src/components/snackbar';
 import { useContactMutation } from 'src/api/contactMessagesRepository';
 import { useAllCategoriesQuery } from 'src/api/categoryRepository';
 import { LoadingSpinner } from 'src/components/loading-spinner';
-import { Box, Typography, CircularProgress } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 
@@ -49,10 +49,8 @@ function HomePage() {
 
   const allProducts = data?.pages.flatMap((page) => page) ?? [];
   //allProducts contiene todos los productos, en products filtramos para que no se muestren los custom design en el homepage
-  const products = allProducts.filter(
-    (product) => !product.is_custom_design
-  );
-  
+  const products = allProducts.filter((product) => !product.is_custom_design);
+
   const hasProducts = products.length > 0;
 
   return (
@@ -97,7 +95,11 @@ function HomePage() {
               my: 4,
             }}
           >
-            {isFetchingNextPage && <CircularProgress size={40} />}
+            {isFetchingNextPage && (
+              <Box sx={{ transform: 'scale(0.6)' }}>
+                <LoadingSpinner />
+              </Box>
+            )}
             {!hasNextPage && !isFetchingNextPage && (
               <Typography variant="body1" color="text.secondary">
                 ¡Has visto todos los productos!
