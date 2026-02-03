@@ -13,6 +13,7 @@ import { PATHS } from 'src/routes/paths';
 import Iconify from 'src/components/iconify';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useAllCategoriesQuery } from 'src/api/categoryRepository';
+
 interface CategoriesNavButtonProps {
   isOpen: boolean;
   onToggle: () => void;
@@ -95,6 +96,21 @@ export const CategoriesNavButton = ({ isOpen, onToggle, onClose }: CategoriesNav
           )}
         </List>
       </Collapse>
+      <ListItemButton
+        onClick={() => {
+          onClose();
+          navigate(PATHS.customDesigns.root);
+        }}
+      >
+        <ListItemIcon>
+          <Iconify icon="solar:magic-stick-bold-duotone" />
+        </ListItemIcon>
+        <ListItemText sx={{ fontSize: 14 }} primary="Diseños personalizados" />
+        <Iconify
+          icon="material-symbols-light:arrow-forward-rounded"
+          sx={{ width: 18, height: 18 }}
+        />
+      </ListItemButton>
     </>
   );
 };

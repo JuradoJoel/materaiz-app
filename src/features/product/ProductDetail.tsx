@@ -75,7 +75,9 @@ const ProductDetail = () => {
               <CartQuantityControl product={product} sx={{ mt: 2, bgcolor: 'grey.300' }} />
 
               {isMateProduct(product) && <MateAddonsSection product={product} />}
-              {isMateProduct(product) && <CustomDesignSection product={product} />}
+              {isMateProduct(product) && !product.is_custom_design && (
+                <CustomDesignSection product={product} />
+              )}
             </CardContent>
           </Card>
         </Grid>
